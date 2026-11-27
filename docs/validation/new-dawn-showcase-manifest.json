@@ -1,0 +1,65 @@
+{
+  "title": "New Dawn civilization showcase",
+  "duration_seconds": 114,
+  "capture_fps": 12,
+  "width": 1280,
+  "height": 800,
+  "source_frames": 1368,
+  "staged_resources": true,
+  "scripted_inputs": true,
+  "staged_cameras": true,
+  "affects_normal_campaign": false,
+  "is_performance_benchmark": false,
+  "chapters": [
+    {
+      "name": "cities-under-construction",
+      "source_start_seconds": 0.0
+    },
+    {
+      "name": "city-production-and-rocket-complex",
+      "source_start_seconds": 15.0
+    },
+    {
+      "name": "rocket-assembly",
+      "source_start_seconds": 28.0
+    },
+    {
+      "name": "native-rocket-launch",
+      "source_start_seconds": 41.0
+    },
+    {
+      "name": "ship-design-and-paint",
+      "source_start_seconds": 59.0
+    },
+    {
+      "name": "oracle-recommendations",
+      "source_start_seconds": 65.0
+    },
+    {
+      "name": "city-blueprint-planning",
+      "source_start_seconds": 70.0
+    },
+    {
+      "name": "alien-civilizations-and-fleets",
+      "source_start_seconds": 75.0
+    },
+    {
+      "name": "native-civilization-space-war",
+      "source_start_seconds": 80.0
+    },
+    {
+      "name": "completed-dyson-sphere",
+      "source_start_seconds": 100.0
+    },
+    {
+      "name": "type-two-civilization",
+      "source_start_seconds": 108.0
+    }
+  ],
+  "video_sha256": "bcd2ece5694597d7c8929ad0f9929eda8f74cf0f4bc0bf34bc85a9faa7bf2f39",
+  "packaged_checks": {
+    "civilization": 63,
+    "legacy": 194,
+    "total": 257
+  }
+}

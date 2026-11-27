@@ -8,9 +8,9 @@ public sealed partial class DefenseGame {
  public bool PadHeld(PilotInput.Button b){return Controls!=null&&Controls.Held(b);}
  public bool CrewFire{get{return (!automatedPlayback&&(Input.GetMouseButton(0)||Input.GetKey(KeyCode.LeftControl)))||(Controls!=null&&Controls.R2>.15f);}}
  public bool CrewAim{get{return (!automatedPlayback&&Input.GetMouseButton(1))||(Controls!=null&&Controls.L2>.15f);}}
- public bool CrewInteract{get{return (!automatedPlayback&&Input.GetKey(KeyCode.E))||PadHeld(PilotInput.Button.R1);}}
- public bool CrewReload{get{return (!automatedPlayback&&Input.GetKeyDown(KeyCode.R))||PadDown(PilotInput.Button.Square);}}
- public bool CrewPulse{get{return (!automatedPlayback&&Input.GetKeyDown(KeyCode.Q))||PadDown(PilotInput.Button.Circle);}}
+ public bool CrewInteract{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKey(KeyCode.E))||PadHeld(PilotInput.Button.R1));}}
+ public bool CrewReload{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKeyDown(KeyCode.R))||PadDown(PilotInput.Button.Square));}}
+ public bool CrewPulse{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKeyDown(KeyCode.Q))||PadDown(PilotInput.Button.Circle));}}
  bool PadKeyDown(KeyCode k){
   if(Controls==null)return false;
   if(k==KeyCode.Escape)return PadDown(PilotInput.Button.Options);

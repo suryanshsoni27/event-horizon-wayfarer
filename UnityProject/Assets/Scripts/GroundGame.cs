@@ -6,13 +6,13 @@ using UnityEngine;
 public sealed partial class DefenseGame {
  SurfaceOperations surface;bool surfaceRecording,journalWasPaused;
  public bool GroundActive{get{return !legacyUniverse&&expedition!=null&&expedition.OnFoot;}}
- public bool GroundFireBlocked{get{return releaseFire;}}
+ public bool GroundFireBlocked{get{return releaseFire||civilPlacing;}}
  public bool ModernSurface{get{return !legacyUniverse;}}
  public Vector3 GroundShipPosition{get{return Pos(player);}}
  public void GroundNotice(string s){Notice(s);}
- public void GroundReward(int points,int parts){score+=points;salvageCount+=parts;if(score>bestScore){bestScore=score;if(!qa)PlayerPrefs.SetString("BestScore",bestScore.ToString());}}
+ public void GroundReward(int points,int parts){score+=points;salvageCount+=parts;CivilReward(points,parts);if(score>bestScore){bestScore=score;if(!qa)PlayerPrefs.SetString("BestScore",bestScore.ToString());}}
  public void GroundDamage(float amount){if(outcome!=""||invulnerable>0)return;health=Mathf.Max(0,health-amount);invulnerable=.3f;flash=1;if(health<=0){outcome="CREW LOST / EXPEDITION FAILED";expedition.ScriptWalk(Vector3.zero);} }
- public void GroundHeal(float amount){health=Mathf.Min(100+tiers[1]*25,health+amount);}
+ public void GroundHeal(float amount){health=Mathf.Min(HullMaximum,health+amount);}
  bool GroundMenu(){if(surface==null)return false;if(GameKeyDown(KeyCode.O)&&expedition.OnFoot){surface.Journal=!surface.Journal;if(surface.Journal){journalWasPaused=paused;paused=true;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}else if(!journalWasPaused)ResumeFlight();}if(surface.Journal&&GameKeyDown(KeyCode.Escape)){surface.Journal=false;if(!journalWasPaused)ResumeFlight();return true;}return surface.Journal;}
  void GroundBoard(){if(RoverDeployed&&(wheelDeployment<.999f||Vel(player).magnitude>1.5f)){Notice("Park the rover and finish wheel deployment before leaving the seat.");return;}bool before=expedition.OnFoot;Notice(expedition.ToggleSurface(player));if(surface!=null)surface.Sync();if(before&&!expedition.OnFoot){throttle=0;playerAction=Vector3.zero;if(!legacyUniverse)invulnerable=2;}releaseFire=true;Input.ResetInputAxes();}
  // QA stages a valid landed pose; normal gameplay still lands through the native solver.

@@ -20,6 +20,7 @@ public sealed class PlanetExpedition : MonoBehaviour {
  public void ScriptWalk(Vector3 direction){footMove=Vector3.ClampMagnitude(direction,1);}
  public Vector3 Focus{get{return DefenseGame.Pos(foot);}}public Transform[] Companions{get{return buddies;}}
  public Transform Crew{get{return crew;}}
+ public void ResolveStructure(Vector3 point){if(!OnFoot)return;Vector3 delta=point-Focus;if(delta.sqrMagnitude<.000001f)return;foot.x=point.x;foot.y=point.y;foot.z=point.z;Vector3 n=delta.normalized,v=DefenseGame.Vel(foot);v-=n*Mathf.Min(0,Vector3.Dot(v,n));foot.vx=v.x;foot.vy=v.y;foot.vz=v.z;crew.position=point;}
  static double TerrainHash(int x,int y,int z,uint seed){unchecked{uint h=(uint)x*374761393u+(uint)y*668265263u+(uint)z*2246822519u+seed*3266489917u;h=(h^(h>>13))*1274126177u;h^=h>>16;return (h&0xffffff)/16777215.0;}}
  static double TerrainNoise(double x,double y,double z,uint seed){int ix=(int)Math.Floor(x),iy=(int)Math.Floor(y),iz=(int)Math.Floor(z);x-=ix;y-=iy;z-=iz;x=x*x*(3-2*x);y=y*y*(3-2*y);z=z*z*(3-2*z);double value=0;for(int dx=0;dx<2;dx++)for(int dy=0;dy<2;dy++)for(int dz=0;dz<2;dz++)value+=TerrainHash(ix+dx,iy+dy,iz+dz,seed)*(dx!=0?x:1-x)*(dy!=0?y:1-y)*(dz!=0?z:1-z);return value;}
  public static float Height(Vector3 direction,double seed,double radius=22){double norm=Math.Sqrt((double)direction.x*direction.x+(double)direction.y*direction.y+(double)direction.z*direction.z);if(norm<1e-10)return 0;double x=direction.x/norm,y=direction.y/norm,z=direction.z/norm,s=seed;

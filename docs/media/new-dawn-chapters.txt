@@ -1,0 +1,14 @@
+New Dawn / staged Unity gameplay showcase
+1280x800, 12 fps capture, 1:54 total. Seeded resources, scripted input and cameras; not an FPS benchmark.
+
+00:00  Cities Under Construction
+00:15  City Production And Rocket Complex
+00:28  Rocket Assembly
+00:41  Native Rocket Launch
+00:59  Ship Design And Paint
+01:05  Oracle Recommendations
+01:10  City Blueprint Planning
+01:15  Alien Civilizations And Fleets
+01:20  Native Civilization Space War
+01:40  Completed Dyson Sphere
+01:48  Type Two Civilization

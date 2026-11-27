@@ -1,10 +1,24 @@
 # Event Horizon / Wayfarer
 
-A Unity space-adventure prototype with a custom C++ physics core, locally trained dynamics predictions, space NPCs, procedural planets, alien missions and a six-wheel crew rover. Built while learning Unity and experimenting with AI-assisted development.
+A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Watch the complete feature tour](docs/media/wayfarer-full-feature-tour.jpg)](docs/media/wayfarer-full-feature-tour.mp4)
+[![New Dawn civilization expansion](docs/media/new-dawn-civilization.jpg)](docs/media/new-dawn-civilization-tour.mp4)
 
-**[Watch the complete 3:23 feature tour](docs/media/wayfarer-full-feature-tour.mp4)** · [33-second rover demo](docs/media/dualsense-rover-tour.mp4) · [Recording manifest](docs/validation/feature-tour-manifest.json)
+**[Watch the New Dawn civilization showcase](docs/media/new-dawn-civilization-tour.mp4)** · [Play guide and new controls](docs/NEW_DAWN.md) · [Original 3:23 exploration tour](docs/media/wayfarer-full-feature-tour.mp4)
+
+**[Download the Mac game](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.2.0)** · macOS / Apple Silicon · [Launch instructions](docs/NEW_DAWN.md#download-and-play)
+
+## New Dawn: build a civilization
+
+- Research four original ship hulls and choose four coatings. Designs change the actual spacecraft, hull capacity, thrust and military cannon behavior; a live 3D preview shows the result.
+- Use Oracle, a local strategy adviser, to choose missions based on your resources, facilities, progress and threats. Milestone rewards are unique and need no API key.
+- Place eight types of city districts on a planet. Construction, shared power, foundries, science, population and native-physics shuttle traffic continue while you explore.
+- Assemble survey rockets and launch through the native solver. Successful flights unlock further infrastructure.
+- Build warships, negotiate with three rival civilizations, visit their capitals and fight planetary space wars. Nearby ships and plasma bolts use native motion; distant battles use a strategic approximation.
+- Expand across core worlds, progress through six civilization tiers, and construct twelve Dyson sectors with 672 rendered collectors.
+- Keep your cities, hull blueprints, missions, fleets, diplomatic relations and megastructure progress in a local campaign save with an atomic write and validated backup.
+
+Open command with **B**, **L3 while flying/driving**, or **D-pad down on foot**. L1/R1 changes tabs, D-pad selects, Cross acts and Circle returns. Land and disembark before placing a city. The [New Dawn guide](docs/NEW_DAWN.md) explains recipes, progression, controller bindings and model limits.
 
 ## Explore, land, drive
 
@@ -97,18 +111,21 @@ Controller tests use injected DualSense HID reports and a virtual gamepad. A phy
 
 ## Verification
 
-The delivered player passed **194 packaged checks**: 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Reviewed numerical results are included in [docs/validation](docs/validation).
+The current build passed **257 packaged checks**: 63 civilization checks plus the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. The civilization suite covers the economy, real rocket ascent, fleets, ship upgrades, controller placement, saves, pause and origin shifts. Reviewed numerical results are included in [docs/validation](docs/validation).
 
 After building and closing the normal player:
 
 ```sh
 python3 tools/verify_game.py
+python3 tools/check_civilization.py
 python3 tools/check_rover.py
 ```
 
+The [1:54 New Dawn showcase](docs/media/new-dawn-civilization-tour.mp4) demonstrates city construction, rocket assembly and native ascent, ship design, Oracle recommendations, fleet combat and the completed Dyson project. It uses seeded resources, scripted inputs and camera positions, explicitly labeled on screen. Capture is 1280×800 at 12 fps and is not an FPS benchmark or an uninterrupted manual campaign. It does not alter the normal campaign save. Reproduce it with `python3 tools/record_civilization.py`.
+
 Additional native and model checks live under `tools/`. Player QA and recording commands write to the local, ignored `evidence/` directory. Reproduce the rover tour with `python3 tools/record_rover.py` and FFmpeg installed.
 
-The complete feature tour covers atlas navigation, continuous flight and landing, tire deployment, driving and crew exploration, all linked surface missions, extraction and ascent, satellite scanning, station repair, derelicts, native projectile mining, upgrades, comets, both black-hole renderers, capture, space NPC combat, physics/model architecture and local crew portraits. Captions identify staged scenes and accelerated sections. Gameplay sources were captured at 12 fps and edited at 24 fps in a 1920×1080 layout, with an original locally synthesized ambient score. The portrait insert uses a generated synthetic robot in the current local crew manager. The cut joins separate sessions and is not an uninterrupted manual playtest.
+The original exploration tour covers atlas navigation, continuous flight and landing, tire deployment, driving and crew exploration, all linked surface missions, extraction and ascent, satellite scanning, station repair, derelicts, native projectile mining, upgrades, comets, both black-hole renderers, capture, space NPC combat, physics/model architecture and local crew portraits. Captions identify staged scenes and accelerated sections. Gameplay sources were captured at 12 fps and edited at 24 fps in a 1920×1080 layout, with an original locally synthesized ambient score. The portrait insert uses a generated synthetic robot in the current local crew manager. The cut joins separate sessions and is not an uninterrupted manual playtest.
 
 After building, close the normal player and run `python3 tools/make_feature_tour.py --record` to capture and assemble the tour. Without `--record`, the tool reuses recordings under `evidence/`. The optional `--cosmos-record --feature-inserts` player flags stage the atlas, orbital, mining and workshop close-ups; ordinary gameplay is unchanged. Timing varies with recording conditions, so review the mission cuts after recapturing.
 
