@@ -2,11 +2,17 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Graphics and production pass](docs/media/production-city-after.jpg)](docs/media/wayfarer-production-tour.mp4)
+[![Planet ecologies and creatures](docs/media/ecology-temperate.png)](docs/media/wayfarer-planet-ecology.mp4)
 
-**[Download the Mac game — v0.5.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.5.0)** · **[Watch the graphics tour](docs/media/wayfarer-production-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.6.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.6.0)** · **[Watch the planet and creature tour](docs/media/wayfarer-planet-ecology.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.6.0: planet ecology and graphics
+
+Nine species now inhabit three climate families: canopy stalkers, fungal Sporebacks and a Thorn Matriarch on temperate worlds; scorpions, Glassbacks and a Sunbreaker on desert worlds; Rime Maws, Rimecallers and a Glacier Titan on frozen worlds. They have different anatomy, attack timing, movement, health and projectiles. The field journal identifies local fauna and explains how to fight it.
+
+The visual pass adds curved, rooted foliage, sparse desert succulents, rigid rime formations, climate-specific minerals and nests, dry desert basins, cracked ice, improved sky scattering and more natural creature materials. URP post-processing resources are now connected, enabling the configured ACES color grading and bloom; contact occlusion adds depth at intersections. Creature spawning and checkpoint restoration also handle local rock fields more reliably. Existing mission and checkpoint progress carries forward. See the [ecology guide, screenshots and validation limits](docs/PLANET_ECOLOGY.md).
 
 ## v0.5.0: face flight
 
@@ -127,11 +133,12 @@ Controller tests use injected DualSense HID reports and a virtual gamepad. A phy
 
 ## Verification
 
-The v0.5.0 packaged player passed **428 automated checks**: 50 face-flight, 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Face-flight QA runs the real native detector on a public test image, checks rotation/scale-resistant gesture geometry, calibration and tracking loss, then injects poses through actual ship steering, thrust and native braking. Production and campaign suites cover terrain, graphics controls, old saves, chapter gates, physical contracts and civilization systems. Reviewed face-flight results live in [docs/validation](docs/validation/head-pilot-validation.json).
+The v0.6.0 packaged player passed **477 automated checks**: 49 ecology/rendering, 50 face-flight, 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Face-flight QA runs the real native detector on a public test image, checks rotation/scale-resistant gesture geometry, calibration and tracking loss, then injects poses through actual ship steering, thrust and native braking. Production and campaign suites cover terrain, graphics controls, old saves, chapter gates, physical contracts and civilization systems. Reviewed ecology results live in [docs/validation](docs/validation/ecology-validation.json); face-flight results remain available there as well.
 
 After building and closing the normal player:
 
 ```sh
+python3 tools/check_ecology.py
 python3 tools/check_head_pilot.py
 python3 tools/check_production.py
 python3 tools/check_voyager.py
@@ -140,11 +147,14 @@ python3 tools/verify_game.py
 python3 tools/benchmark_voyager.py
 python3 tools/benchmark_voyager.py --ultra --width 1920 --height 1080
 python3 tools/record_production.py
+python3 tools/record_ecology.py
 ```
 
 The v0.4 [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These earlier measurements do not include live camera processing. They are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
 
-The new [50-second graphics tour](docs/media/wayfarer-production-tour.mp4) shows ship designs, graded terrain, walking and sprinting, alien fleet combat, planetary atmosphere and graphics settings at 1920×1080 and 30 FPS. It uses seeded resources, scripted inputs and staged cameras, labeled on screen. Simulation advances at a fixed 1/30 second per captured frame. The original ambient score is assembled separately. It is not a performance benchmark or a live-audio recording. The [manifest](docs/validation/production-record-manifest.json) includes measured simulation timing for each segment.
+The [36-second planet and creature art review](docs/media/wayfarer-planet-ecology.mp4) shows all nine species on their own surfaces at 1920×1080 and 30 FPS, with scripted cameras and staged idle/attack poses. It is silent and is not a combat playthrough or performance benchmark. See its [manifest](docs/validation/ecology-record-manifest.json).
+
+The earlier [50-second graphics tour](docs/media/wayfarer-production-tour.mp4) shows ship designs, graded terrain, walking and sprinting, alien fleet combat, planetary atmosphere and graphics settings at 1920×1080 and 30 FPS. It uses seeded resources, scripted inputs and staged cameras, labeled on screen. Simulation advances at a fixed 1/30 second per captured frame. The original ambient score is assembled separately. It is not a performance benchmark or a live-audio recording. The [manifest](docs/validation/production-record-manifest.json) includes measured simulation timing for each segment.
 
 The [72-second Twelve Horizons walkthrough](docs/media/twelve-horizons-tour.mp4) shows chapters, city infrastructure, native rocket ascent, ship outfitting, contracts, settings, fleet combat and the Dyson structure. Seeded resources, scripted inputs and staged cameras are labeled on screen. Capture is 1280×800 at 12 FPS, and the original ambient score is assembled separately. It is not an FPS benchmark, live-audio capture or uninterrupted manual campaign. The [manifest](docs/validation/voyager-record-manifest.json) records scene timings. Recording and QA protect normal campaign files.
 

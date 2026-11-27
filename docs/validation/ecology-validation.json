@@ -1,0 +1,46 @@
+{
+  "version": "0.6.0",
+  "platform": "macOS Apple Silicon",
+  "verification": "Packaged Unity player, not editor-only tests",
+  "suite_counts": {
+    "ecology": 49,
+    "head-pilot": 50,
+    "production": 33,
+    "voyager": 87,
+    "civilization": 64,
+    "game": 29,
+    "planet": 20,
+    "expanse": 33,
+    "surface": 33,
+    "cosmos": 28,
+    "controller": 51
+  },
+  "total_checks": 477,
+  "all_pass": true,
+  "native_physics_checks": "PASS",
+  "ecology_geometry": [
+    {
+      "biome": "temperate",
+      "plants": 1580,
+      "vertices": 283775
+    },
+    {
+      "biome": "arid",
+      "plants": 360,
+      "vertices": 61884
+    },
+    {
+      "biome": "frozen",
+      "plants": 386,
+      "vertices": 31915
+    }
+  ],
+  "runtime_render_resources_activated": true,
+  "color_grading_verified_in_rendered_pixels": true,
+  "actual_v03_save_compatibility_checked": true,
+  "live_camera_used": false,
+  "physical_controller_manually_tested": false,
+  "manual_campaign_balance_playthrough": false,
+  "performance_benchmark": false,
+  "normal_player_startup_smoke": true
+}

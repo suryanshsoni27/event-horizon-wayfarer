@@ -4,6 +4,15 @@ using UnityEngine.Rendering.Universal;
 
 // An original HDR reflection environment and explicit camera settings, independent of scene reloads.
 public sealed class ProductionVisuals : MonoBehaviour {
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+ static void ActivateRuntimeResources(){
+  if(Application.isEditor)return;
+  var all=Resources.FindObjectsOfTypeAll<RenderPipelineGlobalSettings>();bool applied=false;RenderPipelineGlobalSettings selected=null;
+  foreach(var settings in all)if(settings.GetType().Name=="UniversalRenderPipelineGlobalSettings"){selected=settings;applied=GraphicsSettings.TrySetCurrentRenderPipelineGlobalSettings(settings);break;}
+  var shaders=GraphicsSettings.GetRenderPipelineSettings<UniversalRenderPipelineRuntimeShaders>();
+  Debug.Log("RENDER_RUNTIME_RESOURCES preloaded="+all.Length+" applied="+applied+" shaders="+(shaders!=null));
+  if(selected!=null){var field=selected.GetType().GetField("m_Settings",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);var container=field==null?null:field.GetValue(selected) as RenderPipelineGraphicsSettingsContainer;Debug.Log("RENDER_RUNTIME_CONTAINER count="+(container==null?-1:container.settingsList.Count));}
+ }
  public static ProductionVisuals Current{get;private set;}Cubemap environment;Bloom bloom;Vignette vignette;
  public bool ReflectionsReady{get{return environment!=null&&RenderSettings.customReflectionTexture==environment;}}
  public void Initialize(){
@@ -24,7 +33,8 @@ public sealed class ProductionVisuals : MonoBehaviour {
  }
  static Vector3 CubeDirection(int face,float u,float v){switch(face){case 0:return new Vector3(1,-v,-u).normalized;case 1:return new Vector3(-1,-v,u).normalized;case 2:return new Vector3(u,1,v).normalized;case 3:return new Vector3(u,-1,-v).normalized;case 4:return new Vector3(u,-v,1).normalized;default:return new Vector3(-u,-v,-1).normalized;}}
  public void Apply(Camera camera,VoyagerSettings settings){
-  if(settings==null)return;var data=camera.GetUniversalAdditionalCameraData();data.antialiasing=settings.antialiasing==2?AntialiasingMode.SubpixelMorphologicalAntiAliasing:settings.antialiasing==1?AntialiasingMode.FastApproximateAntialiasing:AntialiasingMode.None;data.antialiasingQuality=AntialiasingQuality.High;data.requiresDepthTexture=true;
+  if(settings==null)return;var data=camera.GetUniversalAdditionalCameraData();data.antialiasing=settings.antialiasing==2?AntialiasingMode.SubpixelMorphologicalAntiAliasing:settings.antialiasing==1?AntialiasingMode.FastApproximateAntialiasing:AntialiasingMode.None;data.antialiasingQuality=AntialiasingQuality.High;data.requiresDepthTexture=true;data.SetRenderer(0);
+  var contact=Resources.Load<ScreenSpaceAmbientOcclusion>("ContactOcclusion");if(contact!=null)contact.SetActive(settings.quality>0);
   if(bloom!=null)bloom.intensity.Override(settings.bloom);if(vignette!=null)vignette.intensity.Override(settings.motion?.08f:0);
   var pipeline=GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset;if(pipeline!=null)pipeline.msaaSampleCount=1;
   var key=GameObject.Find("Warm key");if(key!=null){var light=key.GetComponent<Light>();light.shadows=settings.shadowQuality==0?LightShadows.None:settings.shadowQuality==1?LightShadows.Hard:LightShadows.Soft;}

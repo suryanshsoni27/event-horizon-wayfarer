@@ -13,6 +13,7 @@ Shader "Orbit/PlanetSurface" {
  SubShader {Tags{"RenderPipeline"="UniversalPipeline" "RenderType"="Opaque"}
  Pass {Name "ForwardLit" Tags{"LightMode"="UniversalForward"} HLSLPROGRAM
  #pragma target 3.5
+ #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
  #pragma vertex vert
  #pragma fragment frag
  #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -31,21 +32,26 @@ Shader "Orbit/PlanetSurface" {
   float3 radial=normalize(i.local),n=normalize(i.normal),view=SafeNormalize(_WorldSpaceCameraPos-i.world);float height=length(i.local)-_Radius,scaledHeight=height*1200/max(100,_Radius);
   float broad=noise(i.local*.012+_Seed),grain=noise(i.local*.16),slope=1-saturate(dot(n,radial));
   float water=1-smoothstep(.08,.7,height),snow=smoothstep(140,195,scaledHeight+abs(radial.y)*20);
-  float arid=step(.5,_Climate)*(1-step(1.5,_Climate)),ice=step(1.5,_Climate);snow=lerp(snow,0,arid);snow=lerp(snow,saturate(.68+scaledHeight*.004),ice);
+  float arid=step(.5,_Climate)*(1-step(1.5,_Climate)),ice=step(1.5,_Climate);float seaLevel=water;water*=1-arid;water*=1-ice;snow=lerp(snow,0,arid);snow=lerp(snow,saturate(.68+scaledHeight*.004),ice);
   if(_Radius<100){water=1-smoothstep(-.24,-.03,height);snow=smoothstep(.8,1.4,height+abs(radial.y)*.25);}
   float3 weights=pow(abs(n),4);weights/=max(.0001,weights.x+weights.y+weights.z);
   float3 grassPhoto=triColor(TEXTURE2D_ARGS(_GrassTex,sampler_GrassTex),i.local*.28,weights),rockPhoto=triColor(TEXTURE2D_ARGS(_RockTex,sampler_RockTex),i.local*.12,weights);
   float rockAmount=saturate(slope*3.4+smoothstep(80,160,scaledHeight)*.3);
-  float3 sand=lerp(float3(.27,.22,.135),float3(.33,.145,.065),arid),stone=rockPhoto*lerp(.85,1.05,broad);
+  float3 sand=lerp(float3(.27,.22,.135),float3(.43,.285,.15),arid),stone=rockPhoto*lerp(.85,1.05,broad);
+  float mineral=dot(grassPhoto,float3(.3,.55,.15));sand*=lerp(.76,1.16,saturate(mineral*1.8));
   stone=lerp(stone,stone*float3(1.1,.7,.45),arid*.65);
   float3 grass=grassPhoto*(_Land.rgb*3.1)*lerp(.82,1.12,broad);float3 land=lerp(sand,grass,smoothstep(.5,4,scaledHeight)*(1-arid));land=lerp(land,stone,rockAmount);
-  land=lerp(land,float3(.63,.71,.77),snow*(1-saturate(slope*2.1)));land*=.94+.06*grain;
+  land=lerp(land,float3(.64,.70,.73)*lerp(.88,1.06,grain),snow*(1-saturate(slope*2.1)));land*=.94+.06*grain;
+  float fissure=pow(1-abs(sin(i.local.x*.32+sin(i.local.z*.19)*2.1)*sin(i.local.y*.29+i.local.z*.23)),18);
+  land=lerp(land,float3(.15,.32,.38),ice*seaLevel*fissure*.45);
+  land=lerp(land,land*.72,(1-arid)*(1-ice)*(1-water)*(1-smoothstep(.3,2.2,scaledHeight))*.5);
   float detailFade=1-smoothstep(30,130,length(_WorldSpaceCameraPos-i.world));
   float3 detail=lerp(triDetail(TEXTURE2D_ARGS(_GrassNormal,sampler_GrassNormal),i.local*.28,weights),triDetail(TEXTURE2D_ARGS(_RockNormal,sampler_RockNormal),i.local*.12,weights),rockAmount);detail-=n*dot(n,detail);n=normalize(n+detail*.15*detailFade*(1-water)*(1-snow*.7));
-  float3 wave=float3(sin(i.local.x*.07+_Time.y)*cos(i.local.z*.08),0,cos(i.local.z*.08-_Time.y*.7)*sin(i.local.x*.06));n=normalize(n+wave*.025*water);
-  SurfaceData surface=(SurfaceData)0;surface.albedo=lerp(land,_Ocean.rgb*(.8+grain*.2),water);surface.metallic=0;surface.smoothness=lerp(.14+snow*.13,.94,water);surface.occlusion=1;surface.normalTS=half3(0,0,1);surface.alpha=1;
+  float3 ripple=float3(cos(i.local.x*5.8+sin(i.local.z*.48)),sin(i.local.y*5.3),cos(i.local.z*5.8));ripple-=n*dot(n,ripple);n=normalize(n+ripple*.045*arid*detailFade*(1-rockAmount));
+  float3 wave=float3(sin(i.local.x*.7+_Time.y)*cos(i.local.z*.8),0,cos(i.local.z*.8-_Time.y*.7)*sin(i.local.x*.6));wave-=n*dot(n,wave);n=normalize(n+wave*.035*water);
+  SurfaceData surface=(SurfaceData)0;surface.albedo=lerp(land,_Ocean.rgb*(.8+grain*.2),water);surface.metallic=0;surface.smoothness=lerp(.16+snow*.16+ice*seaLevel*.32,.92,water);surface.occlusion=1;surface.normalTS=half3(0,0,1);surface.alpha=1;
   InputData input=(InputData)0;input.positionWS=i.world;input.positionCS=i.p;input.normalWS=n;input.viewDirectionWS=view;input.shadowCoord=TransformWorldToShadowCoord(i.world);input.bakedGI=SampleSH(n);input.normalizedScreenSpaceUV=GetNormalizedScreenSpaceUV(i.p);input.shadowMask=half4(1,1,1,1);input.vertexLighting=VertexLighting(i.world,n);
-  half4 color=UniversalFragmentPBR(input,surface);float day=saturate(dot(radial,GetMainLight().direction)*3+.2),distance=length(_WorldSpaceCameraPos-i.world);float haze=(1-exp(-distance/max(250,_Radius*1.1)))*.20*day;color.rgb=lerp(color.rgb,float3(.12,.21,.29)*(.3+day),haze);return color;
+  half4 color=UniversalFragmentPBR(input,surface);float day=saturate(dot(radial,GetMainLight().direction)*3+.2),distance=length(_WorldSpaceCameraPos-i.world);float haze=(1-exp(-distance/max(250,_Radius*1.1)))*.20*day;color.rgb=lerp(color.rgb,lerp(lerp(float3(.12,.21,.29),float3(.31,.22,.14),arid),float3(.23,.32,.40),ice)*(.3+day),haze);return color;
  }
  ENDHLSL}
  Pass {Name "DepthOnly" Tags{"LightMode"="DepthOnly"} ZWrite On ColorMask 0 HLSLPROGRAM

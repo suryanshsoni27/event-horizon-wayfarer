@@ -1,33 +1,59 @@
 Shader "Orbit/XenoChitin" {
- Properties { _Hurt("Damage flash", Float)=0 _Dissolve("Corpse dissolve",Float)=0 }
- SubShader { Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" } Pass {
+ Properties { _Hurt("Damage flash",Float)=0 _Dissolve("Corpse dissolve",Float)=0 }
+ HLSLINCLUDE
+ #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+ CBUFFER_START(UnityPerMaterial)
+ float _Hurt,_Dissolve;
+ CBUFFER_END
+ void CorpseClip(float3 local) {float d=frac(sin(dot(floor(local*43),float3(12.9898,78.233,37.719)))*43758.5453);clip(d-_Dissolve);}
+ ENDHLSL
+ SubShader {Tags {"RenderPipeline"="UniversalPipeline" "RenderType"="Opaque"}
+ Pass {Name "ForwardLit" Tags{"LightMode"="UniversalForward"}
  HLSLPROGRAM
  #pragma vertex vert
  #pragma fragment frag
  #pragma target 3.5
- #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+ #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+ #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
  #pragma multi_compile_fragment _ _SHADOWS_SOFT
- #pragma multi_compile _ _ADDITIONAL_LIGHTS
- #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+ #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+ #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
  #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
  struct A {float4 p:POSITION;float3 n:NORMAL;float4 c:COLOR;};
- struct V {float4 p:SV_POSITION;float3 world:TEXCOORD0;float3 n:TEXCOORD1;float3 local:TEXCOORD2;float4 c:COLOR;};float _Hurt,_Dissolve;
+ struct V {float4 p:SV_POSITION;float3 world:TEXCOORD0;half3 n:TEXCOORD1;float3 local:TEXCOORD2;half4 c:COLOR;};
  V vert(A a){V o;o.p=TransformObjectToHClip(a.p.xyz);o.world=TransformObjectToWorld(a.p.xyz);o.n=TransformObjectToWorldNormal(a.n);o.local=a.p.xyz;o.c=a.c;return o;}
  half4 frag(V i):SV_Target {
-  float dither=frac(sin(dot(floor(i.world*43),float3(12.9898,78.233,37.719)))*43758.5453);clip(dither-_Dissolve);float3 n=normalize(i.n),v=normalize(_WorldSpaceCameraPos-i.world);float ridges=.5+.5*sin(i.local.y*31+sin(i.local.z*17)*2+sin(i.local.x*23));float pores=.5+.5*sin(i.local.x*97)*sin(i.local.y*103)*sin(i.local.z*89);
-  float glow=saturate(i.c.a);float3 albedo=i.c.rgb*(.75+.2*ridges+.05*pores);Light l=GetMainLight(TransformWorldToShadowCoord(i.world));
-  float diff=saturate(dot(n,l.direction))*l.shadowAttenuation;float spec=pow(saturate(dot(n,normalize(v+l.direction))),64)*.55;
-  float3 color=albedo*(float3(.07,.1,.13)+l.color*(.12+diff*.95))+l.color*spec*l.shadowAttenuation;
-  color+=pow(1-saturate(dot(n,v)),3)*albedo*.45;uint count=GetAdditionalLightsCount();for(uint k=0;k<count;k++){Light a=GetAdditionalLight(k,i.world);color+=albedo*a.color*saturate(dot(n,a.direction))*a.distanceAttenuation;}
-  color+=i.c.rgb*glow*(2.5+.3*sin(_Time.y*3+i.local.y*4));color=lerp(color,float3(2,.3,.1),saturate(_Hurt));return half4(color,1);
+  CorpseClip(i.local);float3 n=normalize(i.n),v=SafeNormalize(_WorldSpaceCameraPos-i.world);
+  float grooves=.5+.5*sin(i.local.z*38+sin(i.local.x*17)*1.3);
+  float pores=sin(i.local.x*113)*sin(i.local.y*97)*sin(i.local.z*103);
+  float fade=1-smoothstep(12,45,distance(_WorldSpaceCameraPos,i.world));
+  float3 grain=float3(cos(i.local.x*113),sin(i.local.y*97),cos(i.local.z*103));grain-=n*dot(n,grain);n=normalize(n+grain*.026*fade);
+  float organ=saturate(i.c.a),crease=smoothstep(.16,.36,grooves);
+  SurfaceData surface=(SurfaceData)0;
+  surface.albedo=i.c.rgb*(.92+.035*grooves+.015*pores);surface.albedo=lerp(surface.albedo,float3(.48,.095,.045),saturate(_Hurt)*.25);
+  surface.metallic=.025;surface.smoothness=lerp(.22+crease*.09,.4,organ);surface.occlusion=.85+.15*crease;
+  surface.normalTS=half3(0,0,1);surface.alpha=1;surface.emission=i.c.rgb*organ*(.55+.08*sin(_Time.y*1.8+i.local.z*2));
+  InputData input=(InputData)0;input.positionWS=i.world;input.positionCS=i.p;input.normalWS=n;input.viewDirectionWS=v;
+  input.shadowCoord=TransformWorldToShadowCoord(i.world);input.bakedGI=SampleSH(n);input.normalizedScreenSpaceUV=GetNormalizedScreenSpaceUV(i.p);input.shadowMask=half4(1,1,1,1);input.vertexLighting=VertexLighting(i.world,n);
+  half4 color=UniversalFragmentPBR(input,surface);
+  Light sun=GetMainLight(input.shadowCoord);float scatter=pow(saturate(dot(-v,sun.direction)),4)*saturate(1-dot(n,v));
+  color.rgb+=i.c.rgb*sun.color*scatter*.055*sun.shadowAttenuation;
+  return color;
  }
  ENDHLSL }
+ Pass {Name "DepthOnly" Tags{"LightMode"="DepthOnly"} ZWrite On ColorMask 0 HLSLPROGRAM
+ #pragma vertex dv
+ #pragma fragment df
+ struct A{float4 p:POSITION;};struct V{float4 p:SV_POSITION;float3 local:TEXCOORD0;};
+ V dv(A a){V o;o.p=TransformObjectToHClip(a.p.xyz);o.local=a.p.xyz;return o;}half4 df(V i):SV_Target{CorpseClip(i.local);return 0;}
+ ENDHLSL}
  Pass {Name "ShadowCaster" Tags{"LightMode"="ShadowCaster"} ZWrite On ColorMask 0 HLSLPROGRAM
  #pragma vertex sv
  #pragma fragment sf
- #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
  #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
- float3 _LightDirection;struct A{float4 p:POSITION;float3 n:NORMAL;};float4 sv(A a):SV_POSITION{return ApplyShadowClamping(TransformWorldToHClip(ApplyShadowBias(TransformObjectToWorld(a.p.xyz),TransformObjectToWorldNormal(a.n),_LightDirection)));}half4 sf():SV_Target{return 0;}
- ENDHLSL }
+ float3 _LightDirection;struct A{float4 p:POSITION;float3 n:NORMAL;};struct V{float4 p:SV_POSITION;float3 local:TEXCOORD0;};
+ V sv(A a){V o;o.p=ApplyShadowClamping(TransformWorldToHClip(ApplyShadowBias(TransformObjectToWorld(a.p.xyz),TransformObjectToWorldNormal(a.n),_LightDirection)));o.local=a.p.xyz;return o;}
+ half4 sf(V i):SV_Target{CorpseClip(i.local);return 0;}
+ ENDHLSL}
  }
 }

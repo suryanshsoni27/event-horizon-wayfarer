@@ -16,7 +16,7 @@ Shader "Orbit/Atmosphere" {
   float groundDisc=b*b-dot(camera,camera)+_GroundRadius*_GroundRadius;if(groundDisc>0){float groundHit=-b-sqrt(groundDisc);if(groundHit>entry)exit=min(exit,groundHit);}if(exit<=entry)discard;
   float stepSize=(exit-entry)/12,optical=0,lit=0;Light sun=GetMainLight();
   [unroll]for(int k=0;k<12;k++){float3 p=camera+direction*(entry+(k+.5)*stepSize);float altitude=max(0,length(p)-_GroundRadius);float density=exp(-altitude/max(.1,(_AtmosRadius-_GroundRadius)*.24));float illumination=saturate(dot(normalize(p),sun.direction)*3+.3);optical+=density*stepSize;lit+=density*illumination*stepSize;}
-  float phase=.75*(1+pow(dot(direction,sun.direction),2));float alpha=1-exp(-optical*(.48/max(8,_AtmosRadius-_GroundRadius)));float lightRatio=lit/max(.001,optical);float3 scatter=_Tint.rgb*(.12+lightRatio*phase*1.1);scatter+=float3(1,.36,.1)*pow(saturate(dot(direction,sun.direction)),24)*lightRatio*.3;
+  float phase=.75*(1+pow(dot(direction,sun.direction),2));float alpha=1-exp(-optical*(4.2/max(8,_AtmosRadius-_GroundRadius)));float lightRatio=lit/max(.001,optical);float3 scatter=_Tint.rgb*(.025+lightRatio*phase*.85);scatter+=float3(1,.36,.1)*pow(saturate(dot(direction,sun.direction)),24)*lightRatio*.3;
   return half4(scatter,alpha);
  }
  ENDHLSL}}}
