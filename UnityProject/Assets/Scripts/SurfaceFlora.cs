@@ -12,7 +12,7 @@ public sealed class SurfaceFlora : MonoBehaviour {
     void Update(){if(ground==null)return;timer-=Time.deltaTime;if(timer>0)return;timer=.7f;Vector3 focus=ground.OnFoot?ground.Focus:Camera.main.transform.position;var p=ground.Nearest(focus);if(p==null||ground.Alt(focus)>90){Clear();return;}if(p!=planet||(focus-last).sqrMagnitude>144)Rebuild(p,focus);}
     void Clear(){if(patch!=null)Destroy(patch.gameObject);if(mesh!=null)Destroy(mesh);mesh=null;patch=null;planet=null;Plants=Grass=Succulents=IceClusters=0;}
     static Color C(float r,float g,float b,float wind=0){return new Color(r,g,b,wind);}
-    static void Leaf(SurfaceArt.Geometry g,Vector3 at,Vector3 along,Vector3 up,float width,float length,Color color){
+    public static void Leaf(SurfaceArt.Geometry g,Vector3 at,Vector3 along,Vector3 up,float width,float length,Color color){
         Vector3 side=Vector3.Cross(along,up).normalized;int first=g.vertices.Count;const int steps=5;
         for(int k=0;k<=steps;k++) {
             float t=k/(float)steps,w=Mathf.Sin(t*Mathf.PI)*width;
@@ -20,8 +20,9 @@ public sealed class SurfaceFlora : MonoBehaviour {
             Vector3 normal=Vector3.Cross(side,along+up*((Mathf.Cos(t*Mathf.PI)*.23f*Mathf.PI)-.24f*t)).normalized;
             Color c=color;c.a=t;
             g.vertices.Add(center-side*w);g.vertices.Add(center+up*w*.15f);g.vertices.Add(center+side*w);
+            g.uv.Add(new Vector2(0,t));g.uv.Add(new Vector2(.5f,t));g.uv.Add(new Vector2(1,t));
             g.colors.Add(c);g.colors.Add(c);g.colors.Add(c);g.normals.Add(normal);g.normals.Add(normal);g.normals.Add(normal);
-            if(k<steps)for(int j=0;j<2;j++){int i=first+k*3+j;g.triangles.AddRange(new[]{i,i+3,i+1,i+1,i+3,i+4});}
+            if(k<steps)for(int j=0;j<2;j++){int i=first+k*3+j;g.triangles.AddRange(new[]{i,i+1,i+3,i+1,i+4,i+3});}
         }
     }
     public void Refresh(){last=new Vector3(float.PositiveInfinity,0,0);timer=0;}

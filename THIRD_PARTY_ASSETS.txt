@@ -26,3 +26,14 @@ Unmodified diffuse, OpenGL normal and AO/roughness/metal maps are included in
 Assets/Resources/Surfaces. Asset URLs, sizes and SHA256 checksums are recorded in
 docs/validation/production-asset-manifest.json. The HDR reflection cube, bevelled
 meshes, alien ships, foundations and animation code are original project work.
+
+Original generated material artwork added for v0.7.0
+
+The scute, bark and leaf albedo images (xeno_scutes_v1.png, alien_bark_v1.png,
+alien_leaf_v1.png) were created with the built-in OpenAI image generation tool.
+These are generated original artwork, not photographs or photogrammetry scans.
+They were integrated into the project's continuous creature meshes and scenery.
+Prompts, source dimensions, file sizes and SHA256 hashes are in
+docs/validation/cinematic-art-prompts.json. No proprietary game art was used.
+The creature shader derives restrained surface relief from albedo in real time;
+it does not use an authored displacement map or a generated normal-map set.

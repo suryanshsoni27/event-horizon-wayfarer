@@ -35,7 +35,7 @@ public sealed partial class SurfaceArt : IDisposable {
         float deathTime;bool wasDead;
     }
 
-    public sealed class Geometry {
+    public sealed partial class Geometry {
         public readonly List<Vector3> vertices = new List<Vector3>();
         public readonly List<int> triangles = new List<int>();
         public readonly List<Color> colors = new List<Color>();
@@ -47,7 +47,7 @@ public sealed partial class SurfaceArt : IDisposable {
                 float phi = y * Mathf.PI / rings, theta = x * Mathf.PI * 2 / sides;
                 Vector3 d = new Vector3(Mathf.Sin(phi) * Mathf.Cos(theta), Mathf.Cos(phi), Mathf.Sin(phi) * Mathf.Sin(theta));
                 float rib = 1 + .025f * Mathf.Sin(theta * 6) * Mathf.Sin(phi * 3);
-                vertices.Add(center + rotation * Vector3.Scale(d * rib, size)); colors.Add(color);
+                vertices.Add(center + rotation * Vector3.Scale(d * rib, size)); colors.Add(color); uv.Add(new Vector2(x/(float)sides,y/(float)rings));
                 normals.Add(rotation * new Vector3(d.x/Mathf.Max(.001f,size.x),d.y/Mathf.Max(.001f,size.y),d.z/Mathf.Max(.001f,size.z)).normalized);
                 if (y < rings && x < sides) {
                     int i = start + y * (sides + 1) + x;
@@ -61,7 +61,7 @@ public sealed partial class SurfaceArt : IDisposable {
             for (int r = 0; r <= rings; r++) for (int a = 0; a <= sides; a++) {
                 float t = r / (float)rings, angle = a * Mathf.PI * 2 / sides;
                 vertices.Add(Vector3.Lerp(start, end, t) + bend * Mathf.Sin(t * Mathf.PI) + (right * Mathf.Cos(angle) + up * Mathf.Sin(angle)) * radius * Mathf.Pow(1 - t, .7f));
-                colors.Add(color);
+                colors.Add(color);uv.Add(new Vector2(a/(float)sides,t));
                 Vector3 tangent=end-start+bend*(Mathf.PI*Mathf.Cos(t*Mathf.PI));
                 Vector3 outward=right*Mathf.Cos(angle)+up*Mathf.Sin(angle);
                 normals.Add((outward+forward*(radius/Mathf.Max(.01f,tangent.magnitude))*.7f).normalized);
@@ -71,13 +71,13 @@ public sealed partial class SurfaceArt : IDisposable {
         public void Blade(Vector3 center, Vector3 right, Vector3 up, float width, float length, Color color) {
             int i = vertices.Count;
             vertices.AddRange(new[] { center - right * width, center + right * width, center + up * length + right * width * .2f, center + up * length - right * width * .2f });
-            colors.AddRange(new[] { color, color, color, color });
+            colors.AddRange(new[] { color, color, color, color });uv.AddRange(new[]{Vector2.zero,Vector2.right,Vector2.one,Vector2.up});
             Vector3 n=Vector3.Cross(up,right).normalized;normals.AddRange(new[]{n,n,n,n});
             triangles.AddRange(new[] { i, i + 2, i + 1, i, i + 3, i + 2 });
         }
         public Mesh Mesh(string name) {
             var mesh = new Mesh { name = name, indexFormat = vertices.Count > 65000 ? IndexFormat.UInt32 : IndexFormat.UInt16 };
-            mesh.SetVertices(vertices); mesh.SetColors(colors); mesh.SetTriangles(triangles, 0); if(normals.Count==vertices.Count)mesh.SetNormals(normals);else mesh.RecalculateNormals(); mesh.RecalculateBounds(); return mesh;
+            mesh.SetVertices(vertices); mesh.SetColors(colors); if(uv.Count==vertices.Count)mesh.SetUVs(0,uv); mesh.SetTriangles(triangles, 0); if(normals.Count==vertices.Count)mesh.SetNormals(normals);else mesh.RecalculateNormals(); mesh.RecalculateBounds(); return mesh;
         }
     }
 
@@ -89,6 +89,8 @@ public sealed partial class SurfaceArt : IDisposable {
     public SurfaceArt() {
         chitin = Own(new Material(Shader.Find("Orbit/XenoChitin")));
         vegetation = Own(new Material(Shader.Find("Orbit/AlienFlora")));
+        chitin.SetTexture("_AlbedoMap",Resources.Load<Texture2D>("Surfaces/xeno_scutes_v1"));
+        vegetation.SetTexture("_LeafMap",Resources.Load<Texture2D>("Surfaces/alien_leaf_v1"));
         metal = Lit(new Color(.15f, .22f, .27f), .7f, .45f);
         ceramic = Lit(new Color(.65f, .69f, .65f), .35f, .4f);
         dark = Lit(new Color(.025f, .04f, .048f), .2f, .4f);

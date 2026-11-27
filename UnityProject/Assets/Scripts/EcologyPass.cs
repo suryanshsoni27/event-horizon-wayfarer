@@ -37,7 +37,7 @@ public sealed partial class DefenseGame {
     void EcologyCamera(PlanetExpedition.Planet planet,int role,float orbit) {
         var foe=surface.Current.foes.Find(f=>f.kind==role&&!f.dead);Vector3 up=surface.Up(surface.World(foe)),forward=foe.view.root.forward,side=Vector3.Cross(up,forward),center=surface.World(foe)+up*(role==2?.6f:0);
         float radius=role==2?10.5f:5.5f;Vector3 dir=Quaternion.AngleAxis(orbit,up)*(forward*.82f+side*.57f).normalized;
-        civilFilmAt=center+dir*radius+up*(role==2?3.0f:1.6f);civilFilmLook=center+up*.12f;
+        ClearCreatureCamera(center,up,forward,side,radius,orbit,role==2?3.0f:1.6f);
         cam.transform.position=civilFilmAt;cam.transform.rotation=Quaternion.LookRotation(civilFilmLook-civilFilmAt,up);
     }
     void DrawEcologyShowcase() {

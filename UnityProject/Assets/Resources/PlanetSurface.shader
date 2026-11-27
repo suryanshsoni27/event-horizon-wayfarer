@@ -36,6 +36,7 @@ Shader "Orbit/PlanetSurface" {
   if(_Radius<100){water=1-smoothstep(-.24,-.03,height);snow=smoothstep(.8,1.4,height+abs(radial.y)*.25);}
   float3 weights=pow(abs(n),4);weights/=max(.0001,weights.x+weights.y+weights.z);
   float3 grassPhoto=triColor(TEXTURE2D_ARGS(_GrassTex,sampler_GrassTex),i.local*.28,weights),rockPhoto=triColor(TEXTURE2D_ARGS(_RockTex,sampler_RockTex),i.local*.12,weights);
+  grassPhoto=lerp(grassPhoto,triColor(TEXTURE2D_ARGS(_GrassTex,sampler_GrassTex),i.local*.071+float3(.37,.61,.12),weights),.36);
   float rockAmount=saturate(slope*3.4+smoothstep(80,160,scaledHeight)*.3);
   float3 sand=lerp(float3(.27,.22,.135),float3(.43,.285,.15),arid),stone=rockPhoto*lerp(.85,1.05,broad);
   float mineral=dot(grassPhoto,float3(.3,.55,.15));sand*=lerp(.76,1.16,saturate(mineral*1.8));

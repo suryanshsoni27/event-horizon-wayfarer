@@ -2,11 +2,17 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Planet ecologies and creatures](docs/media/ecology-temperate.png)](docs/media/wayfarer-planet-ecology.mp4)
+[![Cinematic creature materials](docs/media/cinematic-temperate-creature.png)](docs/media/wayfarer-cinematic-art.mp4)
 
-**[Download the Mac game — v0.6.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.6.0)** · **[Watch the planet and creature tour](docs/media/wayfarer-planet-ecology.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.7.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.7.0)** · **[Watch the new art review](docs/media/wayfarer-cinematic-art.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.7.0: cinematic materials and landscapes
+
+Original generated scute, bark and leaf artwork now appears on the playable creatures and scenery. Continuous body/head surfaces, shaped armor and slimmer articulated limbs improve creature silhouettes. Rooted branching canopies, eroded desert columns and glacial formations give the three climates larger landscape forms, with native lower-trunk collisions and stable streaming. Smoother boulders, corrected leaf lighting, less repetitive ground texture and revised daylight improve the presentation.
+
+See the [actual Unity captures, asset prompts, benchmark reports and remaining visual work](docs/CINEMATIC_ART.md). This is a substantial prototype art pass; it does not yet match the authored production quality of a large commercial game. Existing missions, nine species, campaign progress and optional face flight remain available.
 
 ## v0.6.0: planet ecology and graphics
 
@@ -133,11 +139,12 @@ Controller tests use injected DualSense HID reports and a virtual gamepad. A phy
 
 ## Verification
 
-The v0.6.0 packaged player passed **477 automated checks**: 49 ecology/rendering, 50 face-flight, 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Face-flight QA runs the real native detector on a public test image, checks rotation/scale-resistant gesture geometry, calibration and tracking loss, then injects poses through actual ship steering, thrust and native braking. Production and campaign suites cover terrain, graphics controls, old saves, chapter gates, physical contracts and civilization systems. Reviewed ecology results live in [docs/validation](docs/validation/ecology-validation.json); face-flight results remain available there as well.
+The v0.7.0 packaged player passed **519 automated checks**: 42 cinematic art, scenery and rendering, 49 ecology/rendering, 50 face-flight, 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Face-flight QA runs the real native detector on a public test image, checks rotation/scale-resistant gesture geometry, calibration and tracking loss, then injects poses through actual ship steering, thrust and native braking. Production and campaign suites cover terrain, graphics controls, old saves, chapter gates, physical contracts and civilization systems. Reviewed current results live in [docs/validation](docs/validation/cinematic-art-validation.json); prior results remain available there as well.
 
 After building and closing the normal player:
 
 ```sh
+python3 tools/check_cinematic_art.py
 python3 tools/check_ecology.py
 python3 tools/check_head_pilot.py
 python3 tools/check_production.py
@@ -150,7 +157,7 @@ python3 tools/record_production.py
 python3 tools/record_ecology.py
 ```
 
-The v0.4 [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These earlier measurements do not include live camera processing. They are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
+The current [cinematic art benchmark reports](docs/CINEMATIC_ART.md#validation) cover three climates and their guardian close-ups. The v0.4 [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These earlier measurements do not include live camera processing. They are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
 
 The [36-second planet and creature art review](docs/media/wayfarer-planet-ecology.mp4) shows all nine species on their own surfaces at 1920×1080 and 30 FPS, with scripted cameras and staged idle/attack poses. It is silent and is not a combat playthrough or performance benchmark. See its [manifest](docs/validation/ecology-record-manifest.json).
 

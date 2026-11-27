@@ -1,0 +1,82 @@
+{
+  "unity": "6000.6.10f1",
+  "device": "Mac16,10",
+  "processor": "Apple M4",
+  "graphics": "Apple M4",
+  "quality": "Balanced",
+  "antiAliasing": "SubpixelMorphologicalAntiAliasing",
+  "renderScale": 0.8999999761581421,
+  "width": 1280,
+  "height": 800,
+  "targetFps": 60,
+  "staged": true,
+  "captureDisabled": true,
+  "phases": [
+    {
+      "name": "cinematic-landscape-0",
+      "frames": 360,
+      "averageMs": 17.03723907470703,
+      "p95Ms": 17.57387351989746,
+      "p99Ms": 17.955583572387695,
+      "minimumFps": 11.337510108947754,
+      "allocatedMemory": 253628727,
+      "gpuMs": 4.882253124540309,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-0",
+      "frames": 360,
+      "averageMs": 16.808696746826172,
+      "p95Ms": 17.566417694091797,
+      "p99Ms": 17.593870162963867,
+      "minimumFps": 51.13224792480469,
+      "allocatedMemory": 254021943,
+      "gpuMs": 4.722003703096157,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-landscape-1",
+      "frames": 360,
+      "averageMs": 16.80592918395996,
+      "p95Ms": 17.487295150756836,
+      "p99Ms": 17.611705780029297,
+      "minimumFps": 47.47108459472656,
+      "allocatedMemory": 238358839,
+      "gpuMs": 4.551651505850411,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-1",
+      "frames": 360,
+      "averageMs": 16.75925636291504,
+      "p95Ms": 17.34724998474121,
+      "p99Ms": 17.59503936767578,
+      "minimumFps": 50.28843307495117,
+      "allocatedMemory": 238620983,
+      "gpuMs": 4.664119558745167,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-landscape-2",
+      "frames": 360,
+      "averageMs": 16.759319305419922,
+      "p95Ms": 17.34929084777832,
+      "p99Ms": 17.583539962768555,
+      "minimumFps": 50.79256820678711,
+      "allocatedMemory": 242094391,
+      "gpuMs": 4.550200231218089,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-2",
+      "frames": 360,
+      "averageMs": 16.847448348999023,
+      "p95Ms": 17.571456909179688,
+      "p99Ms": 20.14191436767578,
+      "minimumFps": 48.461753845214844,
+      "allocatedMemory": 242618679,
+      "gpuMs": 4.375105902080476,
+      "gpuTimingAvailable": true
+    }
+  ]
+}

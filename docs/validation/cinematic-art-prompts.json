@@ -1,0 +1,48 @@
+{
+  "method": "Built-in image_gen",
+  "version": "0.7.0",
+  "purpose": "Original albedo material artwork, used on playable Unity meshes. Not gameplay screenshots.",
+  "prompts": [
+    {
+      "key": "chitin",
+      "prompt": "Use case: stylized-concept. Asset type: seamless square physically based game material ALBEDO texture, covering the ENTIRE image edge to edge, for a realistic alien creature carapace in a cinematic science-fiction game. Primary request: an original natural biological surface with densely interlocking irregular keratin scutes, fine branching cuticle wrinkles, tiny pores, worn edges, a few subtle healed scratches and dry mineral deposits. Neutral desaturated gray-brown color, medium value, soft realistic organic color variation. Scale: each scute is about 5 percent of the image width; many scutes. Composition: orthographic extremely close surface scan, perfectly flat even illumination, perfectly sharp across entire image, no perspective, no vignette, no specular highlights, no ambient shadows, no directional lighting. Seamless and tileable on all four edges. This is a flat texture map, not a picture of an animal or sphere. No text, no labels, no border, no logos, no characters. Square 2048 resolution."
+    },
+    {
+      "key": "bark",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless square physically based game material ALBEDO texture, edge to edge, alien petrified tree bark. Primary request: a realistic high-detail scanned bark surface of an ancient alien rainforest tree, broad intertwining dark fibrous vertical ridges, deep charcoal-brown irregular fissures, silver gray weathered raised fibers, tiny pale lichen flecks, subtle mineral red tones. Organic and believable, no fantasy glow. Orthographic close-up of only the flat bark material. Even flat diffuse illumination, no highlights, no cast shadows, no vignette, no perspective. Tileable and seamless at every edge. No tree trunk or object silhouette, no surrounding forest, no text, no labels, no borders. Square 2048 resolution."
+    },
+    {
+      "key": "leaf",
+      "prompt": "Use case: photorealistic-natural. Asset type: square albedo surface texture for a 3D game alien leaf. Primary request: a single continuous close macro field of real fern leaf tissue filling the full square frame from edge to edge, muted gray sage and blue-green, a narrow pale central longitudinal midrib running vertically down the middle, fine branching veins to both edges, micro cells, tiny bronze spots and subtle weathering. Flat evenly lit diffuse photograph scanned surface, no shadows, no shiny highlights, no perspective. The image is leaf surface only, NOT a cutout leaf shape: absolutely no background, no margins, no text, no border, no scene. Intricately detailed natural botanical surface with longitudinal symmetry and slight imperfections. Square 2048 resolution."
+    }
+  ],
+  "assets": [
+    {
+      "file": "UnityProject/Assets/Resources/Surfaces/xeno_scutes_v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3860038,
+      "sha256": "0f491aeca13ba03aa7d1ab1805674731c61c7098664e5f1d5353b0f9655a4945",
+      "type": "Generated albedo artwork, not a photogrammetry scan",
+      "derived_normal_texture": false
+    },
+    {
+      "file": "UnityProject/Assets/Resources/Surfaces/alien_bark_v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 4279445,
+      "sha256": "bd6299cfeb24cb75f79c170a023204b63f7fc23c2e5dfc1ed00a3148a4e03201",
+      "type": "Generated albedo artwork, not a photogrammetry scan",
+      "derived_normal_texture": false
+    },
+    {
+      "file": "UnityProject/Assets/Resources/Surfaces/alien_leaf_v1.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 3867473,
+      "sha256": "de492c7df576ca769ddbfcc80a8c5a2be30ce1a03e59f2d62bf202eb78772d29",
+      "type": "Generated albedo artwork, not a photogrammetry scan",
+      "derived_normal_texture": false
+    }
+  ]
+}

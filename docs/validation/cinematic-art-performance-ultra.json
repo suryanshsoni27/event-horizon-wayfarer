@@ -1,0 +1,82 @@
+{
+  "unity": "6000.6.10f1",
+  "device": "Mac16,10",
+  "processor": "Apple M4",
+  "graphics": "Apple M4",
+  "quality": "Ultra",
+  "antiAliasing": "SubpixelMorphologicalAntiAliasing",
+  "renderScale": 1.0,
+  "width": 1920,
+  "height": 1080,
+  "targetFps": 60,
+  "staged": true,
+  "captureDisabled": true,
+  "phases": [
+    {
+      "name": "cinematic-landscape-0",
+      "frames": 360,
+      "averageMs": 16.805557250976562,
+      "p95Ms": 17.454124450683594,
+      "p99Ms": 17.675212860107422,
+      "minimumFps": 47.59845733642578,
+      "allocatedMemory": 249368887,
+      "gpuMs": 8.252032869495451,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-0",
+      "frames": 360,
+      "averageMs": 16.759897232055664,
+      "p95Ms": 17.304088592529297,
+      "p99Ms": 17.596166610717773,
+      "minimumFps": 50.5491943359375,
+      "allocatedMemory": 249827639,
+      "gpuMs": 7.912747453600685,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-landscape-1",
+      "frames": 360,
+      "averageMs": 16.808504104614258,
+      "p95Ms": 17.51437759399414,
+      "p99Ms": 17.611833572387695,
+      "minimumFps": 47.69294738769531,
+      "allocatedMemory": 234164535,
+      "gpuMs": 7.883755787689653,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-1",
+      "frames": 360,
+      "averageMs": 16.85169219970703,
+      "p95Ms": 17.577417373657227,
+      "p99Ms": 19.002296447753906,
+      "minimumFps": 50.02334213256836,
+      "allocatedMemory": 234426679,
+      "gpuMs": 8.109876393023619,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-landscape-2",
+      "frames": 360,
+      "averageMs": 16.76202964782715,
+      "p95Ms": 17.285537719726562,
+      "p99Ms": 17.587833404541016,
+      "minimumFps": 51.302223205566406,
+      "allocatedMemory": 237244727,
+      "gpuMs": 7.9482025462008705,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "cinematic-guardian-2",
+      "frames": 360,
+      "averageMs": 16.815101623535156,
+      "p95Ms": 17.57437515258789,
+      "p99Ms": 18.548376083374023,
+      "minimumFps": 48.27488708496094,
+      "allocatedMemory": 237703479,
+      "gpuMs": 7.292234261048078,
+      "gpuTimingAvailable": true
+    }
+  ]
+}

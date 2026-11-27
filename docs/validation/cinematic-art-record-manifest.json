@@ -1,0 +1,83 @@
+{
+  "version": "0.7.0",
+  "frames": 1440,
+  "fps": 30,
+  "duration_seconds": 48,
+  "width": 1920,
+  "height": 1080,
+  "quality": "Ultra",
+  "anti_aliasing": "SMAA",
+  "contact_occlusion": true,
+  "postprocessing": "ACES and color grading",
+  "simulation_seconds_per_captured_frame": 0.03333333333333333,
+  "staged_encounters": true,
+  "scripted_cameras": true,
+  "idle_and_attack_pose_review": true,
+  "manual_gameplay": false,
+  "performance_benchmark": false,
+  "audio": false,
+  "camera_capture": false,
+  "peak_pending_png_bytes": 2660335,
+  "scenes": [
+    {
+      "scene": "landscape-0",
+      "frames": 180,
+      "simulation_seconds": 5.966667
+    },
+    {
+      "scene": "cinematic-fauna-0-0",
+      "frames": 100,
+      "simulation_seconds": 3.333333
+    },
+    {
+      "scene": "cinematic-fauna-0-1",
+      "frames": 100,
+      "simulation_seconds": 3.333334
+    },
+    {
+      "scene": "cinematic-fauna-0-2",
+      "frames": 100,
+      "simulation_seconds": 3.333332
+    },
+    {
+      "scene": "landscape-1",
+      "frames": 180,
+      "simulation_seconds": 5.966667
+    },
+    {
+      "scene": "cinematic-fauna-1-0",
+      "frames": 100,
+      "simulation_seconds": 3.333334
+    },
+    {
+      "scene": "cinematic-fauna-1-1",
+      "frames": 100,
+      "simulation_seconds": 3.333332
+    },
+    {
+      "scene": "cinematic-fauna-1-2",
+      "frames": 100,
+      "simulation_seconds": 3.333336
+    },
+    {
+      "scene": "landscape-2",
+      "frames": 180,
+      "simulation_seconds": 5.966663
+    },
+    {
+      "scene": "cinematic-fauna-2-0",
+      "frames": 100,
+      "simulation_seconds": 3.333336
+    },
+    {
+      "scene": "cinematic-fauna-2-1",
+      "frames": 100,
+      "simulation_seconds": 3.333332
+    },
+    {
+      "scene": "cinematic-fauna-2-2",
+      "frames": 100,
+      "simulation_seconds": 3.333332
+    }
+  ]
+}
