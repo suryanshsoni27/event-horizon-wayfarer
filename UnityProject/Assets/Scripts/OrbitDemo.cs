@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class OrbitDemo : MonoBehaviour {
- [StructLayout(LayoutKind.Sequential)] public struct State { public double x,y,z,vx,vy,vz; public int captured; }
+ [Serializable,StructLayout(LayoutKind.Sequential)] public struct State { public double x,y,z,vx,vy,vz; public int captured; }
  [DllImport("blackhole",CallingConvention=CallingConvention.Cdecl)] static extern void bh_step(ref State s,double ax,double ay,double az,double dt);
  [Serializable] public class Model { public int dimensions,trainingTransitions; public float heldoutRmse;public float[] radialCenters,radialSigmas,wx,wy,wz; }
  public State state;DefenseGame game;Model model;Transform astronaut,flame;LineRenderer trail,forecast,stem;List<Vector3> history=new List<Vector3>();

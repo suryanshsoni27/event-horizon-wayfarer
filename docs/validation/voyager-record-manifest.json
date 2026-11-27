@@ -1,0 +1,53 @@
+{
+  "frames": 864,
+  "fps": 12,
+  "duration_seconds": 72.0,
+  "seeded_resources": true,
+  "scripted_input": true,
+  "staged_cameras": true,
+  "live_audio_capture": false,
+  "audio": "Separately synthesized original ambient score using the game's chord palette.",
+  "performance_benchmark": false,
+  "chapters": [
+    {
+      "name": "twelve-chapter-campaign",
+      "start_seconds": 0.0
+    },
+    {
+      "name": "cities-and-foundations",
+      "start_seconds": 6.0
+    },
+    {
+      "name": "native-rocket-launch",
+      "start_seconds": 16.0
+    },
+    {
+      "name": "modular-ship-loadouts",
+      "start_seconds": 30.0
+    },
+    {
+      "name": "frontier-contracts",
+      "start_seconds": 36.0
+    },
+    {
+      "name": "colonies-supply-and-factions",
+      "start_seconds": 41.0
+    },
+    {
+      "name": "settings-and-accessibility",
+      "start_seconds": 46.0
+    },
+    {
+      "name": "alien-flagship-and-fleet-combat",
+      "start_seconds": 51.0
+    },
+    {
+      "name": "dyson-project",
+      "start_seconds": 61.0
+    },
+    {
+      "name": "final-chapter",
+      "start_seconds": 67.0
+    }
+  ]
+}

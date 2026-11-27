@@ -25,6 +25,7 @@
   "overlapping_district_placement_rejected": true,
   "city_core_blocks_native_crew_penetration": true,
   "native_survey_rocket_launches_from_local_pad": true,
+  "rocket_clears_the_constructed_launch_platform": true,
   "native_rocket_reaches_one_kilometer_and_earns_science": true,
   "survey_launch_credited_once": true,
   "planetary_age_requires_research_and_successful_flight": true,

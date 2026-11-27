@@ -1,0 +1,8 @@
+{
+  "version": "0.3.0",
+  "architecture": "arm64",
+  "bytes": 42587183,
+  "sha256": "c41de8bc4191918dc2c6c0ad4493f4a8be97246eb327e4beb9eaf0b3af49d09e",
+  "zip_crc_valid": true,
+  "no_environment_or_campaign_files": true
+}

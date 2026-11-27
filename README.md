@@ -2,23 +2,24 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![New Dawn civilization expansion](docs/media/new-dawn-civilization.jpg)](docs/media/new-dawn-civilization-tour.mp4)
+[![Twelve Horizons campaign](docs/media/twelve-horizons.jpg)](docs/media/twelve-horizons-tour.mp4)
 
-**[Watch the New Dawn civilization showcase](docs/media/new-dawn-civilization-tour.mp4)** · [Play guide and new controls](docs/NEW_DAWN.md) · [Original 3:23 exploration tour](docs/media/wayfarer-full-feature-tour.mp4)
+**[Download the Mac game — v0.3.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.3.0)** · **[Watch the 72-second walkthrough](docs/media/twelve-horizons-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
-**[Download the Mac game](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.2.0)** · macOS / Apple Silicon · [Launch instructions](docs/NEW_DAWN.md#download-and-play)
+macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
 
-## New Dawn: build a civilization
+## Twelve Horizons: an expedition becomes a civilization
 
-- Research four original ship hulls and choose four coatings. Designs change the actual spacecraft, hull capacity, thrust and military cannon behavior; a live 3D preview shows the result.
-- Use Oracle, a local strategy adviser, to choose missions based on your resources, facilities, progress and threats. Milestone rewards are unique and need no API key.
-- Place eight types of city districts on a planet. Construction, shared power, foundries, science, population and native-physics shuttle traffic continue while you explore.
-- Assemble survey rockets and launch through the native solver. Successful flights unlock further infrastructure.
-- Build warships, negotiate with three rival civilizations, visit their capitals and fight planetary space wars. Nearby ships and plasma bolts use native motion; distant battles use a strategic approximation.
-- Expand across core worlds, progress through six civilization tiers, and construct twelve Dyson sectors with 672 rendered collectors.
-- Keep your cities, hull blueprints, missions, fleets, diplomatic relations and megastructure progress in a local campaign save with an atomic write and validated backup.
+- **Twelve sequential chapters:** land, uncover an alien expedition, build a city, launch a survey rocket, customize a ship, settle new worlds, repel raids, fight planetary wars and confront an alien flagship. Every successive chapter increases actual enemy health and damage; later defenses add waves.
+- **Real ship choices:** four original hulls, four coatings and twelve modules across propulsion, weapon, defense and cargo categories. Reactor budgets, costs and tradeoffs affect thrust, speed, hull, shields, heat, projectile behavior and cargo capacity. A live 3D preview shows your design.
+- **Seven contract archetypes:** rescue, three-point survey, salvage, elite hunt, vulnerable orbital escort, intercolony courier and colony defense. The local adviser ranks jobs by your situation and explains its recommendation. Physical interactions and actual combat complete them.
+- **Build and supply worlds:** eight district types, native-physics civilian shuttles, construction, shared energy, science and alloy production. Food, morale, colony policies, supply routes and timed crises give settlements needs beyond their skyline.
+- **A contested frontier:** three rival civilizations develop industry, research and territory. Negotiate, fabricate reserve warships and join nearby native-physics fleet battles. Distant battles use a strategic approximation over the same health and outcome state.
+- **Reach the star:** launch survey rockets through the native solver, progress through six civilization tiers and build twelve Dyson collector sectors with 672 panels. The final chapter combines three worlds, the completed project and an alien flagship battle.
+- **Keep your expedition:** three independent campaign slots, checksums, atomic saves and validated backups restore the ship, crew, rover, world catalogue, mission progress, routes and civilization. Continue an existing slot or import the earlier New Dawn civilization.
+- **Improve the feel:** remappable keyboard and digital controller actions, deadzone and sensitivity controls, aim assistance, toggle interaction, contrast and text-size options, three graphics presets, frame-rate targets, synthesized music and spatial sound, revised materials, stellar coronas, pooled impacts and ground dust.
 
-Open command with **B**, **L3 while flying/driving**, or **D-pad down on foot**. L1/R1 changes tabs, D-pad selects, Cross acts and Circle returns. Land and disembark before placing a city. The [New Dawn guide](docs/NEW_DAWN.md) explains recipes, progression, controller bindings and model limits.
+The [Twelve Horizons guide](docs/TWELVE_HORIZONS.md) lists every chapter, controls, fitting rules, survival systems and checkpoint limits. [New Dawn's guide](docs/NEW_DAWN.md) explains the underlying city, shipwright, diplomacy and Dyson systems.
 
 ## Explore, land, drive
 
@@ -30,7 +31,7 @@ Open command with **B**, **L3 while flying/driving**, or **D-pad down on foot**.
 - Reboard the parked rover, retract the tires and return to flight.
 - Play using keyboard/mouse or a PS5 DualSense controller.
 
-This is prototype gameplay and procedural art. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
+This is prototype gameplay and procedural art; distant terrain transitions and animation still need polish. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
 
 ## Physics and NPC architecture
 
@@ -81,7 +82,8 @@ Connect the DualSense through USB or [pair it with macOS Bluetooth](https://www.
 
 | Action | Keyboard / mouse | DualSense |
 |---|---|---|
-| Start / resume; pause | Enter; Esc | Cross; Options |
+| Confirm menu / pause | Enter; Esc or F1 | Cross; Options |
+| Save / checkpoint menu / contracts | F5 / F9 / Tab | Through pause menu |
 | Flight look | Mouse / arrows | Right stick |
 | Flight thrust / brake | W/S throttle; Space brake | R2 thrust; L2 brake |
 | Flight strafe / vertical thrust | A/D; Z/X | Left stick |
@@ -101,27 +103,33 @@ Connect the DualSense through USB or [pair it with macOS Bluetooth](https://www.
 | Salvage workshop | U; 1–4 fit | R3; D-pad selects, Cross fits |
 | Session crew-photo manager | H | Native chooser uses mouse / keyboard |
 
-In the atlas, left/right or L1/R1 changes systems, up/down selects a destination, Cross engages cruise and Circle returns. Circle also closes the journal and workshop. Cross restarts after a lost run.
+In the atlas, left/right or L1/R1 changes systems, up/down selects a destination, Cross engages cruise and Circle returns. Circle also closes the journal and workshop. After defeat, restore the campaign checkpoint from the defeat screen.
 
 Land and settle below 1.5 m/s before deploying tires or leaving the craft. The rover parks while the crew explores. Return within 6 m to board, then retract the tires before flight. Cruise requires clearing the atmosphere.
 
-Controller tests use injected DualSense HID reports and a virtual gamepad. A physical DualSense was not connected during verification; USB/Bluetooth feel and connection quality remain unverified. Haptics, adaptive triggers and gyro controls are not implemented.
+Controller tests use injected DualSense HID reports and a virtual gamepad. A physical DualSense was not connected during verification; USB/Bluetooth feel, connection quality and device rumble remain unverified. Basic rumble is implemented through Unity controller support; adaptive triggers and gyro controls are not implemented. Keyboard and fourteen digital controller actions can be remapped in settings; analog trigger roles remain fixed.
 
 ![Exploring a planet on foot](docs/media/rover-crew-running.png)
 
 ## Verification
 
-The current build passed **257 packaged checks**: 63 civilization checks plus the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. The civilization suite covers the economy, real rocket ascent, fleets, ship upgrades, controller placement, saves, pause and origin shifts. Reviewed numerical results are included in [docs/validation](docs/validation).
+The v0.3.0 packaged player passed **345 automated checks**: 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Campaign QA covers all twelve chapter gates, increasing difficulty, native landing and rover transitions, physical contracts, escort motion and damage, fitting, shields, remapping and full checkpoint recovery. Civilization QA covers economy, actual native rocket ascent, fleet combat, placement, pause and origin shifts. Reviewed results live in [docs/validation](docs/validation).
 
 After building and closing the normal player:
 
 ```sh
-python3 tools/verify_game.py
+python3 tools/check_voyager.py
 python3 tools/check_civilization.py
-python3 tools/check_rover.py
+python3 tools/verify_game.py
+python3 tools/benchmark_voyager.py
+python3 tools/record_voyager.py
 ```
 
-The [1:54 New Dawn showcase](docs/media/new-dawn-civilization-tour.mp4) demonstrates city construction, rocket assembly and native ascent, ship design, Oracle recommendations, fleet combat and the completed Dyson project. It uses seeded resources, scripted inputs and camera positions, explicitly labeled on screen. Capture is 1280×800 at 12 fps and is not an FPS benchmark or an uninterrupted manual campaign. It does not alter the normal campaign save. Reproduce it with `python3 tools/record_civilization.py`.
+The [performance report](docs/validation/voyager-performance.json) samples flight, a city, native fleet combat and the Dyson project at 1280×800 on Apple M4 hardware with a 60 FPS target. It records 360 frames per scene after warmup, with screenshots disabled, frame-time percentiles, available GPU timing and Unity allocated memory. This is a short staged local sample, not a cross-device or long-term stability guarantee. Automated progression checks do not replace a full manual balance playthrough.
+
+The [72-second Twelve Horizons walkthrough](docs/media/twelve-horizons-tour.mp4) shows chapters, city infrastructure, native rocket ascent, ship outfitting, contracts, settings, fleet combat and the Dyson structure. Seeded resources, scripted inputs and staged cameras are labeled on screen. Capture is 1280×800 at 12 FPS, and the original ambient score is assembled separately. It is not an FPS benchmark, live-audio capture or uninterrupted manual campaign. The [manifest](docs/validation/voyager-record-manifest.json) records scene timings. Recording and QA protect normal campaign files.
+
+Earlier showcases remain available: [1:54 New Dawn](docs/media/new-dawn-civilization-tour.mp4) and the [3:23 exploration tour](docs/media/wayfarer-full-feature-tour.mp4).
 
 Additional native and model checks live under `tools/`. Player QA and recording commands write to the local, ignored `evidence/` directory. Reproduce the rover tour with `python3 tools/record_rover.py` and FFmpeg installed.
 

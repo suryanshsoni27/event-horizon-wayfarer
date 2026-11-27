@@ -1,5 +1,7 @@
 # New Dawn: civilization expansion
 
+> This is the v0.2 system guide. The current v0.3 release adds three full checkpoint slots, a new title/pause flow and twelve chapters. Use the [Twelve Horizons guide](TWELVE_HORIZONS.md) for current download, startup, controls and save behavior.
+
 New Dawn adds a persistent civilization to Event Horizon / Wayfarer. The ship, terrain, space objects, aliens, rover and surface expeditions remain playable. Civilization progress survives restarting a flight or closing the game.
 
 ## Download and play

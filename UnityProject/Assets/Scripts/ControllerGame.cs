@@ -6,11 +6,11 @@ public sealed partial class DefenseGame {
  public bool PadMode{get{return Controls!=null&&Controls.UsingPad;}}
  public bool PadDown(PilotInput.Button b){return Controls!=null&&Controls.Down(b);}
  public bool PadHeld(PilotInput.Button b){return Controls!=null&&Controls.Held(b);}
- public bool CrewFire{get{return (!automatedPlayback&&(Input.GetMouseButton(0)||Input.GetKey(KeyCode.LeftControl)))||(Controls!=null&&Controls.R2>.15f);}}
- public bool CrewAim{get{return (!automatedPlayback&&Input.GetMouseButton(1))||(Controls!=null&&Controls.L2>.15f);}}
- public bool CrewInteract{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKey(KeyCode.E))||PadHeld(PilotInput.Button.R1));}}
- public bool CrewReload{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKeyDown(KeyCode.R))||PadDown(PilotInput.Button.Square));}}
- public bool CrewPulse{get{return !civilPlacing&&((!automatedPlayback&&Input.GetKeyDown(KeyCode.Q))||PadDown(PilotInput.Button.Circle));}}
+ public bool CrewFire{get{return (!automatedPlayback&&(Input.GetMouseButton(0)||GameKey(KeyCode.LeftControl)))||(Controls!=null&&Controls.R2>.15f);}}
+ public bool CrewAim{get{return (preferences!=null&&preferences.toggleAim?aimToggle:!automatedPlayback&&Input.GetMouseButton(1))||(Controls!=null&&(preferences!=null&&preferences.toggleAim?aimToggle:Controls.L2>.15f));}}
+ public bool CrewInteract{get{return !civilPlacing&&(preferences!=null&&preferences.toggleInteract?interactionToggle:GameKey(KeyCode.E)||PadHeld(PilotInput.Button.R1));}}
+ public bool CrewReload{get{return !civilPlacing&&((!automatedPlayback&&GameKeyDown(KeyCode.R))||PadDown(PilotInput.Button.Square));}}
+ public bool CrewPulse{get{return !civilPlacing&&((!automatedPlayback&&GameKeyDown(KeyCode.Q))||PadDown(PilotInput.Button.Circle));}}
  bool PadKeyDown(KeyCode k){
   if(Controls==null)return false;
   if(k==KeyCode.Escape)return PadDown(PilotInput.Button.Options);
@@ -28,8 +28,8 @@ public sealed partial class DefenseGame {
  }
  // Navigation runs before flight input. The same button cannot operate a menu and fire a weapon.
  bool ControllerMenu(){
-  Controls.Poll();
-  if(Controls.Disconnected&&(!automatedPlayback||Controls.TestDevice!=null)){paused=true;releaseFire=true;playerAction=Vector3.zero;roverDrive=roverSteer=0;Notice("Controller disconnected / paused. Reconnect, then press Cross or Enter.");Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}
+  Controls.Poll();if(VoyagerMenuInput())return true;
+  if(Controls.Disconnected&&(!automatedPlayback||Controls.TestDevice!=null)){paused=true;releaseFire=true;playerAction=Vector3.zero;roverDrive=roverSteer=0;Notice("Controller disconnected / paused. Reconnect, then press Cross or Enter.");Cursor.lockState=CursorLockMode.None;Cursor.visible=true;if(voyager!=null){OpenVoyager(VoyagerPanel.Pause);return true;}}
   if(outcome!=""){if(PadDown(PilotInput.Button.Cross)){ResetRound();Controls.SuppressUntilNeutral();}return false;}
   if(surface!=null&&surface.Journal&&PadDown(PilotInput.Button.Circle)){surface.Journal=false;if(!journalWasPaused)ResumeFlight();return true;}
   if(chartOpen){

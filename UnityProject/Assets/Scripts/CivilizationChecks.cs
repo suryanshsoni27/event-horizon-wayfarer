@@ -35,6 +35,7 @@ public sealed partial class DefenseGame {
   Vector3 cityAt=planet.body.P+actualHub.normal*((float)planet.body.radius+PlanetExpedition.Height(actualHub.normal,planet.body.seed,planet.body.radius));checks["city_core_blocks_native_crew_penetration"]=Vector3.Distance(civilizationScene.Resolve(cityAt+actualHub.normal*1.15f,.6f),cityAt)>6;
   CivilFixtureDistrict(2);CivilFixtureDistrict(3);CivilFixtureDistrict(4);CivilFixtureDistrict(5);var local=CivilLocal;civilization.FabricateRocket(local,out why);AdvanceCivil(civilization,13);
   int launches=civilization.launches;checks["native_survey_rocket_launches_from_local_pad"]=LaunchCivilRocket();civilFollowTime=0;paused=true;
+  var launchPad=local.districts.Find(d=>d.kind==5);checks["rocket_clears_the_constructed_launch_platform"]=civilRockets.Count==1&&Vector3.Dot(Pos(civilRockets[0].state)-civilizationScene.DistrictPosition(launchPad.id),launchPad.normal)>=2.4f;
   for(int i=0;i<750&&civilization.launches==launches;i++)CivilRocketTick(.05f);
   checks["native_rocket_reaches_one_kilometer_and_earns_science"]=civilization.launches==launches+1&&civilRockets.Count>0&&civilRockets[0].maxAltitude>1000;
   for(int i=0;i<60;i++)CivilRocketTick(.05f);checks["survey_launch_credited_once"]=civilization.launches==launches+1;

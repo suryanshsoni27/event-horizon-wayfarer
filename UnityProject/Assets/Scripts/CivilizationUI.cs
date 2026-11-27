@@ -3,11 +3,11 @@ using UnityEngine;
 public sealed partial class DefenseGame {
  GUIStyle civHero,civHeading,civBody,civCaption,civSmall,civButton,civNumber;static readonly Color civInk=new Color(.89f,.95f,1),civMuted=new Color(.47f,.62f,.72f),civCyan=new Color(.24f,.94f,.79f),civAmber=new Color(1,.63f,.25f),civPanel=new Color(.025f,.055f,.083f,1);
  string[] civTabs={"OVERVIEW","ORACLE / MISSIONS","CITY PLANNER","SHIPWRIGHT","FLEET COMMAND","DYSON PROJECT"};
- public bool CivilUIOpen{get{return civilOpen||civilRecord;}}
+ public bool CivilUIOpen{get{return civilOpen||civilRecord||VoyagerMenuOpen;}}
  public Vector3 CivilStarPosition(int system){return catalog[Mathf.Clamp(system,0,catalog.Count-1)].location+new Vector3(-20000,10000,-75000)-OriginGlobal;}
  void CivilStyles(){if(civBody!=null)return;civBody=new GUIStyle(GUI.skin.label){fontSize=22,wordWrap=true,normal={textColor=Color.white}};civHeading=new GUIStyle(civBody){fontSize=33,fontStyle=FontStyle.Bold};civHero=new GUIStyle(civHeading){fontSize=45};civCaption=new GUIStyle(civBody){fontSize=17,normal={textColor=Color.white}};civSmall=new GUIStyle(civCaption){fontSize=15};civNumber=new GUIStyle(civBody){fontSize=30,fontStyle=FontStyle.Bold};civButton=new GUIStyle(GUI.skin.label){fontSize=19,fontStyle=FontStyle.Bold,wordWrap=true,alignment=TextAnchor.MiddleCenter,normal={textColor=Color.white}};}
  void CBox(Rect r,Color color){GUI.color=color.linear;GUI.DrawTexture(r,Texture2D.whiteTexture);GUI.color=Color.white;}
- void CText(Rect r,string value,GUIStyle style=null,Color? color=null){GUI.color=(color??(style==civCaption||style==civSmall?civMuted:civInk)).linear;GUI.Label(r,value,style??civBody);GUI.color=Color.white;}
+ void CText(Rect r,string value,GUIStyle style=null,Color? color=null){GUI.color=(color??(style==civCaption||style==civSmall?civMuted:civInk)).linear;GUI.Label(r,ControlHints(value),style??civBody);GUI.color=Color.white;}
  bool CButton(Rect r,string value,bool active=false){bool hover=r.Contains(Event.current.mousePosition)&&!automatedPlayback;CBox(r,active?new Color(.055f,.26f,.26f):hover?new Color(.065f,.15f,.20f):new Color(.035f,.08f,.115f));if(active)CBox(new Rect(r.x,r.y,3,r.height),civCyan);bool hit=GameButton(r,"",GUIStyle.none);CText(r,value,civButton,active?civCyan:civInk);return hit;}
  void CBar(Rect r,float value,Color color){CBox(r,new Color(.09f,.16f,.21f));CBox(new Rect(r.x,r.y,r.width*Mathf.Clamp01(value),r.height),color);}
  void ChangeCivilTab(int tab){civilTab=tab;civilSelection=0;civilizationScene.Preview(civilTab,civilSelection,civilPaint,civilization);}

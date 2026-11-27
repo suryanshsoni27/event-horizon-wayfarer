@@ -26,7 +26,7 @@ public sealed partial class DefenseGame {
  void RoverInput(float dt){if(!RoverDeployed)return;throttle=0;playerAction=Vector3.zero;landingAssist=cruising=cruiseBraking=false;
   if(!automatedPlayback||Controls.TestDevice!=null){roverDrive=(GameKey(KeyCode.W)?1:0)-(GameKey(KeyCode.S)?1:0);roverSteer=(GameKey(KeyCode.D)?1:0)-(GameKey(KeyCode.A)?1:0);roverBrake=GameKey(KeyCode.Space);
    if(Controls.Connected){roverDrive=Mathf.Clamp(roverDrive+Controls.R2-Controls.L2+Controls.Move.y,-1,1);roverSteer=Mathf.Clamp(roverSteer+Controls.Move.x,-1,1);roverBrake|=PadHeld(PilotInput.Button.Cross);}
-   if(!expedition.OnFoot&&!paused){roverCameraYaw+=(Controls.Look.x*80+((GameKey(KeyCode.RightArrow)?1:0)-(GameKey(KeyCode.LeftArrow)?1:0))*65)*dt+(!automatedPlayback?Input.GetAxisRaw("Mouse X")*1.5f:0);roverCameraPitch=Mathf.Clamp(roverCameraPitch-Controls.Look.y*60*dt-(!automatedPlayback?Input.GetAxisRaw("Mouse Y")*1.5f:0),4,45);}
+   if(!expedition.OnFoot&&!paused){roverCameraYaw+=(Controls.Look.x*80+((GameKey(KeyCode.RightArrow)?1:0)-(GameKey(KeyCode.LeftArrow)?1:0))*65)*dt+(!automatedPlayback?Input.GetAxisRaw("Mouse X")*1.5f*MouseLookX:0);roverCameraPitch=Mathf.Clamp(roverCameraPitch-Controls.Look.y*60*dt-(!automatedPlayback?Input.GetAxisRaw("Mouse Y")*1.5f*MouseLookY:0),4,45);}
   }
   if(expedition.OnFoot||paused||!RoverReady){roverDrive=roverSteer=0;roverBrake=true;}
  }

@@ -1,0 +1,70 @@
+{
+  "version": "0.3.0",
+  "checks_passed": 345,
+  "suites": {
+    "voyager-runtime-checks.json": 87,
+    "civilization-runtime-checks.json": 64,
+    "game-runtime-checks.json": 29,
+    "planet-runtime-checks.json": 20,
+    "expanse-runtime-checks.json": 33,
+    "surface-runtime-checks.json": 33,
+    "cosmos-runtime-checks.json": 28,
+    "controller-runtime-checks.json": 51
+  },
+  "build_success": true,
+  "player_architecture": "arm64",
+  "build_bytes": 95883056,
+  "playtest_limits": [
+    "No complete manual twelve-chapter balance playthrough.",
+    "DualSense verified with injected HID and virtual gamepad; physical controller not connected.",
+    "Short staged performance sample; other Unity editors remained open.",
+    "Procedural prototype art; distant terrain transitions and animation require further polish."
+  ],
+  "benchmark_configuration": {
+    "output": "1280x800",
+    "quality": "Balanced",
+    "render_scale": 0.9,
+    "target_fps": 60,
+    "vsync": false,
+    "frames_per_scene": 360,
+    "warmup_frames_per_scene": 90,
+    "device": "Apple M4, 16 GB RAM",
+    "memory_metric": "Unity allocated memory; not full process resident memory"
+  },
+  "package": {
+    "version": "0.3.0",
+    "architecture": "arm64",
+    "bytes": 42587183,
+    "sha256": "c41de8bc4191918dc2c6c0ad4493f4a8be97246eb327e4beb9eaf0b3af49d09e",
+    "zip_crc_valid": true,
+    "no_environment_or_campaign_files": true
+  },
+  "application_secret_scan": {
+    "reviewed_findings": [
+      {
+        "file": "Contents/MonoBleedingEdge/etc/mono/2.0/machine.config",
+        "line": 214,
+        "reason": "Unmodified Unity Mono strong-name public key mapping; Token is a public assembly identifier."
+      },
+      {
+        "file": "Contents/MonoBleedingEdge/etc/mono/4.5/machine.config",
+        "line": 234,
+        "reason": "Unmodified Unity Mono strong-name public key mapping; Token is a public assembly identifier."
+      },
+      {
+        "file": "Contents/MonoBleedingEdge/etc/mono/4.0/machine.config",
+        "line": 231,
+        "reason": "Unmodified Unity Mono strong-name public key mapping; Token is a public assembly identifier."
+      }
+    ],
+    "other_findings": 0
+  },
+  "player_executable_sha256": "7c35381bf8024c421027b1d8b24700735c29e0e19281cdc6cfe3427a9028b588",
+  "publication_checks": {
+    "staged_source_secret_findings": 0,
+    "git_history_secret_findings": 0,
+    "application_credentials_found": 0,
+    "reviewed_vendor_public_key_mappings": 3,
+    "environment_and_private_paths_blocked": true
+  }
+}
