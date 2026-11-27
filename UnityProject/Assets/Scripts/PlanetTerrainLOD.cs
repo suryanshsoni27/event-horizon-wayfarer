@@ -47,7 +47,8 @@ public sealed class PlanetTerrainLOD : MonoBehaviour {
   p.source=vertices;p.sourceNormals=vertexNormals;p.draw=(Vector3[])vertices.Clone();p.drawNormals=(Vector3[])vertexNormals.Clone();p.revision=revision;
   p.mesh.vertices=vertices;p.mesh.normals=vertexNormals;
   if(initial){var triangles=new List<int>();for(int y=0;y<N;y++)for(int x=0;x<N;x++){int i=y*(N+1)+x;triangles.AddRange(new[]{i,i+1,i+N+1,i+1,i+N+2,i+N+1});}
-   for(int edge=0;edge<4;edge++)for(int k=0;k<N;k++){int a=EdgeIndex(edge,k),b=EdgeIndex(edge,k+1),bottom=Grid+edge*(N+1)+k;triangles.AddRange(new[]{a,b,bottom,b,bottom+1,bottom,a,bottom,b,b,bottom,bottom+1});}p.mesh.SetTriangles(triangles,0);
+   // Stitched edges are watertight; redundant skirts create vertical walls across valleys.
+   p.mesh.SetTriangles(triangles,0);
   }p.mesh.RecalculateBounds();
  }
  static int EdgeIndex(int edge,int k){return edge==0?k:edge==1?N*(N+1)+k:edge==2?k*(N+1):k*(N+1)+N;}

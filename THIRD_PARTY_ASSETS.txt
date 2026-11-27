@@ -37,3 +37,11 @@ Prompts, source dimensions, file sizes and SHA256 hashes are in
 docs/validation/cinematic-art-prompts.json. No proprietary game art was used.
 The creature shader derives restrained surface relief from albedo in real time;
 it does not use an authored displacement map or a generated normal-map set.
+
+Original inhabited-world assets added for v0.8.0
+
+The humanoid meshes, articulated rigs, military settlement geometry, terrain
+ridge extension and coastal water shader are original procedural project work.
+They reuse the credited CC0 metal/fabric maps and existing original foliage art.
+No models, characters, textures or footage from GTA or Guardians of the Galaxy
+are included. Human-like faces are procedural geometry, not likeness scans.

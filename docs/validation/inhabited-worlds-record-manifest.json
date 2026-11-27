@@ -1,0 +1,78 @@
+{
+  "version": "0.8.0",
+  "frames": 1290,
+  "fps": 30,
+  "duration_seconds": 43,
+  "width": 1920,
+  "height": 1080,
+  "quality": "Ultra",
+  "anti_aliasing": "SMAA",
+  "contact_occlusion": true,
+  "postprocessing": "ACES and color grading",
+  "simulation_seconds_per_captured_frame": 0.03333333333333333,
+  "staged_encounters": true,
+  "scripted_cameras": true,
+  "idle_and_attack_pose_review": true,
+  "manual_gameplay": false,
+  "performance_benchmark": false,
+  "audio": false,
+  "camera_capture": false,
+  "peak_pending_png_bytes": 3025785,
+  "scenes": [
+    {
+      "scene": "outpost-1",
+      "frames": 150,
+      "simulation_seconds": 4.966667
+    },
+    {
+      "scene": "armed-1-0",
+      "frames": 90,
+      "simulation_seconds": 3.0
+    },
+    {
+      "scene": "armed-1-1",
+      "frames": 90,
+      "simulation_seconds": 3.0
+    },
+    {
+      "scene": "armed-1-2",
+      "frames": 90,
+      "simulation_seconds": 3.0
+    },
+    {
+      "scene": "outpost-2",
+      "frames": 150,
+      "simulation_seconds": 4.966667
+    },
+    {
+      "scene": "armed-2-0",
+      "frames": 90,
+      "simulation_seconds": 3.0
+    },
+    {
+      "scene": "armed-2-1",
+      "frames": 90,
+      "simulation_seconds": 3.0
+    },
+    {
+      "scene": "armed-2-2",
+      "frames": 90,
+      "simulation_seconds": 2.999998
+    },
+    {
+      "scene": "forest",
+      "frames": 150,
+      "simulation_seconds": 4.966667
+    },
+    {
+      "scene": "coast",
+      "frames": 150,
+      "simulation_seconds": 4.966663
+    },
+    {
+      "scene": "mountains",
+      "frames": 150,
+      "simulation_seconds": 4.966667
+    }
+  ]
+}

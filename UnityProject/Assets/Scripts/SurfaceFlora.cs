@@ -34,7 +34,7 @@ public sealed class SurfaceFlora : MonoBehaviour {
             Vector3 a=new Vector3(axis.y,axis.z,axis.x),b=Vector3.Cross(axis,a),cube=dir/facing;
             float tile=2.8f/(float)p.body.radius;int cx=Mathf.FloorToInt((Vector3.Dot(cube,a)+1)/tile),cy=Mathf.FloorToInt((Vector3.Dot(cube,b)+1)/tile);
             for(int x=cx-22;x<=cx+22;x++)for(int y=cy-22;y<=cy+22;y++) {
-                var rng=new System.Random(unchecked(x*73856093^y*19349663^face*83492791^(int)p.body.seed*1107));
+                var rng=new System.Random(unchecked(x*73856093^y*19349663^face*83492791^(int)(p.body.seed%1000)*1107));
                 float u=(x+(float)rng.NextDouble())*tile-1,v=(y+(float)rng.NextDouble())*tile-1;if(Mathf.Abs(u)>1||Mathf.Abs(v)>1)continue;
                 Vector3 normal=PlanetTerrainLOD.Direction(face,u,v);float h=PlanetExpedition.Height(normal,p.body.seed,p.body.radius);
                 if(h<.7f)continue;Vector3 pos=normal*((float)p.body.radius+h-.025f),world=p.body.P+pos;

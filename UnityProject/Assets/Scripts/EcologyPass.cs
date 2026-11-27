@@ -8,9 +8,10 @@ using UnityEngine.Rendering.Universal;
 
 public sealed partial class DefenseGame {
     bool ecologyShowcase;string ecologyTitle,ecologyDetail;
-    PlanetExpedition.Planet StageEcology(int climate) {
+    PlanetExpedition.Planet StageEcology(int climate,string destination=null) {
         NewCampaign(3);paused=true;chapterBanner=toastTime=0;invulnerable=10000;
-        var planet=expedition.planets.Find(p=>p.key==(climate==0?"HOME":"S0P"+climate));
+        if(destination!=null){var port=ports.Find(p=>p.key==destination);chartSystem=port.system;player=Make(port.global-OriginGlobal+Vector3.up*(port.radius+200),Vector3.zero);FloatingOrigin();Stream(true);}
+        var planet=expedition.planets.Find(p=>p.key==(destination??(climate==0?"HOME":"S0P"+climate)));
         Vector3 sun=new Vector3(-.25f,.2f,-.94f).normalized,up=sun;float best=float.MaxValue;
         // Pick an ordinary native surface with daylight and low local relief for a readable art review.
         for(int j=0;j<80;j++) {

@@ -1,0 +1,15 @@
+{
+  "version": "0.8.0",
+  "asset": "Event-Horizon-v0.8-macOS-AppleSilicon.zip",
+  "bytes": 71868814,
+  "sha256": "abb2cd7f91f7e3083f71fb6775ab0c6e780c08376ba40bff04df95d42c48201b",
+  "architecture": "arm64",
+  "zip_integrity": "PASS",
+  "app_signature": "local ad-hoc; verified with codesign --deep --strict",
+  "developer_id_signed": false,
+  "notarized": false,
+  "camera_usage_description": true,
+  "continuity_camera_capability": true,
+  "private_configuration_in_archive": false,
+  "app_secret_scan_remaining_findings": 0
+}

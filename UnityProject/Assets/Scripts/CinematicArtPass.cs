@@ -55,7 +55,7 @@ public sealed partial class DefenseGame {
             bool foliageNormals=true;
             Transform landscapeRoot=null;foreach(Transform child in planet.root.transform)if(child.name=="STREAMED LANDSCAPES / "+((SurfaceEcology.Biome)biome)){landscapeRoot=child;break;}if(landscapeRoot!=null)foreach(var part in landscapeRoot.GetComponentsInChildren<MeshFilter>())foliageNormals&=ValidArtNormals(part.sharedMesh);
             checks["scenery_surface_normals_face_the_visible_side_"+suffix]=landscapeRoot!=null&&foliageNormals;
-            checks["landscape_geometry_and_contacts_are_bounded_"+suffix]=scenery.Vertices>1000&&scenery.Vertices<150000&&scenery.Contacts.Count==scenery.Landmarks*3&&scenery.Contacts.Count<=84;
+            checks["landscape_geometry_and_contacts_are_bounded_"+suffix]=scenery.Vertices>1000&&scenery.Vertices<400000&&scenery.Contacts.Count==Mathf.Min(19,scenery.Landmarks)*3&&scenery.Contacts.Count<=57;
             bool valid=true,continuous=true,bound=true;Material skin=null;
             foreach(var foe in surface.Current.foes) {
                 var filter=foe.view.torso.GetComponentInChildren<MeshFilter>();continuous&=LargestConnectedSurface(filter.sharedMesh)>3000;

@@ -40,13 +40,13 @@ public sealed partial class DefenseGame {
   civilOpen=false;civilizationScene.HidePreview();voyagerPanel=VoyagerPanel.Home;paused=true;
   voyagerAudio=gameObject.AddComponent<VoyagerAudio>();voyagerAudio.Initialize(preferences);
   for(int i=1;i<=3;i++)if(ReadCampaign(i)!=null){slotSelection=i;break;}
-  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
-  else if(voyagerBenchmark)StartCoroutine(Array.IndexOf(args,"--cinematic-art-benchmark")>=0?CinematicArtBenchmark():VoyagerBenchmark());
-  else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--cinematic-art-record")>=0?CinematicArtRecord():Array.IndexOf(args,"--ecology-record")>=0?EcologyRecord():Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
+  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-qa")>=0?InhabitedWorldChecks():Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
+  else if(voyagerBenchmark)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-benchmark")>=0?InhabitedWorldBenchmark():Array.IndexOf(args,"--cinematic-art-benchmark")>=0?CinematicArtBenchmark():VoyagerBenchmark());
+  else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-record")>=0?InhabitedWorldRecord():Array.IndexOf(args,"--cinematic-art-record")>=0?CinematicArtRecord():Array.IndexOf(args,"--ecology-record")>=0?EcologyRecord():Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
  }
  CampaignCheckpoint ReadCampaign(int slot){return CampaignFiles.Read<CampaignCheckpoint>(CampaignPath(slot),x=>x.Validate());}
  CampaignCheckpoint CaptureCampaign(){
-  var checkpoint=new CampaignCheckpoint{slot=voyager.slot,savedUtc=DateTime.UtcNow.ToString("O"),civilization=civilization,campaign=voyager,
+  var checkpoint=new CampaignCheckpoint{landscapeVersion=expedition.LandscapeVersion,slot=voyager.slot,savedUtc=DateTime.UtcNow.ToString("O"),civilization=civilization,campaign=voyager,
    ship=player,rotation=shipRotation,health=health,elapsed=simSeconds,cellX=cellX,cellY=cellY,cellZ=cellZ,score=score,
    tiers=(int[])tiers.Clone(),salvageCount=salvageCount,wheels=wheelsRequested,wheelDeployment=wheelDeployment,
    roverYaw=roverCameraYaw,roverPitch=roverCameraPitch,flightAssist=flightAssist,chartSystem=chartSystem,chartPort=chartPort,
@@ -68,7 +68,7 @@ public sealed partial class DefenseGame {
  }
  bool LoadCampaign(int slot){
   var data=ReadCampaign(slot);if(data==null){Toast("No valid checkpoint in slot "+slot);return false;}
-  voyagerRestoring=true;ClearContractViews();ResetRound();civilization=data.civilization;voyager=data.campaign;
+  voyagerRestoring=true;ClearContractViews();expedition.LandscapeVersion=data.landscapeVersion;ResetRound();civilization=data.civilization;voyager=data.campaign;
   cellX=data.cellX;cellY=data.cellY;cellZ=data.cellZ;catalog=new List<StarSystem>();ports=new List<Port>();
   for(int i=0;i<data.catalogue.Count;i++){var c=data.catalogue[i];AddCatalogSystem(i,c.name,new GalacticPoint(c.x,c.y,c.z),c.key);}
   player=data.ship;shipRotation=desiredRotation=data.rotation;chartSystem=data.chartSystem;chartPort=data.chartPort;
@@ -84,7 +84,7 @@ public sealed partial class DefenseGame {
  }
  void RestoreRocket(CampaignCheckpoint.SavedRocket saved){var planet=expedition.planets.Find(p=>p.key==saved.key);if(planet==null)return;var root=frontierArt.Rocket(null);root.position=Pos(saved.state);root.rotation=Quaternion.FromToRotation(Vector3.up,(root.position-planet.body.P).normalized);var flame=new GameObject("Rocket / restored exhaust").AddComponent<LineRenderer>();flame.transform.SetParent(root,false);flame.useWorldSpace=false;flame.positionCount=2;flame.SetPositions(new[]{Vector3.up,Vector3.down*12});flame.startWidth=1.2f;flame.endWidth=4;flame.sharedMaterial=frontierArt.beamOrange;civilRockets.Add(new CivilRocket{state=saved.state,key=saved.key,age=saved.age,maxAltitude=saved.altitude,credited=saved.credited,root=root,flame=flame});}
  void NewCampaign(int slot,int scenario=0){
-  voyagerRestoring=true;ClearContractViews();ResetRound();civilization=new CivilizationModel();voyager=new VoyagerState{slot=slot,scenario=scenario,seed=7319+scenario*311,legacy=newGamePlus?1:0};
+  voyagerRestoring=true;ClearContractViews();expedition.LandscapeVersion=1;ResetRound();civilization=new CivilizationModel();voyager=new VoyagerState{slot=slot,scenario=scenario,seed=7319+scenario*311,legacy=newGamePlus?1:0};
   if(scenario==1){civilization.alloy=550;foreach(var f in civilization.factions)f.relation-=15;}
   if(scenario==2){civilization.alloy=500;civilization.energy=250;}
   RebuildCivilPresentation();health=HullMaximum;voyagerRestoring=false;campaignStarted=true;slotSelection=slot;
@@ -212,7 +212,7 @@ public sealed partial class DefenseGame {
  public Vector3 AssistedAim(Vector3 origin,Vector3 aim,bool ground){
   if(voyager==null||!preferences.aimAssist||!PadMode)return aim;
   float best=ground?5:4;Vector3 chosen=aim;
-  if(ground&&surface.Current!=null){foreach(var f in surface.Current.foes)if(!f.dead){Vector3 delta=surface.World(f)+surface.Up(surface.World(f))*(f.kind==2?2:1)-origin;float angle=Vector3.Angle(aim,delta);if(angle<best&&delta.magnitude<85){best=angle;chosen=delta.normalized;}}}
+  if(ground&&surface.Current!=null){foreach(var f in surface.Current.foes)if(!f.dead){Vector3 delta=surface.World(f)+surface.Up(surface.World(f))*(surface.Species(f).humanoid?.28f:f.kind==2?2:1)-origin;float angle=Vector3.Angle(aim,delta);if(angle<best&&delta.magnitude<85){best=angle;chosen=delta.normalized;}}}
   else foreach(var unit in civilUnits)if(unit.enemy&&unit.HP>0){Vector3 delta=Pos(unit.state)-origin;float angle=Vector3.Angle(aim,delta);if(angle<best&&delta.magnitude<1000){best=angle;chosen=delta.normalized;}}
   return Vector3.RotateTowards(aim,chosen,.6f*Mathf.Deg2Rad,0);
  }

@@ -2,11 +2,17 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Cinematic creature materials](docs/media/cinematic-temperate-creature.png)](docs/media/wayfarer-cinematic-art.mp4)
+[![Armed alien settlement](docs/media/inhabited-aurelian-0.png)](docs/media/wayfarer-inhabited-worlds.mp4)
 
-**[Download the Mac game — v0.7.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.7.0)** · **[Watch the new art review](docs/media/wayfarer-cinematic-art.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.8.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.8.0)** · **[Watch the inhabited-world review](docs/media/wayfarer-inhabited-worlds.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.8.0: inhabited worlds, forests and coasts
+
+Some temperate destinations now contain armed astronaut enclaves and human-looking Aurelian soldiers, with infantry, marksmen and commanders. Their weapons fire native ballistic projectiles, aiming warnings give time to react, cover blocks shots, and the suit pulse interrupts bursts. Research outposts include habitats, command buildings, solar arrays and a rocket launch facility. Occupied-world missions recover security logs, decrypt archives, defend a relay and defeat the commander.
+
+Denser broadleaf and evergreen canopies add near/far detail and native nearby trunk contacts. Temperate basins have a separate reflective water surface with animated ripples and shoreline foam. New campaigns gain sharper alpine ridges matched between the terrain mesh and C++ physics; existing saves retain their original terrain generation. The atlas marks inhabited destinations. See [player captures, how to find them, validation and production limits](docs/INHABITED_WORLDS.md).
 
 ## v0.7.0: cinematic materials and landscapes
 
@@ -53,7 +59,7 @@ The [Twelve Horizons guide](docs/TWELVE_HORIZONS.md) lists every chapter, contro
 - Approach black holes with a distant accretion-disk view and a nearby numerical Schwarzschild lensing shader.
 - Fly among asteroids, satellites, a research station, wrecks and comet effects.
 - Land on complete procedural planets, deploy six tires and drive with four astronauts aboard.
-- Disembark, walk or run, fight alien creatures, recover a recorder, scan specimens, defend a relay and defeat a guardian.
+- Disembark, walk or run, fight climate-specific creatures or armed humanoids, and complete linked expedition missions.
 - Reboard the parked rover, retract the tires and return to flight.
 - Play using keyboard/mouse or a PS5 DualSense controller.
 

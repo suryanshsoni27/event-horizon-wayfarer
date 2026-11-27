@@ -7,12 +7,15 @@ public static class SurfaceEcology {
     public sealed class Species {
         public readonly Biome biome;
         public readonly int role;
+        public readonly bool humanoid, helmet;
+        readonly int identity;
         public readonly string name, tactic;
         public readonly float health, speed, range, windup, cooldown, damage;
         public readonly Color shell, plate, organ;
-        public int Id { get { return (int)biome * 3 + role; } }
+        public int Id { get { return identity; } }
         public Species(Biome b, int r, string n, string t, float hp, float s, float reach,
-                       float tell, float recovery, float hit, Color skin, Color armor, Color glow) {
+                       float tell, float recovery, float hit, Color skin, Color armor, Color glow, int id=-1, bool suited=false) {
+            identity=id<0?(int)b*3+r:id;humanoid=id>=9;helmet=suited;
             biome=b;role=r;name=n;tactic=t;health=hp;speed=s;range=reach;
             windup=tell;cooldown=recovery;damage=hit;shell=skin;plate=armor;organ=glow;
         }
@@ -29,6 +32,22 @@ public static class SurfaceEcology {
         new Species(Biome.Frozen,1,"RIMECALLER","Keeps its distance and launches dense ice bolts.",92,1.8f,21,.9f,3.7f,16,C(.20f,.27f,.31f),C(.47f,.61f,.64f),C(.27f,.63f,.81f,.3f)),
         new Species(Biome.Frozen,2,"GLACIER TITAN","Massive tusks and a long recovery. Attack after it swings.",680,1.9f,5.2f,1.3f,3.1f,34,C(.21f,.27f,.28f),C(.63f,.70f,.68f),C(.34f,.70f,.87f,.32f))
     };
+    // Only non-home temperate planets may be occupied. P3 is always a black hole.
+    public enum Society { Wildlife, AstronautEnclave, AurelianConcord }
+    public static Society Civilization(string key) {
+        if(string.IsNullOrEmpty(key)||!key.StartsWith("S",System.StringComparison.Ordinal)||!key.EndsWith("P0",System.StringComparison.Ordinal))return Society.Wildlife;
+        int system;if(!int.TryParse(key.Substring(1,key.Length-3),out system)||system<=0)return Society.Wildlife;
+        return system%3==1?Society.AurelianConcord:system%3==2?Society.AstronautEnclave:Society.Wildlife;
+    }
+    public static string SocietyName(string key) {var c=Civilization(key);return c==Society.AurelianConcord?"AURELIAN CONCORD / ARMED ALIEN SETTLEMENT":c==Society.AstronautEnclave?"FRONTIER ENCLAVE / ASTRONAUT SECURITY":Habitat(Climate(key));}
+    static readonly Species[] citizens={
+        new Species(Biome.Temperate,0,"ENCLAVE RIFLEMAN","Strafes and fires three-round bursts. Break line of sight.",88,3.0f,28,.75f,2.8f,9,C(.14f,.19f,.23f),C(.68f,.71f,.67f),C(.22f,.60f,.73f,.1f),9,true),
+        new Species(Biome.Temperate,1,"ENCLAVE MARKSMAN","Keeps distance. The long amber aim line warns of a shot.",76,2.5f,42,1.25f,3.6f,20,C(.14f,.18f,.19f),C(.33f,.39f,.29f),C(.8f,.49f,.18f,.1f),10,true),
+        new Species(Biome.Temperate,2,"ENCLAVE COMMANDER","Heavy armor and burst fire. Stagger with the suit pulse.",340,2.7f,31,1.0f,3.2f,13,C(.12f,.17f,.22f),C(.46f,.52f,.58f),C(.8f,.3f,.12f,.1f),11,true),
+        new Species(Biome.Temperate,0,"CONCORD SENTINEL","Human-like alien infantry. Flanks between bursts.",94,3.3f,29,.8f,2.8f,10,C(.52f,.47f,.39f),C(.20f,.27f,.26f),C(.3f,.65f,.54f,.1f),12),
+        new Species(Biome.Temperate,1,"CONCORD PATHFINDER","Long-range pulse rifle. Use trunks and buildings as cover.",82,2.8f,43,1.35f,3.8f,21,C(.45f,.43f,.38f),C(.31f,.28f,.22f),C(.78f,.51f,.18f,.1f),13),
+        new Species(Biome.Temperate,2,"CONCORD PRAETOR","Armored leader. Reposition during the reload window.",370,2.9f,32,1.05f,3.3f,14,C(.55f,.48f,.40f),C(.25f,.29f,.33f),C(.55f,.40f,.75f,.1f),14)
+    };
     public static Biome Climate(string key) {
         if(!string.IsNullOrEmpty(key)) {
             if(key.EndsWith("P1",System.StringComparison.Ordinal))return Biome.Arid;
@@ -36,7 +55,7 @@ public static class SurfaceEcology {
         }
         return Biome.Temperate;
     }
-    public static Species For(string key,int role) { return species[(int)Climate(key)*3+Mathf.Clamp(role,0,2)]; }
+    public static Species For(string key,int role) { var society=Civilization(key);int r=Mathf.Clamp(role,0,2);return society==Society.Wildlife?species[(int)Climate(key)*3+r]:citizens[(society==Society.AstronautEnclave?0:3)+r]; }
     public static Species For(PlanetExpedition.Planet planet,int role) { return For(planet==null?"HOME":planet.key,role); }
     public static string Habitat(Biome b) { return b==Biome.Arid?"ARID / DUNE FAUNA":b==Biome.Frozen?"FROZEN / CRYOPHILIC FAUNA":"TEMPERATE / CANOPY FAUNA"; }
 }

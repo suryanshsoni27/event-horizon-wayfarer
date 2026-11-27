@@ -6,15 +6,18 @@ using UnityEngine.Rendering;
 // Original, reusable surface art. All meshes/materials belong to this game instance.
 public sealed partial class SurfaceArt : IDisposable {
     public sealed class CreatureView {
-        public Transform root,torso,jaw;public int kind;public SurfaceEcology.Species species;
+        public Transform root,torso,jaw;public HumanoidMotion humanoid;
+        public Transform Muzzle{get{return humanoid==null?null:humanoid.muzzle;}}
+        public void Aim(Vector3 target){if(humanoid!=null)humanoid.target=target;}public int kind;public SurfaceEcology.Species species;
         public readonly List<Transform> tail=new List<Transform>(),pincers=new List<Transform>();
         public readonly List<Transform> hips=new List<Transform>(),knees=new List<Transform>(),feet=new List<Transform>();
         public readonly List<Vector3> homes=new List<Vector3>(),plants=new List<Vector3>();public readonly List<bool> planted=new List<bool>();
         public readonly List<Renderer> renderers=new List<Renderer>();public System.Func<Vector3,Vector3> Contact;
         readonly MaterialPropertyBlock block=new MaterialPropertyBlock();float phase,lastTime,strike,collapse;public float KneeFlex{get;private set;}
-        public void Strike(){strike=1;}public void Shift(Vector3 d){for(int i=0;i<plants.Count;i++)plants[i]-=d;}
+        public void Strike(){strike=1;if(humanoid!=null)humanoid.Kick();}public void Shift(Vector3 d){if(humanoid!=null)humanoid.Shift(d);for(int i=0;i<plants.Count;i++)plants[i]-=d;}
         public void Animate(float time,float speed,float windup,float hurt,bool dead){
             float dt=Mathf.Clamp(time-lastTime,0,.1f);lastTime=time;strike=Mathf.MoveTowards(strike,0,dt*4);collapse=Mathf.MoveTowards(collapse,dead?1:0,dt*2.2f);
+            if(humanoid!=null){humanoid.Pose(this,time,dt,speed,windup,strike,collapse,hurt,dead);KneeFlex=humanoid.KneeFlex;ApplyDamage(time,hurt,dead);return;}
             if(!dead&&windup<=0)phase+=Mathf.Max(0,speed)*dt/(kind==2?2.7f:1.65f);
             float breathe=Mathf.Sin(time*2.3f)*.018f;torso.localPosition=new Vector3(0,breathe+windup*.11f-collapse*.50f,strike*.35f);
             torso.localRotation=Quaternion.Euler(-windup*17+strike*25,Mathf.Sin(time)*1.5f,collapse*83);
@@ -30,7 +33,9 @@ public sealed partial class SurfaceArt : IDisposable {
                 Vector3 world=root.TransformPoint(target);if(Contact!=null&&!dead){Vector3 grounded=Contact(world);world=grounded+root.up*Mathf.Sin(swing*Mathf.PI)*.26f*Mathf.Clamp01(speed);if(stance||speed<.2f){if(!planted[i]){plants[i]=grounded;planted[i]=true;}if(Vector3.Distance(plants[i],grounded)>1.1f*root.lossyScale.y)plants[i]=grounded;world=plants[i];}else planted[i]=false;}
                 Vector3 pole=root.TransformDirection(new Vector3(homes[i].x>0?1:-1,.15f,.12f));JointMotion.Solve(root,hips[i],knees[i],feet[i],world,pole,.72f,.83f);KneeFlex=Mathf.Max(KneeFlex,Quaternion.Angle(hips[i].rotation,knees[i].rotation));
             }
-            if(dead&&!wasDead)deathTime=time;wasDead=dead;block.SetFloat("_Hurt",hurt*3);block.SetFloat("_Dissolve",dead?Mathf.Clamp01((time-deathTime-3)/1.5f):0);foreach(var renderer in renderers)if(renderer!=null)renderer.SetPropertyBlock(block);
+            ApplyDamage(time,hurt,dead);
+        }
+        void ApplyDamage(float time,float hurt,bool dead){if(dead&&!wasDead)deathTime=time;wasDead=dead;block.SetFloat("_Hurt",hurt*3);block.SetFloat("_Dissolve",dead?Mathf.Clamp01((time-deathTime-3)/1.5f):0);foreach(var renderer in renderers)if(renderer!=null)renderer.SetPropertyBlock(block);
         }
         float deathTime;bool wasDead;
     }

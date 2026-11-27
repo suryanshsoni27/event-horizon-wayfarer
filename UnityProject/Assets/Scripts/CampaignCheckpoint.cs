@@ -35,6 +35,7 @@ public static class CampaignFiles {
 
 [Serializable]
 public sealed class CampaignCheckpoint {
+ public int landscapeVersion; // Missing in v0.3-v0.7 checkpoints: zero keeps their original terrain.
  public int version=1,slot=1,quality=1,chartSystem,chartPort,salvageCount,hits,kills,arrivals;
  public long cellX,cellY,cellZ,score;
  public string savedUtc;
@@ -54,7 +55,7 @@ public sealed class CampaignCheckpoint {
  public List<CatalogueEntry> catalogue=new List<CatalogueEntry>();
  [Serializable] public sealed class CatalogueEntry {public string name,key;public double x,y,z;}
  public bool Validate(){
-  if(version!=1||slot<1||slot>3||civilization==null||!civilization.Validate()||campaign==null||!campaign.Validate()||campaign.slot!=slot||crew==null||surface==null||space==null||tiers==null||tiers.Length!=4||catalogue==null||catalogue.Count<32||catalogue.Count>128||chartSystem<0||chartSystem>=catalogue.Count||chartPort<0||chartPort>3)return false;
+  if(landscapeVersion<0||landscapeVersion>1||version!=1||slot<1||slot>3||civilization==null||!civilization.Validate()||campaign==null||!campaign.Validate()||campaign.slot!=slot||crew==null||surface==null||space==null||tiers==null||tiers.Length!=4||catalogue==null||catalogue.Count<32||catalogue.Count>128||chartSystem<0||chartSystem>=catalogue.Count||chartPort<0||chartPort>3)return false;
   if(Math.Abs(cellX)>1000000000L||Math.Abs(cellY)>1000000000L||Math.Abs(cellZ)>1000000000L)return false;
   foreach(int t in tiers)if(t<0||t>3)return false;
   if(!ValidState(ship)||!VoyagerState.Finite(health)||health<=0||health>10000||!VoyagerState.Finite(elapsed)||elapsed<0||!VoyagerState.Finite(wheelDeployment)||wheelDeployment<0||wheelDeployment>1||salvageCount<0)return false;

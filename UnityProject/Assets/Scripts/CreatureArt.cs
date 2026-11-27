@@ -95,6 +95,7 @@ public sealed partial class SurfaceArt {
     }
     public CreatureView Creature(Transform parent,int kind) { return Creature(parent,SurfaceEcology.For("HOME",kind)); }
     public CreatureView Creature(Transform parent,SurfaceEcology.Species species) {
+        if(species.humanoid)return Humanoid(parent,species);
         int kind=species.role;bool desert=species.biome==SurfaceEcology.Biome.Arid,ice=species.biome==SurfaceEcology.Biome.Frozen;
         var view=new CreatureView{kind=kind,species=species};
         view.root=new GameObject(species.name).transform;view.root.SetParent(parent,false);
