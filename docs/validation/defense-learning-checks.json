@@ -1,0 +1,22 @@
+{
+  "features": [
+    "bias",
+    "distance/30",
+    "linear_closest_approach/12",
+    "time_to_closest/1.2",
+    "closing_cosine",
+    "relative_speed/25"
+  ],
+  "label": "actual native minimum distance <2.4 during next 1.2 seconds",
+  "training_encounters": 4000,
+  "heldout_encounters": 1000,
+  "heldout_positive_rate": 0.413,
+  "heldout_brier": 0.04742777307083044,
+  "constant_prior_baseline_brier": 0.2424765625,
+  "online_shift": "1000 observed encounters with independently thrusting agents",
+  "online_weight_l2_change": 0.2161011259597793,
+  "shifted_holdout_brier_before": 0.05125732957579839,
+  "shifted_holdout_brier_after": 0.05268300948034016,
+  "runtime_learning_rate": 0.02,
+  "limits": "Model estimates danger under observed behavior; labels depend on agent evasive behavior. No future player input. Offline synthetic/native warm start; runtime updates use actual game encounters."
+}

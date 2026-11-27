@@ -1,0 +1,54 @@
+# Secrets and local environment files. Review safe templates before tracking.
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+credentials.json
+service-account*.json
+.npmrc
+.pypirc
+
+# Unity-generated and per-user files.
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+.vs/
+.idea/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.pdb
+*.mdb
+
+# Builds, private local evidence, logs and backup archives.
+/Build/
+/Builds/
+/archive/
+/evidence/
+/native/build/
+*.dylib
+*.so
+*.dll
+*.dSYM/
+*.log
+
+# Python caches and OS files.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,22 @@
+{
+  "planet_surface_contact": true,
+  "landed_disembark": true,
+  "walking_uses_native_surface": true,
+  "reboard_near_ship": true,
+  "boost_escape_atmosphere": true,
+  "atmospheric_model_domain_explicit": true,
+  "native_fallback_matches_new_forces": true,
+  "planets_do_not_overlap_hole_hazards": true,
+  "initial_spawn_outside_planets": true,
+  "planet_origin_shift": true,
+  "extensible_crew_roster_over_four": true,
+  "crew_texture_cache_bounded": true,
+  "crop_updates_actual_visor_material": true,
+  "selection_has_independent_crop": true,
+  "reselection_preserves_crop": true,
+  "corrupt_replacement_preserves_profile": true,
+  "remove_keeps_other_profiles": true,
+  "roster_selection_eviction_stays_bounded": true,
+  "large_valid_photo_downsamples": true,
+  "restart_boards_crew_and_preserves_roster": true
+}

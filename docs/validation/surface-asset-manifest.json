@@ -1,0 +1,42 @@
+[
+  {
+    "asset": "grass_path_2",
+    "page": "https://polyhaven.com/a/grass_path_2",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license",
+    "file": "grass_diff.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_path_2/grass_path_2_diff_1k.jpg",
+    "bytes": 716010,
+    "sha256": "7f30b163739435c11f500f3818c7bb4922bab5f2734cc9ba6dd36817f0c9a8ab"
+  },
+  {
+    "asset": "grass_path_2",
+    "page": "https://polyhaven.com/a/grass_path_2",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license",
+    "file": "grass_normal.png",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/grass_path_2/grass_path_2_nor_gl_1k.png",
+    "bytes": 2199966,
+    "sha256": "cf7864e1ecb3359bd0cbc42106bdb6149a0d828cb7c91221ceb771d819b1d0bc"
+  },
+  {
+    "asset": "rocky_terrain_02",
+    "page": "https://polyhaven.com/a/rocky_terrain_02",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license",
+    "file": "rock_diff.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocky_terrain_02/rocky_terrain_02_diff_1k.jpg",
+    "bytes": 843188,
+    "sha256": "d570c10b1d5302f4fde9e0e94f4cbab0d5e112fc3fe2b3b91c38a98bd3ddaf4b"
+  },
+  {
+    "asset": "rocky_terrain_02",
+    "page": "https://polyhaven.com/a/rocky_terrain_02",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license",
+    "file": "rock_normal.png",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/rocky_terrain_02/rocky_terrain_02_nor_gl_1k.png",
+    "bytes": 6484633,
+    "sha256": "1cedbca3a5fb723345d361ebb93494f395af49c804c2b1779b5526014f682ef7"
+  }
+]

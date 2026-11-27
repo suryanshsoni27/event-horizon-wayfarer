@@ -1,0 +1,9 @@
+{
+  "random_rover_contacts": 200,
+  "max_rover_clearance_error": 2.171374191561881e-12,
+  "rover_contact_clearance_metres": 0.95,
+  "rover_lower_rolling_resistance_than_ship": true,
+  "boulder_contact_uses_rover_clearance": true,
+  "invalid_dt_is_noop": true,
+  "scope": "Native mode 3 contact ABI only; driving and boarding are separately tested in the packaged Unity player."
+}

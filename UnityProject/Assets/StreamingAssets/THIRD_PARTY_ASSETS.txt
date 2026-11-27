@@ -1,0 +1,14 @@
+Surface texture credits
+
+Grass Path 2 and Rocky Terrain 02 by Poly Haven contributors.
+https://polyhaven.com/a/grass_path_2
+https://polyhaven.com/a/rocky_terrain_02
+
+Downloaded from the official Poly Haven API/CDN at 1K resolution on 2026-11-26.
+CC0 licence: https://polyhaven.com/license
+CC0 legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+Diffuse and OpenGL normal maps are included in Assets/Resources/Surfaces.
+Original asset URLs, sizes and SHA256 checksums: docs/validation/surface-asset-manifest.json.
+The planet meshes, shaders, procedural terrain, ship and suit geometry are original project work.
+No franchise assets or paid assets are included.

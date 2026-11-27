@@ -1,0 +1,27 @@
+{
+  "dimensions": 3,
+  "seed": 42,
+  "training_transitions": 40000,
+  "heldout_transitions": 8000,
+  "acceleration_component_rmse": 0.0007259255663087642,
+  "acceleration_xyz_rmse": [
+    0.0007694614517086203,
+    0.0006951833715249285,
+    0.000711022459386338
+  ],
+  "zero_acceleration_baseline_rmse": 1.2078570025411035,
+  "velocity_step_component_rmse_dt_001": 7.259255663087642e-06,
+  "six_second_inclined_rollout_position_errors_r6_r9_r12_r15": [
+    0.03189482626410285,
+    0.0002733367841290579,
+    0.0037455354971032005,
+    0.00030164258863416926
+  ],
+  "orbit_steps": 50000,
+  "orbit_radius_min": 8.987127079310179,
+  "orbit_radius_max": 9.012946994793461,
+  "orbit_z_min": -7.382973944203296,
+  "orbit_z_max": 7.361823532348781,
+  "relative_energy_error_final": 2.1286117665830767e-06,
+  "scope": "heldout IID 3D positions radius 2.4..300, random 3-axis actions and velocities; out-of-domain not validated"
+}
