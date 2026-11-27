@@ -154,11 +154,29 @@ public sealed partial class SurfaceArt : IDisposable {
     }
     public Transform Rifle(Transform crew) {
         var root = new GameObject("PULSE CARBINE / animated muzzle").transform; root.SetParent(crew, false);root.gameObject.layer=crew.gameObject.layer;
-        Piece("Receiver", root, PrimitiveType.Cube, Vector3.zero, new Vector3(.15f, .23f, .62f), metal);
-        Piece("Ceramic barrel shroud", root, PrimitiveType.Cube, new Vector3(0, .02f, .39f), new Vector3(.19f, .17f, .44f), ceramic);
-        Piece("Barrel", root, PrimitiveType.Cylinder, new Vector3(0, .025f, .68f), new Vector3(.1f, .11f, .1f), dark, Quaternion.Euler(90, 0, 0));
-        Piece("Battery cell", root, PrimitiveType.Cube, new Vector3(.09f, .03f, .08f), new Vector3(.03f, .09f, .35f), cyan);
-        Piece("Grip", root, PrimitiveType.Cube, new Vector3(0, -.18f, -.12f), new Vector3(.09f, .24f, .13f), dark, Quaternion.Euler(-15, 0, 0)); return root;
+        var receiver=Piece("Machined upper receiver",root,PrimitiveType.Cube,new Vector3(0,.025f,.055f),new Vector3(.12f,.13f,.48f),metal);
+        receiver.GetComponent<MeshFilter>().sharedMesh=ProductionGeometry.PressureHull;
+        Piece("Lower action housing",root,PrimitiveType.Cube,new Vector3(0,-.048f,.02f),new Vector3(.105f,.065f,.31f),dark);
+        Piece("Shoulder stock frame",root,PrimitiveType.Cube,new Vector3(0,.005f,-.28f),new Vector3(.075f,.07f,.24f),metal);
+        Piece("Rubber shoulder pad",root,PrimitiveType.Cube,new Vector3(0,-.014f,-.40f),new Vector3(.11f,.18f,.05f),dark);
+        for(int sign=-1;sign<=1;sign+=2) {
+            Piece("Vented handguard",root,PrimitiveType.Cube,new Vector3(sign*.055f,.014f,.39f),new Vector3(.025f,.105f,.35f),ceramic,Quaternion.Euler(0,0,-sign*12));
+            for(int i=0;i<5;i++)Piece("Handguard cooling cutout",root,PrimitiveType.Cube,new Vector3(sign*.071f,.034f,.27f+i*.055f),new Vector3(.006f,.035f,.026f),dark);
+        }
+        Piece("Free floating barrel",root,PrimitiveType.Cylinder,new Vector3(0,.025f,.62f),new Vector3(.052f,.15f,.052f),dark,Quaternion.Euler(90,0,0));
+        Piece("Muzzle brake",root,PrimitiveType.Cylinder,new Vector3(0,.025f,.78f),new Vector3(.074f,.04f,.074f),metal,Quaternion.Euler(90,0,0));
+        Piece("Recessed barrel bore",root,PrimitiveType.Cylinder,new Vector3(0,.025f,.823f),new Vector3(.035f,.004f,.035f),dark,Quaternion.Euler(90,0,0));
+        Piece("Top optic rail",root,PrimitiveType.Cube,new Vector3(0,.105f,.07f),new Vector3(.045f,.035f,.34f),dark);
+        Piece("Reflex optic frame",root,PrimitiveType.Cube,new Vector3(0,.153f,.08f),new Vector3(.09f,.07f,.06f),metal);
+        Piece("Reflex optic lens",root,PrimitiveType.Cube,new Vector3(0,.159f,.113f),new Vector3(.059f,.044f,.005f),cyan);
+        Piece("Power indicator",root,PrimitiveType.Cube,new Vector3(.064f,.038f,-.045f),new Vector3(.008f,.018f,.075f),cyan);
+        Piece("Charging bolt",root,PrimitiveType.Cube,new Vector3(.075f,.065f,-.06f),new Vector3(.035f,.03f,.07f),metal);
+        Piece("Pistol grip",root,PrimitiveType.Cube,new Vector3(0,-.15f,-.10f),new Vector3(.075f,.18f,.095f),dark,Quaternion.Euler(-15,0,0));
+        Piece("Trigger guard",root,PrimitiveType.Cube,new Vector3(0,-.105f,-.012f),new Vector3(.028f,.018f,.115f),metal);
+        var cell=JointMotion.Joint("Exchangeable power magazine",root,new Vector3(0,-.115f,.12f));
+        Piece("Power cell shell",cell,PrimitiveType.Cube,Vector3.down*.055f,new Vector3(.075f,.17f,.10f),dark,Quaternion.Euler(9,0,0));
+        Piece("Power cell lock band",cell,PrimitiveType.Cube,Vector3.down*.025f,new Vector3(.078f,.025f,.104f),ceramic);
+        return root;
     }
     public void Dispose() { foreach (var obj in owned) if (obj != null) UnityEngine.Object.Destroy(obj); owned.Clear(); }
 }

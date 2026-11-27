@@ -1,0 +1,161 @@
+{
+  "packs": [
+    {
+      "author": "Quaternius",
+      "pack": "universal-animation-library",
+      "source": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0",
+      "downloaded": "2026-11-27",
+      "edition": "Standard (free)",
+      "archive_bytes": 15904933,
+      "archive_sha256": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724"
+    },
+    {
+      "author": "Quaternius",
+      "pack": "universal-animation-library-2",
+      "source": "https://quaternius.itch.io/universal-animation-library-2",
+      "license": "CC0-1.0",
+      "downloaded": "2026-11-27",
+      "edition": "Standard (free)",
+      "archive_bytes": 18735003,
+      "archive_sha256": "4008ea208a604773a2b2177d965f0f5d3195498b5bf838c3f5785d68e95f2a68"
+    },
+    {
+      "author": "Quaternius",
+      "pack": "universal-base-characters",
+      "source": "https://quaternius.itch.io/universal-base-characters",
+      "license": "CC0-1.0",
+      "downloaded": "2026-11-27",
+      "edition": "Standard (free)",
+      "archive_bytes": 128968391,
+      "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40"
+    }
+  ],
+  "files": [
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Base-Characters-License.txt",
+      "bytes": 806,
+      "sha256": "0f4beaf0fe360a7732e58bbe3dbf60a2422367fbea60cb9ea4add968f383268e"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Hair_Buzzed.fbx",
+      "bytes": 45036,
+      "sha256": "45cfb65bedb6984510b15cadf12e55c872961380228d971d1e434af438e70f8b"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Hair_BuzzedFemale.fbx",
+      "bytes": 43004,
+      "sha256": "5b226ec4d3f5e7794b8034db70e930e869abe08db3665b023b37a7cbdcca5a7c"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Hair_SimpleParted.fbx",
+      "bytes": 62668,
+      "sha256": "7612975d40a7520f5a3ca4df19685a88da37ecd3e5c7d10b198a2265baf98047"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Mannequin_F.fbx",
+      "bytes": 575100,
+      "sha256": "1a7fb4bb8850860eff36aabd60d65d19273a4a072b3c638001fbb38e42add4de"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Superhero_Female_FullBody.fbx",
+      "bytes": 1006508,
+      "sha256": "0727e7b236eeea4115531e07aeb2bb7690c1a58155f743bbf54282944fb97ea9"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Superhero_Male_FullBody.fbx",
+      "bytes": 826876,
+      "sha256": "79344418d754a59730b79d1874752e9592143db34abe8adf138fa9a92a4768e9"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Eye_Brown.png",
+      "bytes": 35958,
+      "sha256": "d08e3356a83211bc6ca21fe3a8e39f4b5c1a3b8f85457fc2c0fb57be09935025"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Eye_Normal.png",
+      "bytes": 15099,
+      "sha256": "9ed61f7726a54fe346a78b9e5a18905d8e2b88f86235d97f53cd207a26f3f8c7"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Hair_1_BaseColor.png",
+      "bytes": 1570376,
+      "sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Hair_1_Normal.png",
+      "bytes": 4326126,
+      "sha256": "57fd0ad8c96a4d01b38769637e066cecaa285b456f6e48ce00863754a457affb"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Hair_2_BaseColor.png",
+      "bytes": 1729467,
+      "sha256": "f9f4f2fb3eeeefb0b6f0fdef38b0770fd6607640c1c680b8139dd76697e9f9b3"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Hair_2_Normal.png",
+      "bytes": 4710013,
+      "sha256": "172f230aae0d4366c3cfc0402b2e6d1811b11f8487344bff28605eeacac1558d"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Female_Dark_BaseColor.png",
+      "bytes": 1319410,
+      "sha256": "d366843ee7d9e9f37ec87a0e1c98c7f2e45573c08eeb80a51a6d9344e68cf288"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Female_Light_BaseColor.png",
+      "bytes": 1317541,
+      "sha256": "743f811857db0b950f3ad09a0733dfa4888801ead332313ca25becea14c54f8d"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Female_Normal.png",
+      "bytes": 3940537,
+      "sha256": "cf922460b43ccd31e983e34db05514c9d451dd2f9cdd01a843978e797719f859"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Female_Roughness.png",
+      "bytes": 1997719,
+      "sha256": "4e00eb2d8196cebacd027e3360b9da6431d8915e27e1b5262c14f20eaaa6dced"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Male_Dark.png",
+      "bytes": 1384380,
+      "sha256": "df680cbc1967a61e85998bfafb8f7bc0a36dd604bb3266486c4b06b1a184bb45"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Male_Ligh.png",
+      "bytes": 1389170,
+      "sha256": "419f96dbb8811511e2d515bcdabc085ff2f219ec7b8b4e91050a84cba6888fe9"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Male_Normal.png",
+      "bytes": 4252937,
+      "sha256": "9b25cf9200216eb754b79cf4c63b5380c419780788322f3c57cdd2b3e02679a6"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/Textures/T_Superhero_Male_Roughness.png",
+      "bytes": 1912686,
+      "sha256": "5079fd95603bdd34700abd42ca6bcf43b615929f29134822aeb63a3a8bb3400c"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/UAL1-License.txt",
+      "bytes": 332,
+      "sha256": "6d01f55c6e4c49a2c9963e147e561945ae2c83958c8ca667d90a6bffdbfac061"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/UAL1_Standard.fbx",
+      "bytes": 23754684,
+      "sha256": "21b32d912da3cb93426d974fb945e86f5b2e86970acd2ce89905e0fbf9f1dcc2"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/UAL2-License.txt",
+      "bytes": 332,
+      "sha256": "6d01f55c6e4c49a2c9963e147e561945ae2c83958c8ca667d90a6bffdbfac061"
+    },
+    {
+      "path": "UnityProject/Assets/Art/Quaternius/UAL2_Standard.fbx",
+      "bytes": 24778332,
+      "sha256": "d26d0e9f4a202d473194c056045143095a605a53ba1d823ef24055be4b86851d"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": "0.9.0",
+  "platform": "macOS Apple Silicon",
+  "verification": "Packaged Unity player",
+  "suite_counts": {
+    "animation": 29,
+    "inhabited-worlds": 50,
+    "cinematic-art": 42,
+    "ecology": 49,
+    "head-pilot": 50,
+    "production": 33,
+    "voyager": 87,
+    "civilization": 64,
+    "game": 29,
+    "planet": 20,
+    "expanse": 33,
+    "surface": 33,
+    "cosmos": 28,
+    "controller": 51
+  },
+  "total_checks": 598,
+  "all_pass": true,
+  "native_physics_checks": "PASS",
+  "ballistic_humanoid_attacks_and_crew_damage_tested": true,
+  "muzzle_cover_blocks_actual_attacks": true,
+  "native_building_and_tree_contacts_tested": true,
+  "modern_native_terrain_parity_directions": 512,
+  "legacy_terrain_generation_preserved": true,
+  "actual_v03_save_compatibility_checked": true,
+  "rendered_water_pixel_response_checked": true,
+  "live_camera_used": false,
+  "physical_controller_manually_tested": false,
+  "manual_campaign_balance_playthrough": false,
+  "normal_player_startup_smoke": true,
+  "skinned_bone_deformation_tested": true,
+  "authored_gait_transitions_tested": true,
+  "visible_magazine_exchange_tested": true,
+  "final_targeted_rechecks": {
+    "animation": 29,
+    "inhabited_worlds": 50,
+    "production": 33
+  },
+  "final_targeted_rechecks_pass": true,
+  "unarmed_companion_followup": {
+    "animation_checks": 29,
+    "controller_rover_checks": 51,
+    "all_pass": true
+  }
+}

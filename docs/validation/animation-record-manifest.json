@@ -1,0 +1,65 @@
+{
+  "version": "0.9.0",
+  "frames": 1260,
+  "fps": 30,
+  "duration_seconds": 42,
+  "width": 1920,
+  "height": 1080,
+  "quality": "Ultra",
+  "anti_aliasing": "SMAA",
+  "contact_occlusion": true,
+  "postprocessing": "ACES and color grading",
+  "simulation_seconds_per_captured_frame": 0.03333333333333333,
+  "staged_encounters": true,
+  "scripted_cameras": true,
+  "authored_skeletal_performances": true,
+  "visible_magazine_exchange": true,
+  "native_player_locomotion": true,
+  "manual_gameplay": false,
+  "performance_benchmark": false,
+  "audio": false,
+  "camera_capture": false,
+  "peak_pending_png_bytes": 2850415,
+  "scenes": [
+    {
+      "scene": "skinned-suit-and-idle",
+      "frames": 120,
+      "simulation_seconds": 3.966667
+    },
+    {
+      "scene": "walk-sprint-stop",
+      "frames": 240,
+      "simulation_seconds": 8.0
+    },
+    {
+      "scene": "aim-and-fire",
+      "frames": 120,
+      "simulation_seconds": 4.0
+    },
+    {
+      "scene": "magazine-exchange",
+      "frames": 150,
+      "simulation_seconds": 5.0
+    },
+    {
+      "scene": "interaction-and-landing",
+      "frames": 150,
+      "simulation_seconds": 5.0
+    },
+    {
+      "scene": "hit-and-death",
+      "frames": 150,
+      "simulation_seconds": 5.0
+    },
+    {
+      "scene": "aurelian-performance",
+      "frames": 120,
+      "simulation_seconds": 3.966667
+    },
+    {
+      "scene": "native-player-walk-and-sprint",
+      "frames": 210,
+      "simulation_seconds": 7.0
+    }
+  ]
+}

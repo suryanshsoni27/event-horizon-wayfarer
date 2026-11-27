@@ -17,7 +17,7 @@ public sealed partial class SurfaceOperations {
         if(f.burst>0) {
             f.burstClock-=dt;
             if(!visible){f.burst=0;f.cooldown=.8f;BlockedShots++;}
-            else if(f.burstClock<=0){RifleShot(f,aim);f.burst--;f.burstClock=.16f;if(f.burst==0){f.cooldown=s.cooldown;Reloads++;}}
+            else if(f.burstClock<=0){RifleShot(f,aim);f.burst--;f.burstClock=.16f;if(f.burst==0){f.cooldown=s.cooldown;Reloads++;f.view?.humanoid?.Reload();}}
         } else if(f.attacking) {
             if(!visible||range>s.range+3){f.attacking=false;f.windup=0;f.cooldown=.4f;BlockedShots++;}
             else {f.windup-=dt;if(f.windup<=0){f.attacking=false;f.burst=s.role==1?1:3;f.burstClock=0;}}

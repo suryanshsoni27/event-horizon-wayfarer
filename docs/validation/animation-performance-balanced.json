@@ -1,0 +1,75 @@
+{
+  "unity": "6000.6.10f1",
+  "device": "Mac16,10",
+  "processor": "Apple M4",
+  "graphics": "Apple M4",
+  "quality": "Balanced",
+  "antiAliasing": "SubpixelMorphologicalAntiAliasing",
+  "renderScale": 0.8999999761581421,
+  "width": 1280,
+  "height": 800,
+  "targetFps": 60,
+  "staged": true,
+  "captureDisabled": true,
+  "phases": [
+    {
+      "name": "live-forest-wildlife",
+      "frames": 360,
+      "averageMs": 16.807113647460938,
+      "p95Ms": 17.429542541503906,
+      "p99Ms": 17.599872589111328,
+      "minimumFps": 46.38515090942383,
+      "allocatedMemory": 289026746,
+      "gpuMs": 5.096277198754251,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "live-armed-outpost-1",
+      "frames": 360,
+      "averageMs": 16.759246826171875,
+      "p95Ms": 17.25078773498535,
+      "p99Ms": 17.60366439819336,
+      "minimumFps": 44.19660949707031,
+      "allocatedMemory": 299971503,
+      "gpuMs": 5.269773958975242,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "live-armed-outpost-2",
+      "frames": 360,
+      "averageMs": 16.80593490600586,
+      "p95Ms": 17.27683448791504,
+      "p99Ms": 17.743253707885742,
+      "minimumFps": 30.34195899963379,
+      "allocatedMemory": 310195506,
+      "gpuMs": 5.162497219700729,
+      "gpuTimingAvailable": true
+    }
+  ],
+  "activity": [
+    {
+      "world": 0,
+      "native_steps": 2610,
+      "projectiles": 2,
+      "travelled_metres": 10.6692,
+      "architecture_batches": 0
+    },
+    {
+      "world": 1,
+      "native_steps": 2610,
+      "projectiles": 14,
+      "travelled_metres": 10.58354,
+      "architecture_batches": 6
+    },
+    {
+      "world": 2,
+      "native_steps": 2619,
+      "projectiles": 14,
+      "travelled_metres": 10.41127,
+      "architecture_batches": 7
+    }
+  ],
+  "simulation_running": true,
+  "camera_capture": false,
+  "long_term_stability_test": false
+}

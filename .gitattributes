@@ -1,0 +1,2 @@
+# Keep upstream license files byte-for-byte, including their original CRLF and spacing.
+UnityProject/Assets/Art/Quaternius/*License.txt -whitespace

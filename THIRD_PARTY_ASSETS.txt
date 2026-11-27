@@ -45,3 +45,24 @@ ridge extension and coastal water shader are original procedural project work.
 They reuse the credited CC0 metal/fabric maps and existing original foliage art.
 No models, characters, textures or footage from GTA or Guardians of the Galaxy
 are included. Human-like faces are procedural geometry, not likeness scans.
+
+Skinned characters and authored performances added for v0.9.0
+
+Quaternius Universal Base Characters, Universal Animation Library 1 and 2.
+Standard FREE editions, downloaded from the author on 2026-11-27.
+https://quaternius.com/packs/universalbasecharacters.html
+https://quaternius.com/packs/universalanimationlibrary.html
+https://quaternius.com/packs/universalanimationlibrary2.html
+CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+
+The included author license files are in Assets/Art/Quaternius.
+Archive and included file SHA256 hashes are in docs/validation/character-asset-manifest.json.
+The free packs provide 86 humanoid animation clips, male/female base anatomy,
+hair, eyes and skin textures. Authored animation does not imply motion capture.
+Only Standard content is included; no paid Pro or Source files were downloaded.
+
+The tailored garment material split, ceramic armor lofts, helmet design, gun
+constraints, magazine exchange choreography, contact IK and runtime animation
+graph are original project work. Native movement remains C++ driven.
+This supersedes the v0.8 primitive humanoid geometry and limb-swing animation;
+the earlier release notes above describe that historical version.

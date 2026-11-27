@@ -2,11 +2,17 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Armed alien settlement](docs/media/inhabited-aurelian-0.png)](docs/media/wayfarer-inhabited-worlds.mp4)
+[![Skinned expedition character](docs/media/animation-walk.png)](docs/media/wayfarer-animation.mp4)
 
-**[Download the Mac game — v0.8.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.8.0)** · **[Watch the inhabited-world review](docs/media/wayfarer-inhabited-worlds.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.9.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.0)** · **[Watch the character animation demo](docs/media/wayfarer-animation.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.9.0: skinned characters and authored performances
+
+The player, three companions and six armed opponent roles now share a Humanoid animation pipeline with skinned anatomy, articulated fingers, authored skin/hair assets and original curved suit armor. Blended walking, jogging and sprinting, two-handed aiming, recoil, a visible power-magazine exchange, hit reactions, landing and a full-body fall replace the earlier primitive biped motion. Driver and passenger seating uses authored clips, with weapons holstered while riding.
+
+The carbine gains a stock, vented handguard, optic and removable cell. Native movement and combat still drive gameplay; the animation graph retargets the performances and applies contact/weapon constraints. See [the motion recording, art credits and validation](docs/CHARACTER_PERFORMANCE.md). The characters are stylized; the nine wildlife rigs and procedural environment art retain their existing designs.
 
 ## v0.8.0: inhabited worlds, forests and coasts
 
@@ -63,7 +69,7 @@ The [Twelve Horizons guide](docs/TWELVE_HORIZONS.md) lists every chapter, contro
 - Reboard the parked rover, retract the tires and return to flight.
 - Play using keyboard/mouse or a PS5 DualSense controller.
 
-This remains prototype gameplay and procedural art. Hand-authored environments and characters, a full manual campaign balance pass and broader hardware testing remain production work. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
+This remains prototype gameplay and procedural art. Detailed environment production, further character art and animation polish, a full manual campaign balance pass and broader hardware testing remain production work. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
 
 ## Physics and NPC architecture
 

@@ -1,0 +1,9 @@
+{
+  "version": "0.9.0",
+  "scanner": "Gitleaks 8.30.1",
+  "full_staged_source_findings": 0,
+  "prior_full_git_history_findings": 0,
+  "source_scan_allowlist_entries": 0,
+  "app_scan": "See animation-app-security-summary.json",
+  "scope": "Complete Git index exported to a fresh directory, plus all prior Git history. The completed release commit is scanned again before pushing."
+}

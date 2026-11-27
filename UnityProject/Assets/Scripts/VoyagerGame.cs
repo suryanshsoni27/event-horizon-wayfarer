@@ -40,9 +40,9 @@ public sealed partial class DefenseGame {
   civilOpen=false;civilizationScene.HidePreview();voyagerPanel=VoyagerPanel.Home;paused=true;
   voyagerAudio=gameObject.AddComponent<VoyagerAudio>();voyagerAudio.Initialize(preferences);
   for(int i=1;i<=3;i++)if(ReadCampaign(i)!=null){slotSelection=i;break;}
-  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-qa")>=0?InhabitedWorldChecks():Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
+  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--animation-qa")>=0?AnimationChecks():Array.IndexOf(args,"--inhabited-worlds-qa")>=0?InhabitedWorldChecks():Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
   else if(voyagerBenchmark)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-benchmark")>=0?InhabitedWorldBenchmark():Array.IndexOf(args,"--cinematic-art-benchmark")>=0?CinematicArtBenchmark():VoyagerBenchmark());
-  else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-record")>=0?InhabitedWorldRecord():Array.IndexOf(args,"--cinematic-art-record")>=0?CinematicArtRecord():Array.IndexOf(args,"--ecology-record")>=0?EcologyRecord():Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
+  else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--animation-record")>=0?AnimationRecord():Array.IndexOf(args,"--inhabited-worlds-record")>=0?InhabitedWorldRecord():Array.IndexOf(args,"--cinematic-art-record")>=0?CinematicArtRecord():Array.IndexOf(args,"--ecology-record")>=0?EcologyRecord():Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
  }
  CampaignCheckpoint ReadCampaign(int slot){return CampaignFiles.Read<CampaignCheckpoint>(CampaignPath(slot),x=>x.Validate());}
  CampaignCheckpoint CaptureCampaign(){

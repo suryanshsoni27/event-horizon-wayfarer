@@ -1,0 +1,8 @@
+{
+  "version": "0.9.0",
+  "scanner": "Gitleaks 8.30.1",
+  "initial_findings": 3,
+  "verified_stock_public_key_mappings": 3,
+  "remaining_findings": 0,
+  "basis": "Complete Mono machine.config files match the installed Unity runtime byte-for-byte. Only exact stock public-key mapping fingerprints are excluded."
+}
