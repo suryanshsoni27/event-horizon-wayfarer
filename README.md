@@ -2,9 +2,9 @@
 
 A Unity space-adventure prototype with a custom C++ physics core, locally trained dynamics predictions, space NPCs, procedural planets, alien missions and a six-wheel crew rover. Built while learning Unity and experimenting with AI-assisted development.
 
-![Four astronauts riding the six-wheel rover](docs/media/rover-driving.png)
+[![Watch the complete feature tour](docs/media/wayfarer-full-feature-tour.jpg)](docs/media/wayfarer-full-feature-tour.mp4)
 
-**[Watch the 33-second rover demo](docs/media/dualsense-rover-tour.mp4)** · [Controller/rover check results](docs/validation/controller-runtime-checks.json)
+**[Watch the complete 3:23 feature tour](docs/media/wayfarer-full-feature-tour.mp4)** · [33-second rover demo](docs/media/dualsense-rover-tour.mp4) · [Recording manifest](docs/validation/feature-tour-manifest.json)
 
 ## Explore, land, drive
 
@@ -107,6 +107,10 @@ python3 tools/check_rover.py
 ```
 
 Additional native and model checks live under `tools/`. Player QA and recording commands write to the local, ignored `evidence/` directory. Reproduce the rover tour with `python3 tools/record_rover.py` and FFmpeg installed.
+
+The complete feature tour covers atlas navigation, continuous flight and landing, tire deployment, driving and crew exploration, all linked surface missions, extraction and ascent, satellite scanning, station repair, derelicts, native projectile mining, upgrades, comets, both black-hole renderers, capture, space NPC combat, physics/model architecture and local crew portraits. Captions identify staged scenes and accelerated sections. Gameplay sources were captured at 12 fps and edited at 24 fps in a 1920×1080 layout, with an original locally synthesized ambient score. The portrait insert uses a generated synthetic robot in the current local crew manager. The cut joins separate sessions and is not an uninterrupted manual playtest.
+
+After building, close the normal player and run `python3 tools/make_feature_tour.py --record` to capture and assemble the tour. Without `--record`, the tool reuses recordings under `evidence/`. The optional `--cosmos-record --feature-inserts` player flags stage the atlas, orbital, mining and workshop close-ups; ordinary gameplay is unchanged. Timing varies with recording conditions, so review the mission cuts after recapturing.
 
 The included rover demo starts from a staged valid landing, uses injected gamepad input and native driving, and protects crew health after clearing the initial patrol. It demonstrates vehicle transitions rather than a physical controller playtest, an uninterrupted landing journey or an FPS benchmark. The black-hole still comes from an earlier staged rendering showcase.
 

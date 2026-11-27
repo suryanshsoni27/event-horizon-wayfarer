@@ -15,7 +15,7 @@ using UnityEngine;
  class Profile{public string path,name;public float zoom=1,panX=.5f,panY=.5f;public int turns,width,height;}
  List<Profile> roster=new List<Profile>();Dictionary<Profile,Texture2D> textures=new Dictionary<Profile,Texture2D>();Dictionary<Transform,Material> companionMaterials=new Dictionary<Transform,Material>();int selected;bool adding,namingFocus,clearFocus;
  static HelmetPhotoUI current;Transform astronaut,face;GameObject gleam;Material faceMaterial;Camera previewCam;RenderTexture preview;bool ready,qa,pickerOpen,managerOpen,previewOpen=true;string message="Local photos become visor portraits. No reconstructed 3D likeness or uploads.";Vector2 scroll;GUIStyle label,small,title,button;
-public void AddLocalTestProfile(string path){adding=true;Load(path);managerOpen=false;}
+public void AddLocalTestProfile(string path,bool showManager=false){adding=true;Load(path);managerOpen=showManager&&AutomatedPlayback;}
  public bool AutomatedPlayback{get;private set;}
  public int CachedCount{get{return textures.Count;}}
  public int RosterCount{get{return roster.Count;}}public string SelectedName{get{return roster.Count==0?"EXPLORER":roster[selected].name;}}

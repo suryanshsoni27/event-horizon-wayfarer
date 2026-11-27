@@ -1,0 +1,21 @@
+{
+  "full_video_audio_decode": true,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "edit_fps": 24,
+  "capture_fps": 12,
+  "duration_seconds": 203.417,
+  "size_bytes": 29691510,
+  "named_chapters": 17,
+  "audio_mean_dbfs": -23.7,
+  "audio_peak_dbfs": -9.6,
+  "output_sha256": "cdc01614a7e91b9157f8b118db0457ac04ec25b7c9348a54c64efeda7aec5d3f",
+  "packaged_checks_passed": 194,
+  "filmed_milestones_passed": 34,
+  "visual_review": "Reviewed every segment midpoint and completed extraction; current crew manager uses a synthetic portrait.",
+  "controller_provenance": "Injected gamepad input; no physical DualSense connected."
+}

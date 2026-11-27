@@ -1,0 +1,516 @@
+{
+  "created_utc": "2026-11-27T05:01:57.128937+00:00",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "edit_fps": 24,
+  "capture_fps": 12,
+  "duration": 203.416667,
+  "gameplay_provenance": "Recorded Unity prototype. Scripted input and staged views; no physical DualSense connected. Cuts join separate sessions.",
+  "music": "Original locally synthesized ambient score; no third-party music.",
+  "capture_base_commit": "fa58dd0c4e6a9da8b786cc78e32147a57d16fae1",
+  "capture_code_sha256": {
+    "FeatureInserts.cs": "e0d80ee533bde87e6b6da5a16821be15974d09839501f974250a964e9587a84e",
+    "CosmosGame.cs": "dbf3dd393294380ca458a83db031d9913bd47d3bf224faf6101e0db098605928",
+    "HelmetPhotoUI.cs": "c4c3310e0f0266ec5582b083782e7186787432b5b5d797029d2155e1edd71240"
+  },
+  "sources": [
+    {
+      "file": "evidence/alien-expedition.mp4",
+      "sha256": "861e31d9dadd3688671d7610fc617ca1466e9b4fb2555c8465e318767588eede"
+    },
+    {
+      "file": "evidence/cosmos-feature-tour.mp4",
+      "sha256": "7e87465948649357a98bcc6d35a8f9a2a4e909315d59fa12d5145d2cafcfc5be"
+    },
+    {
+      "file": "evidence/dualsense-rover-tour.mp4",
+      "sha256": "ce03d5f8601be824055106565af656c78b09110e32830529bb8e22db50568250"
+    },
+    {
+      "file": "evidence/expanse-black-hole.mp4",
+      "sha256": "fc2c19e38674baec316a049f8fc91532da046ce3d1d5096fb048a537a49c1e9e"
+    },
+    {
+      "file": "evidence/expanse-combat.mp4",
+      "sha256": "c3e00c2088877ffa2410009a8658c0ae61c35c7297bbbb08a3973fe818216d85"
+    },
+    {
+      "file": "evidence/expanse-expedition.mp4",
+      "sha256": "f22d0997a04f568fe7cb24402d2c3180bb2d123ca367eabda69cdcb850f53d3a"
+    },
+    {
+      "file": "evidence/feature-inserts.mp4",
+      "sha256": "ba23c584013e3ca3e305be954aaa5ff9144236a8ba5f19fa276c79d5b025c1a4"
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0,
+      "duration": 6,
+      "card": "intro"
+    },
+    {
+      "at": 6,
+      "duration": 4.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 0,
+      "end": 4,
+      "speed": 1,
+      "chapter": "EXPLORE",
+      "number": "01",
+      "title": "Chart your next destination",
+      "details": [
+        "32 systems. 128 catalogue destinations.",
+        "Select a planet or black-hole approach."
+      ],
+      "control": "Create / Share: atlas\nD-pad: select\nCross: cruise",
+      "note": "SCRIPTED GAMEPLAY  /  1x SPEED"
+    },
+    {
+      "at": 10.0,
+      "duration": 13.0,
+      "hold_final_frame": 0,
+      "source": "expanse-expedition.mp4",
+      "start": 106.75,
+      "end": 145.75,
+      "speed": 3,
+      "chapter": "EXPLORE",
+      "number": "01",
+      "title": "Cross the system",
+      "details": [
+        "Continuous interplanetary travel.",
+        "Floating origin keeps the local world stable."
+      ],
+      "control": "",
+      "note": "SCRIPTED CONTINUOUS JOURNEY / 3x SPEED"
+    },
+    {
+      "at": 23.0,
+      "duration": 12.25,
+      "hold_final_frame": 0,
+      "source": "expanse-expedition.mp4",
+      "start": 1.9166666666666667,
+      "end": 50.916666666666664,
+      "speed": 4,
+      "chapter": "LAND",
+      "number": "02",
+      "title": "From orbit to the surface",
+      "details": [
+        "Atmosphere, clouds and procedural terrain.",
+        "Native gravity, drag and terrain contact."
+      ],
+      "control": "D-pad up: VTOL descent",
+      "note": "SCRIPTED CONTINUOUS LANDING / 4x SPEED"
+    },
+    {
+      "at": 35.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "dualsense-rover-tour.mp4",
+      "start": 0,
+      "end": 5,
+      "speed": 1,
+      "chapter": "DRIVE",
+      "number": "03",
+      "title": "Deploy six tires",
+      "details": [
+        "Landing gear unfolds into a crew rover.",
+        "Four astronauts ride aboard."
+      ],
+      "control": "D-pad down: deploy tires",
+      "note": "STAGED LANDING / INJECTED GAMEPAD / HEALTH PROTECTED"
+    },
+    {
+      "at": 40.25,
+      "duration": 9.0,
+      "hold_final_frame": 0,
+      "source": "dualsense-rover-tour.mp4",
+      "start": 5,
+      "end": 14,
+      "speed": 1,
+      "chapter": "DRIVE",
+      "number": "03",
+      "title": "Drive across the planet",
+      "details": [
+        "Steering, braking, reverse and terrain alignment.",
+        "Tires rotate; the suspension follows the ground."
+      ],
+      "control": "R2: drive / L2: reverse\nLeft stick: steer\nCross: handbrake",
+      "note": "NATIVE ROVER DRIVING / INJECTED GAMEPAD"
+    },
+    {
+      "at": 49.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "dualsense-rover-tour.mp4",
+      "start": 17,
+      "end": 22,
+      "speed": 1,
+      "chapter": "EXPLORE ON FOOT",
+      "number": "04",
+      "title": "Park. Disembark. Explore.",
+      "details": [
+        "The rover parks while the crew leaves.",
+        "Astronaut companions roam alongside you."
+      ],
+      "control": "Triangle: exit / board",
+      "note": "INJECTED GAMEPAD / INITIAL PATROL CLEARED"
+    },
+    {
+      "at": 54.25,
+      "duration": 6.0,
+      "hold_final_frame": 0,
+      "source": "dualsense-rover-tour.mp4",
+      "start": 22,
+      "end": 28,
+      "speed": 1,
+      "chapter": "EXPLORE ON FOOT",
+      "number": "04",
+      "title": "Walk, run and regroup",
+      "details": [
+        "Articulated legs, knees and carried equipment.",
+        "A distinct run animation with faster movement."
+      ],
+      "control": "Left stick: move\nL3: toggle run\nCross: hop",
+      "note": "NATIVE CREW MOVEMENT / INJECTED GAMEPAD"
+    },
+    {
+      "at": 60.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "alien-expedition.mp4",
+      "start": 2,
+      "end": 7,
+      "speed": 1,
+      "chapter": "PLANET MISSIONS",
+      "number": "05",
+      "title": "Recover the recorder",
+      "details": [
+        "Reach the site and hold interact.",
+        "Contracts begin when you land and disembark."
+      ],
+      "control": "Hold R1: interact",
+      "note": "FRESH SCRIPTED PLAYTHROUGH / DAMAGE ENABLED"
+    },
+    {
+      "at": 65.25,
+      "duration": 8.666666666666666,
+      "hold_final_frame": 0,
+      "source": "alien-expedition.mp4",
+      "start": 8,
+      "end": 21,
+      "speed": 1.5,
+      "chapter": "PLANET MISSIONS",
+      "number": "05",
+      "title": "Scan three specimens",
+      "details": [
+        "Move between research sites.",
+        "Complete all scans to unlock relay defense."
+      ],
+      "control": "L1: mission journal",
+      "note": "FRESH SCRIPTED PLAYTHROUGH / 1.5x SPEED"
+    },
+    {
+      "at": 73.917,
+      "duration": 8.0,
+      "hold_final_frame": 0,
+      "source": "alien-expedition.mp4",
+      "start": 31,
+      "end": 47,
+      "speed": 2,
+      "chapter": "ALIEN ENCOUNTERS",
+      "number": "06",
+      "title": "Defend the relay",
+      "details": [
+        "Survive waves of hostile creatures.",
+        "Aim, reload and use the suit shockwave."
+      ],
+      "control": "R2: fire / L2: aim\nSquare: reload\nCircle: suit pulse",
+      "note": "RELAY DEFENSE / DAMAGE ENABLED / 2x SPEED"
+    },
+    {
+      "at": 81.917,
+      "duration": 10.0,
+      "hold_final_frame": 0,
+      "source": "alien-expedition.mp4",
+      "start": 52,
+      "end": 62,
+      "speed": 1,
+      "chapter": "ALIEN ENCOUNTERS",
+      "number": "06",
+      "title": "Face the brood warden",
+      "details": [
+        "Attack telegraphs, weak points and creature animation.",
+        "Defeat the guardian and recover its core."
+      ],
+      "control": "Keep moving. Watch the attack rings.",
+      "note": "GUARDIAN ENCOUNTER / DAMAGE ENABLED"
+    },
+    {
+      "at": 91.917,
+      "duration": 8.416666666666666,
+      "hold_final_frame": 2,
+      "source": "alien-expedition.mp4",
+      "start": 78,
+      "end": 84.41666666666667,
+      "speed": 1,
+      "chapter": "EXTRACT",
+      "number": "07",
+      "title": "Bring the expedition home",
+      "details": [
+        "Return to the ship and board.",
+        "Completed extraction awards a one-time bonus."
+      ],
+      "control": "Triangle: board",
+      "note": "SAME PLAYTHROUGH / ALL MISSION CHECKS PASSED"
+    },
+    {
+      "at": 100.333,
+      "duration": 5.333333333333333,
+      "hold_final_frame": 0,
+      "source": "dualsense-rover-tour.mp4",
+      "start": 28,
+      "end": 33.333333333333336,
+      "speed": 1,
+      "chapter": "RETURN TO FLIGHT",
+      "number": "07",
+      "title": "Reboard and retract",
+      "details": [
+        "Gather the crew and fold the tires away.",
+        "The rover becomes a spacecraft again."
+      ],
+      "control": "Triangle: board\nD-pad down: retract",
+      "note": "STAGED VEHICLE TRANSITION / INJECTED GAMEPAD"
+    },
+    {
+      "at": 105.667,
+      "duration": 6.583333333333333,
+      "hold_final_frame": 0,
+      "source": "expanse-expedition.mp4",
+      "start": 60.416666666666664,
+      "end": 80.16666666666667,
+      "speed": 3,
+      "chapter": "RETURN TO FLIGHT",
+      "number": "07",
+      "title": "Power out of the atmosphere",
+      "details": [
+        "Thrust against the planet's gravity.",
+        "Clear the atmosphere before engaging cruise."
+      ],
+      "control": "Cross: boost",
+      "note": "SCRIPTED POWERED ASCENT / 3x SPEED"
+    },
+    {
+      "at": 112.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 12,
+      "end": 17,
+      "speed": 1,
+      "chapter": "ORBITAL ACTIVITIES",
+      "number": "08",
+      "title": "Scan a satellite",
+      "details": [
+        "Solar arrays and orbiting instruments.",
+        "Download telemetry to earn score and parts."
+      ],
+      "control": "D-pad right: orbital service",
+      "note": "STAGED ORBITAL CLOSE-UP / REAL SCAN REWARD"
+    },
+    {
+      "at": 117.25,
+      "duration": 6.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 6,
+      "end": 12,
+      "speed": 1,
+      "chapter": "ORBITAL ACTIVITIES",
+      "number": "08",
+      "title": "Repair at the research station",
+      "details": [
+        "A rotating habitat and docking structures.",
+        "Approach slowly to restore hull health."
+      ],
+      "control": "Service within 160 m\nSpeed below 15 m/s",
+      "note": "STAGED STATION APPROACH / REAL HULL REPAIR"
+    },
+    {
+      "at": 123.25,
+      "duration": 4.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 17,
+      "end": 21,
+      "speed": 1,
+      "chapter": "ORBITAL ACTIVITIES",
+      "number": "08",
+      "title": "Find a derelict freighter",
+      "details": [
+        "Cargo pods and damaged spacecraft.",
+        "Explore the objects scattered around the planet."
+      ],
+      "control": "",
+      "note": "SCRIPTED GAMEPLAY  /  1x SPEED"
+    },
+    {
+      "at": 127.25,
+      "duration": 8.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 21,
+      "end": 29,
+      "speed": 1,
+      "chapter": "MINE AND UPGRADE",
+      "number": "09",
+      "title": "Break apart an asteroid",
+      "details": [
+        "Tumbling, textured rubble surrounds the planet.",
+        "Projectile hits mine a rock and award parts."
+      ],
+      "control": "Square: ship weapon",
+      "note": "STAGED MINING / NATIVE PROJECTILE HITS / TRAFFIC CLEARED"
+    },
+    {
+      "at": 135.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 29,
+      "end": 34,
+      "speed": 1,
+      "chapter": "MINE AND UPGRADE",
+      "number": "09",
+      "title": "Fit the parts you earn",
+      "details": [
+        "Upgrade engine, hull, weapons or targeting.",
+        "Fitted modules change the ship's stats."
+      ],
+      "control": "R3: workshop\nD-pad: select / Cross: fit",
+      "note": "ACTUAL WORKSHOP / EARNED PARTS CONSUMED"
+    },
+    {
+      "at": 140.25,
+      "duration": 5.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 34,
+      "end": 39,
+      "speed": 1,
+      "chapter": "SPACE DETAILS",
+      "number": "10",
+      "title": "Follow a passing comet",
+      "details": [
+        "An icy body and a long ion-tail effect.",
+        "Orbital objects make the sky feel inhabited."
+      ],
+      "control": "",
+      "note": "STAGED CLOSE-UP / ILLUSTRATIVE COMET TAIL"
+    },
+    {
+      "at": 145.25,
+      "duration": 5.833333333333333,
+      "hold_final_frame": 0,
+      "source": "cosmos-feature-tour.mp4",
+      "start": 38.333333333333336,
+      "end": 44.166666666666664,
+      "speed": 1,
+      "chapter": "BLACK HOLES",
+      "number": "11",
+      "title": "The black holes are back",
+      "details": [
+        "A distant accretion disk marks the approach.",
+        "Select UMBRA and cruise toward it."
+      ],
+      "control": "D-pad left: black hole",
+      "note": "STAGED RENDERING SHOWCASE / PHYSICS PAUSED"
+    },
+    {
+      "at": 151.083,
+      "duration": 8.333333333333334,
+      "hold_final_frame": 0,
+      "source": "cosmos-feature-tour.mp4",
+      "start": 44.166666666666664,
+      "end": 52.5,
+      "speed": 1,
+      "chapter": "BLACK HOLES",
+      "number": "11",
+      "title": "See spacetime bend light",
+      "details": [
+        "Nearby numerical Schwarzschild lensing.",
+        "The light-ray shader is separate from gameplay gravity."
+      ],
+      "control": "",
+      "note": "NUMERICAL LENSING SHOWCASE / PHYSICS PAUSED"
+    },
+    {
+      "at": 159.417,
+      "duration": 7.0,
+      "hold_final_frame": 0,
+      "source": "expanse-black-hole.mp4",
+      "start": 15.666667,
+      "end": 22.666667,
+      "speed": 1,
+      "chapter": "BLACK HOLES",
+      "number": "11",
+      "title": "Cross the capture boundary",
+      "details": [
+        "Native capture triggers the loss sequence.",
+        "The ship stretches into an illustrative tidal effect."
+      ],
+      "control": "",
+      "note": "SCRIPTED CAPTURE / STRETCH IS AN ARTISTIC EFFECT"
+    },
+    {
+      "at": 166.417,
+      "duration": 14.0,
+      "hold_final_frame": 0,
+      "source": "expanse-combat.mp4",
+      "start": 1,
+      "end": 15,
+      "speed": 1,
+      "chapter": "SPACE NPCs",
+      "number": "12",
+      "title": "Fight independent space agents",
+      "details": [
+        "Each NPC has its own physical state and goal.",
+        "Predictions guide repeated action planning."
+      ],
+      "control": "Square: fire\nR2: thrust / Cross: boost",
+      "note": "SCRIPTED COMBAT PILOT / DAMAGE ENABLED"
+    },
+    {
+      "at": 180.417,
+      "duration": 11,
+      "card": "physics"
+    },
+    {
+      "at": 191.417,
+      "duration": 6.0,
+      "hold_final_frame": 0,
+      "source": "feature-inserts.mp4",
+      "start": 39,
+      "end": 45,
+      "speed": 1,
+      "chapter": "CUSTOM CREW",
+      "number": "13",
+      "title": "Bring your crew aboard",
+      "details": [
+        "Use local images as helmet portraits.",
+        "Session-only roster, crop and selection tools."
+      ],
+      "control": "H: local crew-photo manager",
+      "note": "CURRENT CREW MANAGER / SYNTHETIC PORTRAIT / SESSION ONLY"
+    },
+    {
+      "at": 197.417,
+      "duration": 6,
+      "card": "outro"
+    }
+  ],
+  "output_sha256": "cdc01614a7e91b9157f8b118db0457ac04ec25b7c9348a54c64efeda7aec5d3f"
+}
