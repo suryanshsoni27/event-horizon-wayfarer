@@ -4,9 +4,9 @@ Twelve Horizons adds a twelve-chapter campaign to Event Horizon / Wayfarer: your
 
 ## Download and play
 
-Download `Event-Horizon-v0.4-macOS-AppleSilicon.zip` from the [v0.4.0 release](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.4.0), unzip it, and open `Event Horizon.app`. This build runs on Apple Silicon Macs. It is not a PS5 console package; a DualSense controls the Mac game over USB or Bluetooth. The [v0.4 graphics pass](PRODUCTION_PASS.md) preserves the twelve-chapter campaign and existing checkpoints.
+Download `Event-Horizon-v0.5-macOS-AppleSilicon.zip` from the [v0.5.0 release](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.5.0), unzip it, and open `Event Horizon.app`. This build runs on Apple Silicon Macs. It is not a PS5 console package; a DualSense controls the Mac game over USB or Bluetooth. The [v0.4 graphics pass](PRODUCTION_PASS.md) and [v0.5 face-flight update](FACE_FLIGHT.md) preserve the twelve-chapter campaign and existing checkpoints.
 
-The independent Mac app is unsigned. If macOS blocks it, review the source and release, then use **System Settings → Privacy & Security → Open Anyway** for this app. The release includes a SHA-256 checksum. No account, API key, environment file or online model service is needed to play.
+The Mac app has a local ad-hoc signature; it is not Developer ID signed or notarized. If macOS blocks it, review the source and release, then use **System Settings → Privacy & Security → Open Anyway** for this app. The release includes a SHA-256 checksum. No account, API key, environment file or online model service is needed to play.
 
 ## Your first expedition
 
@@ -81,6 +81,8 @@ The three rival civilizations grow their industry, research and territorial hold
 Explore alternative legacies alongside the story: Pathfinder rewards exploration and contracts, Concord rewards diplomacy and deliveries, Guardian rewards successful wars and defense, and Starforger rewards a completed Dyson project across three worlds. Story completion awards Wayfarer.
 
 ## Controls, comfort and graphics
+
+**F7 / Settings → Face Flight** opens optional webcam steering. Turn, nod and tilt your head to steer. After calibrating your neutral face and two expressions, hold your mouth open to add throttle or smile broadly to brake. **F6** stops capture and returns to manual controls after pause; **F8** recalibrates. The camera starts only when enabled in the setup screen. Read the [calibration and privacy guide](FACE_FLIGHT.md) before using this experimental input mode.
 
 Settings include mouse and stick sensitivity, deadzone, axis inversion, aim assistance, toggle interaction, toggle aim, rumble, camera motion, high contrast and text scale. Keyboard actions and fourteen digital gamepad actions can be reassigned; conflicting bindings swap. Analog trigger roles remain fixed. Reset a binding page with **Delete / Square**. The menu displays reassigned controller action names.
 

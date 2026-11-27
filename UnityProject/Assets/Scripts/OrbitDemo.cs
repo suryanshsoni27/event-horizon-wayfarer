@@ -112,7 +112,7 @@ public class OrbitDemo : MonoBehaviour {
  void Panel(float x,float y,float w,float h){GUI.color=new Color(.025f,.05f,.075f,.94f);GUI.DrawTexture(new Rect(x,y,w,h),Texture2D.whiteTexture);GUI.color=Color.white;}
  string XYZ(Vector3 p){return p.x.ToString("F2")+"  /  "+p.y.ToString("F2")+"  /  "+p.z.ToString("F2");}
  void AxisLabel(Vector3 p,string text){var q=cam.WorldToScreenPoint(p);if(q.z>0){GUI.Label(new Rect(q.x/Screen.width*1600,1000-q.y/Screen.height*1000,140,30),text,small);}}
- void OnGUI(){if(game!=null){game.DrawGUI();return;}Styles();GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,new Vector3(Screen.width/1600f,Screen.height/1000f,1));
+ void OnGUI(){if(game!=null){game.DrawGUI();game.DrawHeadPilotOverlay();return;}Styles();GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,new Vector3(Screen.width/1600f,Screen.height/1000f,1));
   Text(48,37,"E V E N T   /   H O R I Z O N",small);Text(45,66,"Orbit beyond the plane.",title);Text(48,119,"3D FIELD LAB    /    INCLINED LAUNCH 55°",small);
   Text(1170,42,"LIGHT: NUMERICAL SCHWARZSCHILD / Rs = 1",small);Text(1170,70,"F   RAY QUALITY: "+new[]{"LOW","MEDIUM","HIGH"}[quality],small);
   AxisLabel(Vector3.right*11,"+X");AxisLabel(Vector3.up*11,"+Y");AxisLabel(Vector3.forward*11,"+Z  DEPTH");

@@ -21,7 +21,9 @@ public static class BuildDemo {
    bool dataMap=importer.assetPath.Contains("normal")||importer.assetPath.Contains("_arm");bool changed=importer.sRGBTexture==dataMap||importer.anisoLevel!=8||!importer.mipmapEnabled||importer.maxTextureSize!=1024||importer.wrapMode!=TextureWrapMode.Repeat;
    importer.sRGBTexture=!dataMap;importer.anisoLevel=8;importer.mipmapEnabled=true;importer.maxTextureSize=1024;importer.wrapMode=TextureWrapMode.Repeat;if(changed)importer.SaveAndReimport();
   }
-  PlayerSettings.bundleVersion="0.4.0";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
+  PlayerSettings.bundleVersion="0.5.0";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
+  var playerConfig=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);
+  playerConfig.FindProperty("cameraUsageDescription").stringValue="Use your camera for optional local face-flight steering and a live preview. Video is not recorded or uploaded.";playerConfig.ApplyModifiedPropertiesWithoutUndo();
   var scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
   var camera=new GameObject("Main Camera");camera.tag="MainCamera";camera.AddComponent<Camera>();camera.AddComponent<UniversalAdditionalCameraData>();
   new GameObject("Orbital Field Lab").AddComponent<OrbitDemo>();
@@ -30,6 +32,12 @@ public static class BuildDemo {
   AssetDatabase.SaveAssets();
   var report=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{"Assets/Scenes/Orbit.unity"},locationPathName="../Build/Event Horizon.app",target=BuildTarget.StandaloneOSX,options=BuildOptions.None});
   if(report.summary.result!=UnityEditor.Build.Reporting.BuildResult.Succeeded)throw new System.Exception("Build failed: "+report.summary.result);
+  string bundle=System.IO.Path.GetFullPath("../Build/Event Horizon.app"),info=System.IO.Path.Combine(bundle,"Contents/Info.plist");
+  var plist=System.Xml.Linq.XDocument.Load(info);var dict=plist.Root.Element("dict");bool continuity=false;
+  foreach(var element in dict.Elements("key"))if(element.Value=="NSCameraUseContinuityCameraDeviceType")continuity=true;
+  if(!continuity)dict.Add(new System.Xml.Linq.XElement("key","NSCameraUseContinuityCameraDeviceType"),new System.Xml.Linq.XElement("true"));plist.Save(info);
+  // Re-apply a local ad-hoc signature after the Info.plist capability update.
+  var signing=System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("/usr/bin/codesign","--force --deep --sign - \""+bundle+"\""){UseShellExecute=false});signing.WaitForExit();if(signing.ExitCode!=0)throw new System.Exception("Local app signing failed.");
   Debug.Log("ORBIT_BUILD_SUCCESS "+report.summary.totalSize);
  }
 }

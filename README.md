@@ -4,9 +4,17 @@ A Unity space-adventure and civilization prototype with a custom C++ physics cor
 
 [![Graphics and production pass](docs/media/production-city-after.jpg)](docs/media/wayfarer-production-tour.mp4)
 
-**[Download the Mac game — v0.4.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.4.0)** · **[Watch the new graphics tour](docs/media/wayfarer-production-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.5.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.5.0)** · **[Watch the graphics tour](docs/media/wayfarer-production-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.5.0: face flight
+
+Use a live webcam preview and head movements to pilot the ship. Turn to yaw, nod to pitch and tilt to bank. Hold your mouth open to increase throttle; a broad smile cuts thrust and applies the native brake. A three-step calibration learns your neutral pose, open mouth and smile for the current session. Small head movements pass through an adjustable dead zone and smoothing filter.
+
+Open **F7 / Settings → Face Flight**, start the camera, allow macOS camera access, follow calibration, then select **Arm / Switch to manual flight**. Look forward with a relaxed face to engage steering. **F6** stops the camera; **F8** opens recalibration. Mouse, controller stick or keyboard steering can take over. Speed and weapons can also use their usual controls. Face gestures do not fire weapons.
+
+Camera capture is off at startup. Video, landmarks and calibration stay in memory on this Mac; the game does not record, upload or identify the face. It stops capture when the app leaves the foreground or closes. Lost/stale tracking or a second face suspends flight intent and pauses/disarms face flight. See the [face-flight guide and validation limits](docs/FACE_FLIGHT.md). Live hardware feel and an end-to-end flight with a person in front of the webcam still need manual validation; automated checks use an offline public image and injected poses.
 
 ## v0.4.0: graphics and production fixes
 
@@ -119,11 +127,12 @@ Controller tests use injected DualSense HID reports and a virtual gamepad. A phy
 
 ## Verification
 
-The v0.4.0 packaged player passed **378 automated checks**: 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Production QA measures terrain continuity and platform contact, exercises animation and live graphics controls, migrates preferences and restores an actual v0.3 checkpoint. Campaign and civilization QA cover chapter gates, increasing difficulty, native landing, rover transitions, physical contracts, fitting, economy, native rockets and fleet combat. Reviewed results live in [docs/validation](docs/validation/production-validation.json).
+The v0.5.0 packaged player passed **428 automated checks**: 50 face-flight, 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Face-flight QA runs the real native detector on a public test image, checks rotation/scale-resistant gesture geometry, calibration and tracking loss, then injects poses through actual ship steering, thrust and native braking. Production and campaign suites cover terrain, graphics controls, old saves, chapter gates, physical contracts and civilization systems. Reviewed face-flight results live in [docs/validation](docs/validation/head-pilot-validation.json).
 
 After building and closing the normal player:
 
 ```sh
+python3 tools/check_head_pilot.py
 python3 tools/check_production.py
 python3 tools/check_voyager.py
 python3 tools/check_civilization.py
@@ -133,7 +142,7 @@ python3 tools/benchmark_voyager.py --ultra --width 1920 --height 1080
 python3 tools/record_production.py
 ```
 
-The [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
+The v0.4 [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These earlier measurements do not include live camera processing. They are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
 
 The new [50-second graphics tour](docs/media/wayfarer-production-tour.mp4) shows ship designs, graded terrain, walking and sprinting, alien fleet combat, planetary atmosphere and graphics settings at 1920×1080 and 30 FPS. It uses seeded resources, scripted inputs and staged cameras, labeled on screen. Simulation advances at a fixed 1/30 second per captured frame. The original ambient score is assembled separately. It is not a performance benchmark or a live-audio recording. The [manifest](docs/validation/production-record-manifest.json) includes measured simulation timing for each segment.
 

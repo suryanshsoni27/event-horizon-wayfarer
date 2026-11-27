@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public sealed partial class DefenseGame {
- enum VoyagerPanel {None,Home,Pause,Settings,Contracts,Outfitter,Colonies,Chapters,Defeat}
+ enum VoyagerPanel {None,Home,Pause,Settings,Contracts,Outfitter,Colonies,Chapters,Defeat,HeadPilot}
  VoyagerState voyager;CivilizationModel legacyCivilization;
  VoyagerSettings preferences;
  VoyagerPanel voyagerPanel;
@@ -40,7 +40,7 @@ public sealed partial class DefenseGame {
   civilOpen=false;civilizationScene.HidePreview();voyagerPanel=VoyagerPanel.Home;paused=true;
   voyagerAudio=gameObject.AddComponent<VoyagerAudio>();voyagerAudio.Initialize(preferences);
   for(int i=1;i<=3;i++)if(ReadCampaign(i)!=null){slotSelection=i;break;}
-  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
+  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
   else if(voyagerBenchmark)StartCoroutine(VoyagerBenchmark());
   else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
  }
@@ -99,7 +99,7 @@ public sealed partial class DefenseGame {
   if(!qa&&!automatedPlayback)try{CampaignFiles.Write(SettingsPath,preferences,x=>x.UpgradeAndValidate());}catch(Exception){Toast("Settings could not be saved.");}
  }
  void OpenVoyager(VoyagerPanel panel){
-  if(voyager==null)return;voyagerPanel=panel;voyagerSelection=0;civilOpen=false;civilPlacing=false;chartOpen=upgradeOpen=false;
+  if(voyager==null)return;SuspendHeadPilot();voyagerPanel=panel;voyagerSelection=0;civilOpen=false;civilPlacing=false;chartOpen=upgradeOpen=false;
   civilizationScene.HideGhost();civilizationScene.HidePreview();if(surface!=null)surface.Journal=false;
   paused=true;if(voyagerAudio!=null)voyagerAudio.Silence();releaseFire=true;playerAction=Vector3.zero;roverDrive=0;Controls.SuppressUntilNeutral();Cursor.lockState=CursorLockMode.None;Cursor.visible=true;
   StopRumble();if(panel==VoyagerPanel.Contracts)EnsureContracts();
@@ -127,6 +127,7 @@ public sealed partial class DefenseGame {
   int direction=(GameKeyDown(KeyCode.RightArrow)||PadDown(PilotInput.Button.Right)||PadDown(PilotInput.Button.R1)?1:0)-(GameKeyDown(KeyCode.LeftArrow)||PadDown(PilotInput.Button.Left)||PadDown(PilotInput.Button.L1)?1:0);
   if(voyagerPanel==VoyagerPanel.Home){slotSelection=(slotSelection-1+direction+3)%3+1;if(direction!=0)overwriteSlot=0;voyagerSelection=(voyagerSelection+5)%5;}
   if(voyagerPanel==VoyagerPanel.Defeat)voyagerSelection=(voyagerSelection+2)%2;
+  if(voyagerPanel==VoyagerPanel.HeadPilot){voyagerSelection=(voyagerSelection+HeadPilotRows)%HeadPilotRows;if(direction!=0)HeadPilotAction(voyagerSelection,direction);}
   if(voyagerPanel==VoyagerPanel.Pause)voyagerSelection=(voyagerSelection+9)%9;
   if(voyagerPanel==VoyagerPanel.Outfitter){moduleCategory=(moduleCategory+direction+4)%4;voyagerSelection=(voyagerSelection+3)%3;}
   if(voyagerPanel==VoyagerPanel.Settings){voyagerSelection=(voyagerSelection+SettingsRows())%SettingsRows();if(direction!=0)AdjustSetting(voyagerSelection,direction);}
@@ -143,6 +144,7 @@ public sealed partial class DefenseGame {
   return true;
  }
  void VoyagerPrimary(){
+  if(voyagerPanel==VoyagerPanel.HeadPilot){HeadPilotAction(voyagerSelection);return;}
   if(voyagerPanel==VoyagerPanel.Home){
    if(voyagerSelection==0){if(ReadCampaign(slotSelection)==null&&legacyCivilization!=null){var imported=JsonUtility.FromJson<CivilizationModel>(JsonUtility.ToJson(legacyCivilization));NewCampaign(slotSelection);civilization=imported;RebuildCivilPresentation();health=HullMaximum;SaveCampaign();Toast("Previous civilization imported. The original file is preserved.");}else LoadCampaign(slotSelection);}
    else if(voyagerSelection==1){if(ReadCampaign(slotSelection)!=null&&overwriteSlot!=slotSelection){overwriteSlot=slotSelection;Toast("This slot has a campaign. Select New campaign again to replace it.");}else NewCampaign(slotSelection,newCampaignScenario);}

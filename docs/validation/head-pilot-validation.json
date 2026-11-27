@@ -1,0 +1,36 @@
+{
+  "version": "0.5.0",
+  "platform": "macOS Apple Silicon",
+  "unity": "6000.6.10f1",
+  "new_face_flight_checks": 50,
+  "existing_player_checks": 378,
+  "total_player_checks": 428,
+  "all_passed": true,
+  "native_detector": "Apple Vision face rectangles revision 3 followed by landmarks revision 3",
+  "offline_face_fixture": "../../tools/fixtures/head-pilot-astronaut-source.json",
+  "actual_native_image_detection_tested": true,
+  "actual_ship_physics_with_injected_pose_tested": true,
+  "camera_permission_requested_by_automation": false,
+  "live_webcam_manual_playtest": false,
+  "private_face_video_recorded_or_published": false,
+  "session_calibration_persisted": false,
+  "remaining_manual_checks": [
+    "Live camera permission flow and sustained capture",
+    "Head-axis direction and feel for the selected camera",
+    "Real-person expression calibration in varied lighting",
+    "Live tracking latency, comfort and loss/recovery",
+    "USB and Continuity Camera behavior on other Macs"
+  ],
+  "suites": {
+    "voyager": 87,
+    "civilization": 64,
+    "game": 29,
+    "planet": 20,
+    "expanse": 33,
+    "surface": 33,
+    "cosmos": 28,
+    "controller": 51,
+    "production": 33,
+    "head-pilot": 50
+  }
+}

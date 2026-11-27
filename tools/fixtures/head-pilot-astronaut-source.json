@@ -1,0 +1,9 @@
+{
+  "file": "head-pilot-astronaut.png",
+  "source": "https://raw.githubusercontent.com/scikit-image/scikit-image/main/src/_skimage2/data/astronaut.png",
+  "license_source": "https://scikit-image.org/docs/stable/api/skimage.data#skimage.data.astronaut",
+  "license": "Public domain NASA photograph; no known copyright restrictions.",
+  "bytes": 791555,
+  "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+  "purpose": "Unmodified public test image for offline Apple Vision validation. This is not the player and is never presented as live camera capture."
+}

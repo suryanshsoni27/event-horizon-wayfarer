@@ -53,6 +53,7 @@ public sealed partial class DefenseGame {
   else if(voyagerPanel==VoyagerPanel.Outfitter)DrawVoyagerOutfitter();
   else if(voyagerPanel==VoyagerPanel.Colonies)DrawVoyagerColonies();
   else if(voyagerPanel==VoyagerPanel.Chapters)DrawVoyagerChapters();
+  else if(voyagerPanel==VoyagerPanel.HeadPilot)DrawHeadPilotSetup();
   else DrawVoyagerDefeat();
   VBox(new Rect(60,934,1480,1),new Color(.15f,.25f,.30f));
   VText(new Rect(64,951,1470,38),toastTime>0?voyagerToast:"D-pad / arrows select   •   Cross / Enter act   •   Circle / Escape back   •   "+saveStatus,VoyagerFont.Small,toastTime>0?vGold:vMuted);
@@ -86,6 +87,7 @@ public sealed partial class DefenseGame {
   VBar(new Rect(765,643,710,9),CampaignChapters.Progress(voyager.chapter,voyager,civilization),vCyan);
   VText(new Rect(766,703,704,100),civilization.LevelName+" / "+civilization.Population.ToString("F0")+" citizens\n"+civilization.alloy.ToString("F0")+" alloy / "+civilization.energy.ToString("F0")+" energy / "+civilization.science.ToString("F0")+" science",VoyagerFont.Body,vCyan);
   VText(new Rect(767,836,710,57),"Slot "+voyager.slot+" / "+saveStatus+"\nF5 saves while exploring. Checkpoints preserve your expedition.",VoyagerFont.Small);
+  if(VButton(new Rect(765,775,710,49),"FACE FLIGHT / CAMERA SETUP (F7)"))OpenVoyager(VoyagerPanel.HeadPilot);
  }
  int SettingsRows(){return settingsPage==0?18:settingsPage==1?remappableKeys.Length:settingsPage==2?14:6;}
  string SettingLabel(int index){
@@ -126,7 +128,8 @@ public sealed partial class DefenseGame {
    int col=i%2,row=i/2;Rect rect=new Rect(80+col*750,322+row*62,727,51);
    if(VButton(rect,SettingLabel(i),voyagerSelection==i)){voyagerSelection=i;AdjustSetting(i,1);}
   }
-  VText(new Rect(85,896,1435,30),"Left / right adjusts   •   Cross selects   •   Triangle / G changes page   •   Square resets page   •   Escape cancels rebind",VoyagerFont.Small);
+  if(VButton(new Rect(80,887,710,43),"FACE FLIGHT / CAMERA SETUP (F7)"))OpenVoyager(VoyagerPanel.HeadPilot);
+  VText(new Rect(825,894,690,33),"Left / right adjusts • Cross selects • Triangle / G pages",VoyagerFont.Small);
  }
  void DrawRebinding(){
   VBox(new Rect(0,0,1600,1000),new Color(0,.01f,.025f,.96f));

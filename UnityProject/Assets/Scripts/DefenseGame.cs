@@ -55,7 +55,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
   prior=JsonUtility.FromJson<Prior>(Resources.Load<TextAsset>("defense-risk").text);risk=new Risk(prior);lit=new Material(Shader.Find("Universal Render Pipeline/Lit"));glow=new Material(Shader.Find("Orbit/Glow"));
   var list=new List<Vector3>{Vector3.zero,Vector3.right,Vector3.left,Vector3.up,Vector3.down,Vector3.forward,Vector3.back};for(int x=-1;x<=1;x+=2)for(int y=-1;y<=1;y+=2)for(int z=-1;z<=1;z+=2)list.Add(new Vector3(x,y,z).normalized);candidates=list.ToArray();
   foreach(var r in FindObjectsByType<LineRenderer>(FindObjectsSortMode.None))if(r.name.Contains("navigation")||r.name.Contains("World axis")||r.name.Contains("Depth projection"))r.enabled=false;
-  BuildOpponents();BuildRocket();CinematicPresentation.Configure(cam);expedition=gameObject.AddComponent<PlanetExpedition>();expedition.Initialize(this,cam,agents[0].root);if(!legacyUniverse){gameObject.AddComponent<SurfaceScatter>().Initialize(expedition);surface=gameObject.AddComponent<SurfaceOperations>();surface.Initialize(this,expedition,cam);space=gameObject.AddComponent<SpaceEnvironment>();space.Initialize(this,expedition);BuildRover();}bestScore=long.Parse(PlayerPrefs.GetString("BestScore","0"));ResetRound();ready=true;InitializeCivilization(args);InitializeVoyager(args);
+  BuildOpponents();BuildRocket();CinematicPresentation.Configure(cam);expedition=gameObject.AddComponent<PlanetExpedition>();expedition.Initialize(this,cam,agents[0].root);if(!legacyUniverse){gameObject.AddComponent<SurfaceScatter>().Initialize(expedition);surface=gameObject.AddComponent<SurfaceOperations>();surface.Initialize(this,expedition,cam);space=gameObject.AddComponent<SpaceEnvironment>();space.Initialize(this,expedition);BuildRover();}bestScore=long.Parse(PlayerPrefs.GetString("BestScore","0"));ResetRound();ready=true;InitializeCivilization(args);InitializeVoyager(args);InitializeHeadPilot(args);
   if(civilQA||civilRecord||voyagerQA||voyagerBenchmark||voyagerRecord){}else if(Array.IndexOf(args,"--controller-qa")>=0)StartCoroutine(ControllerChecks());else if(Array.IndexOf(args,"--rover-record")>=0)StartCoroutine(RoverRecord());else if(Array.IndexOf(args,"--cosmos-qa")>=0)StartCoroutine(CosmosChecks());else if(Array.IndexOf(args,"--cosmos-record")>=0)StartCoroutine(CosmosRecord());else if(Array.IndexOf(args,"--surface-qa")>=0)StartCoroutine(SurfaceChecks());else if(Array.IndexOf(args,"--surface-record")>=0)StartCoroutine(SurfaceRecord());else if(Array.IndexOf(args,"--expanse-qa")>=0)StartCoroutine(ExpanseChecks());else if(Array.IndexOf(args,"--expanse-record")>=0)StartCoroutine(ExpanseRecord());else if(Array.IndexOf(args,"--expanse-capture")>=0)StartCoroutine(ExpanseCaptureRecord());else if(Array.IndexOf(args,"--expanse-combat")>=0){quality=2;ApplyQuality();StartCoroutine(Record());}else if(qa)StartCoroutine(Checks());else if(Array.IndexOf(Environment.GetCommandLineArgs(),"--planet-record")>=0)StartCoroutine(PlanetRecord());else if(Array.IndexOf(Environment.GetCommandLineArgs(),"--planet-qa")>=0)StartCoroutine(PlanetChecks());else if(Array.IndexOf(Environment.GetCommandLineArgs(),"--approach-record")>=0)StartCoroutine(ApproachRecord());else if(Array.IndexOf(Environment.GetCommandLineArgs(),"--game-record")>=0)StartCoroutine(Record());
  }
  Material M(Color c,bool additive=false){var m=new Material(additive?glow:lit);m.SetColor(additive?"_Color":"_BaseColor",c);if(!additive)m.SetFloat("_Smoothness",.55f);return m;}
@@ -145,6 +145,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
   return chosen;
  }
  public void Tick(float delta){
+  if(HeadPilotTick())return;
   if(Controls!=null&&ControllerMenu())return;
   if(CivilMenuInput())return;
   if(inTidal){if(voyager==null&&GameKeyDown(KeyCode.R))ResetRound();else{if(GameKeyDown(KeyCode.Escape)||GameKeyDown(KeyCode.P))paused=!paused;if(!paused)UpdateTidal(delta);return;}}
@@ -175,7 +176,8 @@ public sealed partial class DefenseGame : MonoBehaviour {
    float yawDelta=Mathf.Clamp(mouseX,-15,15)+((GameKey(KeyCode.RightArrow)?1:0)-(GameKey(KeyCode.LeftArrow)?1:0))*65*delta+Controls.Look.x*85*delta;
    float pitchDelta=Mathf.Clamp(mouseY,-15,15)+((GameKey(KeyCode.DownArrow)?1:0)-(GameKey(KeyCode.UpArrow)?1:0))*55*delta-Controls.Look.y*70*delta;
    float rollDelta=((GameKey(KeyCode.Q)||PadHeld(PilotInput.Button.L1)?1:0)-(GameKey(KeyCode.E)||PadHeld(PilotInput.Button.R1)?1:0))*75*delta;
-   desiredRotation=desiredRotation*Quaternion.Euler(pitchDelta,yawDelta,rollDelta);throttle=Mathf.Clamp01(throttle+((GameKey(KeyCode.W)?1:0)-(GameKey(KeyCode.S)?1:0))*.65f*delta);if(Controls.UsingPad&&Controls.Connected)throttle=Controls.R2;
+   HeadPilotFlightInput(delta,ref mouseX,ref mouseY,ref yawDelta,ref pitchDelta,ref rollDelta);
+   desiredRotation=desiredRotation*Quaternion.Euler(pitchDelta,yawDelta,rollDelta);throttle=Mathf.Clamp01(throttle+((GameKey(KeyCode.W)?1:0)-(GameKey(KeyCode.S)?1:0))*.65f*delta);bool mouthThrottle=HeadSteeringActive&&headPilot.Settings.mouthControls;if(Controls.UsingPad&&Controls.Connected&&(!mouthThrottle||Controls.R2>.05f))throttle=Controls.R2;if(HeadGestureBrake)throttle=0;
   }
   if(recording){var target=agents[selected];Vector3 aim=legacyUniverse?Pos(target.state)+Vel(target.state)*Vector3.Distance(Pos(target.state),Pos(player))/18-Pos(player):RecordedIntercept(target);if(salvage.Count>0&&Vector3.Distance(salvage[0].p,Pos(player))<28)aim=salvage[0].p-Pos(player);desiredRotation=Quaternion.LookRotation(aim,Vector3.up);throttle=.8f;}
   shipRotation=Quaternion.Slerp(shipRotation,desiredRotation,1-Mathf.Exp(-12*Mathf.Min(delta,.1f)));Quaternion orientation=shipRotation;rocket.rotation=orientation;
@@ -184,7 +186,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
   float main=throttle*(legacyUniverse?5:9)*(civilization==null?1:CivilizationModel.HullThrust[civilization.blueprint])*(1+.25f*tiers[0])*(voyager==null?1:voyager.Thrust)*(boost?1.7f:1)*governor;
   playerAction=orientation*new Vector3(lateral*(legacyUniverse?2:3.5f),vertical*(legacyUniverse?2:3.5f),main);
   if(flightAssist){Vector3 side=Quaternion.Inverse(orientation)*Vel(player);playerAction+=orientation*Vector3.ClampMagnitude(new Vector3(-side.x*.4f,-side.y*.4f,0),.35f);}
-  if(GameKey(KeyCode.Space)||Controls.L2>.05f)playerAction+=Vector3.ClampMagnitude(-Vel(player),5*(1+.25f*tiers[0]));
+  if(GameKey(KeyCode.Space)||Controls.L2>.05f||HeadGestureBrake)playerAction+=Vector3.ClampMagnitude(-Vel(player),5*(1+.25f*tiers[0]));
   if(planetRecording)playerAction+=scriptRCS;if(scriptBrake)playerAction+=Vector3.ClampMagnitude(-Vel(player),5);
   if(cruising){playerAction=CruiseForce(delta);main=25;}if(landingAssist){playerAction=LandingForce();main=3;}if(cruiseBraking){playerAction=CruiseBrake();main=0;}if(expanseRecording&&!cruising&&!landingAssist&&!cruiseBraking&&!expanseMainEngine)playerAction=expanseAction;
   if(expedition.OnFoot){throttle=0;playerAction=Vector3.zero;if((!automatedPlayback||Controls.TestDevice!=null)&&!paused&&outcome=="")expedition.InputTick(delta);}

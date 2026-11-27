@@ -1,0 +1,15 @@
+{
+  "version": "0.5.0",
+  "file": "Event-Horizon-v0.5-macOS-AppleSilicon.zip",
+  "bytes": 55224020,
+  "sha256": "13a7210f468eb177f0381290856906689801c316b1b4b9206736f39e8e662023",
+  "zip_crc_passed": true,
+  "executable_architecture": "arm64",
+  "ad_hoc_signature_verified": true,
+  "distribution_signed_or_notarized": false,
+  "camera_usage_declared": true,
+  "continuity_camera_declared": true,
+  "facepilot_native_library_packaged": true,
+  "environment_private_save_and_camera_preference_paths_absent": true,
+  "offline_test_portrait_not_packaged": true
+}
