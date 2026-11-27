@@ -4,7 +4,7 @@ Twelve Horizons adds a twelve-chapter campaign to Event Horizon / Wayfarer: your
 
 ## Download and play
 
-Download `Event-Horizon-Twelve-Horizons-macOS-AppleSilicon.zip` from the [v0.3.0 release](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.3.0), unzip it, and open `Event Horizon.app`. This build runs on Apple Silicon Macs. It is not a PS5 console package; a DualSense controls the Mac game over USB or Bluetooth.
+Download `Event-Horizon-v0.4-macOS-AppleSilicon.zip` from the [v0.4.0 release](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.4.0), unzip it, and open `Event Horizon.app`. This build runs on Apple Silicon Macs. It is not a PS5 console package; a DualSense controls the Mac game over USB or Bluetooth. The [v0.4 graphics pass](PRODUCTION_PASS.md) preserves the twelve-chapter campaign and existing checkpoints.
 
 The independent Mac app is unsigned. If macOS blocks it, review the source and release, then use **System Settings → Privacy & Security → Open Anyway** for this app. The release includes a SHA-256 checksum. No account, API key, environment file or online model service is needed to play.
 
@@ -84,9 +84,9 @@ Explore alternative legacies alongside the story: Pathfinder rewards exploration
 
 Settings include mouse and stick sensitivity, deadzone, axis inversion, aim assistance, toggle interaction, toggle aim, rumble, camera motion, high contrast and text scale. Keyboard actions and fourteen digital gamepad actions can be reassigned; conflicting bindings swap. Analog trigger roles remain fixed. Reset a binding page with **Delete / Square**. The menu displays reassigned controller action names.
 
-Graphics presets are **Performance, Balanced and Ultra**, using 75%, 90% and 100% render scale with increasing shadow distance. Frame-rate targets are 30, 60 or 120 FPS. Master, music and effects volumes are separate. Original synthesized music, spatial effects, engines, footsteps, weapon impacts and chapter cues play locally.
+Settings have four pages: **Feel & Audio**, **Keyboard Actions**, **Controller Actions** and **Graphics & Camera**. Use the tabs or **G / Triangle** to change pages. Graphics presets are **Performance, Balanced and Ultra**, using 75%, 90% and 100% render scale with increasing shadow distance. Frame-rate targets are 30, 60 or 120 FPS. Anti-aliasing offers Off, FXAA and SMAA; shadows offer Off, Hard and Soft. Bloom ranges from 0 to 0.8 and base field of view from 55° to 90°, with aim/run camera adjustments. Graphics reset preserves keyboard/controller bindings. Master, music and effects volumes are separate. Original synthesized music, spatial effects, engines, footsteps, weapon impacts and chapter cues play locally.
 
-The presentation adds revised original ship geometry, materials, terrain lighting, stellar coronas, pooled impacts and ground dust, cleaner menus and a chapter HUD. The game still uses procedural prototype art; distant terrain transitions and animation need further polish. It is not a finished AAA production or a photorealistic asset library. Rumble is implemented through Unity's controller support; a physical DualSense was not connected for verification. USB/Bluetooth feel, rumble on that device, adaptive triggers and gyro controls are unverified or unsupported.
+The presentation adds physically based materials, textured suits, beveled ship armor, original HDR reflections, distinct alien ships, stitched terrain and graded colony foundations. Walk and sprint use distance-driven animation with slope-aware foot placement and pelvis adjustment. Hand-authored environments, characters and animations remain future production work; this is not a finished AAA production. Rumble is implemented through Unity's controller support; a physical DualSense was not connected for verification. USB/Bluetooth feel and device rumble remain unverified. Adaptive triggers and gyro controls are unsupported.
 
 ## Checkpoints and privacy
 
@@ -96,16 +96,20 @@ Checkpoints include civilization, chapters, contracts, cargo, modules, the world
 
 Files are stored in Unity's local persistent-data directory as `wayfarer-campaign-slot-N.json` and `wayfarer-settings-v1.json`. The previous `wayfarer-civilization-v1.json` is retained for import. No credentials, environment variables or crew photograph pixels enter these saves, the public source or the release archive. Crew portraits are session-local.
 
+The settings payload is version 2 inside the existing filename and checksum envelope. Version 1 preferences migrate automatically while retaining bindings, sensitivity, audio and difficulty. Campaign format remains compatible with v0.3. Defeat unlocks the pointer; select **Restore checkpoint** or **Save slots / Home** with keyboard, mouse or controller.
+
 ## Reproduce the validation and showcase
 
 Build the Mac player using the [repository instructions](../README.md#build-on-macos--apple-silicon), close any normal player, then run:
 
 ```sh
+python3 tools/check_production.py
 python3 tools/check_voyager.py
 python3 tools/check_civilization.py
 python3 tools/verify_game.py
 python3 tools/benchmark_voyager.py
-python3 tools/record_voyager.py
+python3 tools/benchmark_voyager.py --ultra --width 1920 --height 1080
+python3 tools/record_production.py
 ```
 
 QA and recording use isolated files under the ignored `evidence/` directory. The campaign suite checks all chapter gates and monotonic difficulty, actual native landing and rover transitions, physical contract interactions, native escort motion and damage, modules, shields, remapping and full checkpoint recovery. Automated checks do not replace a complete manual twelve-chapter balance playthrough.

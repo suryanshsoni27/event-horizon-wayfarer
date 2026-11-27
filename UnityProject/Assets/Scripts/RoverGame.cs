@@ -20,7 +20,7 @@ public sealed partial class DefenseGame {
   return true;
  }
  Vector3 TerrainNormal(Vector3 p){var body=expedition.Nearest(p);Vector3 up=(p-body.body.P).normalized,right=PlanetExpedition.SurfaceTangent(up,Vector3.right),forward=Vector3.Cross(right,up).normalized;
-  System.Func<Vector3,Vector3> ground=q=>{Vector3 d=(q-body.body.P).normalized;return body.body.P+d*((float)body.body.radius+PlanetExpedition.Height(d,body.body.seed,body.body.radius));};
+  System.Func<Vector3,Vector3> ground=q=>{Vector3 d=(q-body.body.P).normalized;return body.body.P+(voyager!=null&&body.lod!=null?body.lod.SampleSurface(d):d*((float)body.body.radius+PlanetExpedition.Height(d,body.body.seed,body.body.radius)));};
   Vector3 n=Vector3.Cross(ground(p+forward*1.5f)-ground(p-forward*1.5f),ground(p+right*1.5f)-ground(p-right*1.5f)).normalized;return Vector3.Dot(n,up)<0?-n:n;
  }
  void RoverInput(float dt){if(!RoverDeployed)return;throttle=0;playerAction=Vector3.zero;landingAssist=cruising=cruiseBraking=false;
@@ -50,7 +50,7 @@ public sealed partial class DefenseGame {
  void RoverPose(float dt){if(roverView==null)return;float speed=Vector3.Dot(Vel(player),ShipForward);roverView.Pose(wheelDeployment,roverSteer,speed,dt,expedition,!paused&&outcome=="");var canopy=rocket.Find("Canopy");if(canopy!=null)canopy.gameObject.SetActive(wheelDeployment<.05f);
   if(RoverDeployed&&!expedition.OnFoot&&wheelDeployment>.1f)expedition.SeatCrew(rocket,Mathf.SmoothStep(0,1,wheelDeployment));
  }
- void RoverCamera(float dt){Vector3 p=Pos(player),up=ShipUp,f=Quaternion.AngleAxis(roverCameraYaw,up)*ShipForward,right=Vector3.Cross(up,f).normalized;Vector3 look=Quaternion.AngleAxis(roverCameraPitch,right)*f;Vector3 goal=p-look*9.4f+up*2.1f;cam.transform.position=Vector3.Lerp(cam.transform.position,goal,1-Mathf.Exp(-8*dt));cam.transform.rotation=Quaternion.Slerp(cam.transform.rotation,Quaternion.LookRotation(p+up*.8f-cam.transform.position,up),1-Mathf.Exp(-10*dt));cam.fieldOfView=Mathf.Lerp(cam.fieldOfView,65,1-Mathf.Exp(-6*dt));}
+ void RoverCamera(float dt){Vector3 p=Pos(player),up=ShipUp,f=Quaternion.AngleAxis(roverCameraYaw,up)*ShipForward,right=Vector3.Cross(up,f).normalized;Vector3 look=Quaternion.AngleAxis(roverCameraPitch,right)*f;Vector3 goal=p-look*9.4f+up*2.1f;cam.transform.position=Vector3.Lerp(cam.transform.position,goal,1-Mathf.Exp(-8*dt));cam.transform.rotation=Quaternion.Slerp(cam.transform.rotation,Quaternion.LookRotation(p+up*.8f-cam.transform.position,up),1-Mathf.Exp(-10*dt));cam.fieldOfView=Mathf.Lerp(cam.fieldOfView,CameraFov(65),1-Mathf.Exp(-6*dt));}
  void DrawRoverOptions(bool overlay){if(legacyUniverse||GroundActive||overlay)return;
   if(RoverDeployed||expedition.Alt(Pos(player))<1.05f&&Vel(player).magnitude<1.5f){Panel(new Rect(44,645,335,144));Label(60,659,RoverDeployed?(RoverReady?"ROVER / CREW ABOARD":"WHEEL SYSTEM MOVING"):"LANDED / SURFACE OPTIONS",text);bool old=GUI.enabled;GUI.enabled=wheelDeployment==0||RoverReady;if(GameButton(new Rect(60,696,300,35),"6 / PAD DOWN : "+(RoverDeployed?"RETRACT":"DEPLOY")+" TIRES",button))ToggleWheels();GUI.enabled=old;if(GameButton(new Rect(60,739,300,35),"J / TRIANGLE : EXIT CREW",button))GroundBoard();}
  }

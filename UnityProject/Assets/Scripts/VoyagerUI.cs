@@ -6,7 +6,7 @@ public sealed partial class DefenseGame {
  enum VoyagerFont {Small,Body,Heading,Hero}
  GUIStyle vSmall,vBody,vHeading,vHero,vButton;
  readonly CampaignCheckpoint[] slotCache=new CampaignCheckpoint[3];
- bool slotsCached;
+ bool slotsCached;int homePreviewSlot=-1;
  static readonly Color vCyan=new Color(.23f,.91f,.83f),vGold=new Color(1,.70f,.30f),vWhite=new Color(.91f,.95f,1),vMuted=new Color(.65f,.75f,.83f);
  static readonly string[] padNames={"Cross","Circle","Square","Triangle","L1","R1","L3","R3","Options","Share","D-pad up","D-pad down","D-pad left","D-pad right"};
  static readonly KeyCode[] remappableKeys={KeyCode.W,KeyCode.S,KeyCode.A,KeyCode.D,KeyCode.Space,KeyCode.LeftShift,KeyCode.J,KeyCode.E,KeyCode.R,KeyCode.Q,KeyCode.M,KeyCode.K,KeyCode.B,KeyCode.U,KeyCode.O,KeyCode.Tab,KeyCode.F5};
@@ -28,7 +28,7 @@ public sealed partial class DefenseGame {
   bool hover=!automatedPlayback&&r.Contains(Event.current.mousePosition);
   VBox(r,selected?new Color(.045f,.23f,.25f):hover?new Color(.06f,.13f,.18f):new Color(.025f,.065f,.10f));
   if(selected)VBox(new Rect(r.x,r.y,4,r.height),vCyan);
-  bool pressed=GameButton(r,"",GUIStyle.none);VText(new Rect(r.x+22,r.y+10,r.width-35,r.height-9),text,VoyagerFont.Body,selected?vCyan:vWhite);return pressed;
+  bool pressed=GameButton(r,"",GUIStyle.none);if(pressed&&voyagerAudio!=null)voyagerAudio.Cue("ui",cam.transform.position);VText(new Rect(r.x+22,r.y+10,r.width-35,r.height-9),text,VoyagerFont.Body,selected?vCyan:vWhite);return pressed;
  }
  void VBar(Rect r,float value,Color color){VBox(r,new Color(.07f,.13f,.18f));VBox(new Rect(r.x,r.y,r.width*Mathf.Clamp01(value),r.height),color);}
  public string ControlHints(string value){
@@ -65,15 +65,18 @@ public sealed partial class DefenseGame {
   VText(new Rect(82,345,728,89),"Explore alien worlds. Design your ship. Build cities, defend your civilization, and harvest the light of a star.",VoyagerFont.Body,vMuted);
   string[] actions={selected==null?(legacyCivilization==null?"CONTINUE / no checkpoint in this slot":"IMPORT PREVIOUS CIVILIZATION"):"CONTINUE / CHAPTER "+(selected.campaign.chapter+1),overwriteSlot==slotSelection?"CONFIRM / REPLACE THIS CAMPAIGN":"NEW CAMPAIGN","SETTINGS & ACCESSIBILITY","THE TWELVE CHAPTERS","QUIT"};
   for(int i=0;i<5;i++)if(VButton(new Rect(82,440+i*72,706,61),actions[i],voyagerSelection==i)){voyagerSelection=i;VoyagerPrimary();}
+  if(homePreviewSlot!=slotSelection||!civilizationScene.PreviewActive){var display=selected==null?civilization:selected.civilization;civilizationScene.Preview(3,display.blueprint,display.paint,display);homePreviewSlot=slotSelection;}
   VBox(new Rect(885,200,650,450),new Color(.018f,.047f,.069f));
+  if(civilizationScene.PreviewTexture!=null){civilizationScene.FramePreview(618f/205);GUI.DrawTexture(new Rect(900,365,618,205),civilizationScene.PreviewTexture,ScaleMode.StretchToFill,false);}
   VText(new Rect(916,222,580,47),selected==null?"YOUR NEXT EXPEDITION":CampaignChapters.Titles[selected.campaign.chapter],VoyagerFont.Heading);
-  VText(new Rect(919,294,576,165),selected==null?"Twelve chapters carry you from your first landing to a war for the future of your civilization. Each chapter brings greater threats and new responsibilities.":CampaignChapters.Stories[selected.campaign.chapter],VoyagerFont.Body,vMuted);
-  VText(new Rect(919,492,570,115),selected==null?"New campaigns start with normal resources.\nKeyboard, mouse and DualSense supported.":selected.civilization.LevelName+"\n"+selected.civilization.colonies.Count+" worlds / "+selected.campaign.contractsDone+" contracts\n"+selected.savedUtc,VoyagerFont.Small,vCyan);
+  VText(new Rect(919,284,576,80),selected==null?"Twelve horizons. One civilization. A ship that changes with your journey.":CampaignChapters.Stories[selected.campaign.chapter],VoyagerFont.Body,vMuted);
+  VText(new Rect(919,578,570,66),selected==null?"NORMAL RESOURCES / THREE SAVE SLOTS\nKEYBOARD, MOUSE & DUALSENSE":selected.civilization.LevelName+"\n"+selected.civilization.colonies.Count+" worlds / "+selected.campaign.contractsDone+" contracts\n"+FriendlySaveTime(selected.savedUtc),VoyagerFont.Small,vCyan);
   VText(new Rect(895,685,610,35),"CAMPAIGN SLOTS / LEFT OR RIGHT TO SELECT",VoyagerFont.Small);
   for(int i=1;i<=3;i++){var saved=slotCache[i-1];if(VButton(new Rect(888+(i-1)*217,740,201,102),"SLOT "+i+"\n"+(saved==null?"Empty":"Chapter "+(saved.campaign.chapter+1)),slotSelection==i)){slotSelection=i;overwriteSlot=0;}}
   if(VButton(new Rect(82,834,706,61),"TRIANGLE / SCENARIO: "+new[]{"Frontier","Conflict","Scarcity"}[newCampaignScenario]+(newGamePlus?" / LEGACY":"")))newCampaignScenario=(newCampaignScenario+1)%3;
   if(legacyCivilization!=null&&selected==null)VText(new Rect(81,902,710,30),"Import your earlier civilization into this empty slot. Its original file is preserved.",VoyagerFont.Small);
  }
+ static string FriendlySaveTime(string value){DateTime at;return DateTime.TryParse(value,out at)?at.ToLocalTime().ToString("MMM d, HH:mm"):"Checkpoint available";}
  void DrawVoyagerPause(){
   string[] choices={"RESUME EXPEDITION","SAVE CHECKPOINT","LOAD LAST CHECKPOINT","FRONTIER CONTRACTS","SHIP OUTFITTER","COLONIES & DIPLOMACY","CAMPAIGN / 12 CHAPTERS","SETTINGS & ACCESSIBILITY","SAVE & QUIT"};
   for(int i=0;i<choices.Length;i++)if(VButton(new Rect(78,209+i*72,610,60),choices[i],voyagerSelection==i)){voyagerSelection=i;VoyagerPrimary();}
@@ -84,9 +87,10 @@ public sealed partial class DefenseGame {
   VText(new Rect(766,703,704,100),civilization.LevelName+" / "+civilization.Population.ToString("F0")+" citizens\n"+civilization.alloy.ToString("F0")+" alloy / "+civilization.energy.ToString("F0")+" energy / "+civilization.science.ToString("F0")+" science",VoyagerFont.Body,vCyan);
   VText(new Rect(767,836,710,57),"Slot "+voyager.slot+" / "+saveStatus+"\nF5 saves while exploring. Checkpoints preserve your expedition.",VoyagerFont.Small);
  }
- int SettingsRows(){return settingsPage==0?18:settingsPage==1?remappableKeys.Length:14;}
+ int SettingsRows(){return settingsPage==0?18:settingsPage==1?remappableKeys.Length:settingsPage==2?14:6;}
  string SettingLabel(int index){
   if(settingsPage==1)return keyActions[index]+"   /   "+preferences.Key(remappableKeys[index]);
+  if(settingsPage==3)return new[]{"Graphics preset / "+new[]{"Performance","Balanced","Ultra"}[preferences.quality],"Frame rate target / "+preferences.targetFps,"Anti-aliasing / "+new[]{"Off","FXAA","SMAA"}[preferences.antialiasing],"Bloom / "+preferences.bloom.ToString("F2"),"Base field of view / "+preferences.fieldOfView.ToString("F0"),"Shadows / "+new[]{"Off","Hard","Soft"}[preferences.shadowQuality]}[index];
   if(settingsPage==2)return padNames[index]+" action   /   "+padNames[preferences.buttons[index]];
   string[] values={"Mouse sensitivity / "+preferences.mouseSensitivity.ToString("F1"),"Stick sensitivity / "+preferences.stickSensitivity.ToString("F1"),
    "Stick deadzone / "+preferences.deadzone.ToString("F2"),"Invert look X / "+OnOff(preferences.invertX),"Invert look Y / "+OnOff(preferences.invertY),
@@ -100,6 +104,7 @@ public sealed partial class DefenseGame {
  static string OnOff(bool value){return value?"ON":"OFF";}
  void AdjustSetting(int row,int delta){
   if(settingsPage==1){rebindKey=row;rebindReadyAt=Time.unscaledTime+.25f;return;}if(settingsPage==2){rebindAction=row;rebindReadyAt=Time.unscaledTime+.25f;return;}
+  if(settingsPage==3){switch(row){case 0:preferences.quality=(preferences.quality+delta+3)%3;break;case 1:preferences.targetFps=preferences.targetFps==30?60:preferences.targetFps==60?120:30;break;case 2:preferences.antialiasing=(preferences.antialiasing+delta+3)%3;break;case 3:preferences.bloom=Mathf.Clamp(preferences.bloom+delta*.05f,0,.8f);break;case 4:preferences.fieldOfView=Mathf.Clamp(preferences.fieldOfView+delta*5,55,90);break;case 5:preferences.shadowQuality=(preferences.shadowQuality+delta+3)%3;break;}ApplyPreferences();return;}
   switch(row){
    case 0:preferences.mouseSensitivity=Mathf.Clamp(preferences.mouseSensitivity+delta*.1f,.2f,3);break;
    case 1:preferences.stickSensitivity=Mathf.Clamp(preferences.stickSensitivity+delta*.1f,.2f,3);break;
@@ -115,8 +120,8 @@ public sealed partial class DefenseGame {
  }
  void DrawVoyagerSettings(){
   VText(new Rect(80,177,1320,53),"Make the expedition feel right.",VoyagerFont.Heading);
-  string[] pages={"FEEL, AUDIO & GRAPHICS","KEYBOARD ACTIONS","CONTROLLER ACTIONS"};
-  for(int i=0;i<3;i++)if(VButton(new Rect(80+i*490,243,473,50),pages[i],settingsPage==i)){settingsPage=i;voyagerSelection=0;}
+  string[] pages={"FEEL & AUDIO","KEYBOARD ACTIONS","CONTROLLER ACTIONS","GRAPHICS & CAMERA"};
+  for(int i=0;i<4;i++)if(VButton(new Rect(80+i*368,243,352,50),pages[i],settingsPage==i)){settingsPage=i;voyagerSelection=0;}
   int count=SettingsRows();for(int i=0;i<count;i++){
    int col=i%2,row=i/2;Rect rect=new Rect(80+col*750,322+row*62,727,51);
    if(VButton(rect,SettingLabel(i),voyagerSelection==i)){voyagerSelection=i;AdjustSetting(i,1);}
@@ -151,7 +156,7 @@ public sealed partial class DefenseGame {
   string[] categories={"PROPULSION","WEAPON","DEFENSE","PAYLOAD"};for(int i=0;i<4;i++)if(VButton(new Rect(80+i*365,249,350,51),categories[i],moduleCategory==i)){moduleCategory=i;voyagerSelection=voyager.Module(i);}
   for(int i=0;i<3;i++){int index=moduleCategory*3+i;bool owned=i==0||(voyager.unlockedModules&(1<<index))!=0;if(VButton(new Rect(80,350+i*130,760,112),VoyagerState.ModuleNames[index]+"\n"+(voyager.Module(moduleCategory)==i?"INSTALLED":owned?"OWNED / EQUIP":VoyagerState.ModuleCost[index]+" ALLOY / "+(i==2?25:15)+" SCIENCE"),voyagerSelection==i))voyagerSelection=i;}
   VText(new Rect(85,790,740,100),"REACTOR / "+voyager.Draw+" / "+voyager.Reactor(civilization.blueprint)+" power\nCARGO / "+voyager.cargo+" / "+voyager.Capacity(civilization.blueprint)+" capacity",VoyagerFont.Body,vCyan);
-  if(civilizationScene.PreviewTexture!=null)GUI.DrawTexture(new Rect(910,321,600,362),civilizationScene.PreviewTexture,ScaleMode.ScaleToFit,false);
+  if(civilizationScene.PreviewTexture!=null){civilizationScene.FramePreview(4f/3);GUI.DrawTexture(new Rect(910,321,600,362),civilizationScene.PreviewTexture,ScaleMode.ScaleToFit,false);}
   int selection=moduleCategory*3+Mathf.Clamp(voyagerSelection,0,2);
   VText(new Rect(925,709,580,115),VoyagerState.ModuleDescriptions[selection],VoyagerFont.Body,vMuted);
   if(VButton(new Rect(920,840,590,59),"CROSS / INSTALL MODULE",true))VoyagerPrimary();
@@ -185,8 +190,8 @@ public sealed partial class DefenseGame {
  void DrawVoyagerDefeat(){
   VText(new Rect(220,285,1200,90),"THE EXPEDITION IS NOT OVER.",VoyagerFont.Hero);
   VText(new Rect(230,410,1130,123),outcome+"\nYour last checkpoint preserves your civilization and expedition. Return, prepare, and try again.",VoyagerFont.Body,vMuted);
-  if(VButton(new Rect(230,601,1130,76),"CROSS / RESTORE LAST CHECKPOINT",true))LoadCampaign(voyager.slot);
-  if(VButton(new Rect(230,704,1130,65),"RETURN TO CAMPAIGN SLOTS")){campaignStarted=false;OpenVoyager(VoyagerPanel.Home);}
+  if(VButton(new Rect(230,601,1130,76),"CROSS / RESTORE LAST CHECKPOINT",voyagerSelection==0)){voyagerSelection=0;VoyagerPrimary();}
+  if(VButton(new Rect(230,704,1130,65),"RETURN TO CAMPAIGN SLOTS",voyagerSelection==1)){voyagerSelection=1;VoyagerPrimary();}
  }
  string JourneyInstruction(){
   if(voyager.chapter==0){if(!voyager.landed)return "VTOL approach / descend to Pelagos. K / D-pad up toggles assistance.";if(!voyager.tires)return "Park, then deploy tires: 6 / D-pad down.";if(!voyager.walked)return "Leave the rover: "+preferences.Key(KeyCode.J)+" / Triangle.";return "Follow RECORDER. Hold "+preferences.Key(KeyCode.E)+" / R1 to recover it.";}

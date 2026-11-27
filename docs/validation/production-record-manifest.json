@@ -1,0 +1,76 @@
+{
+  "frames": 1500,
+  "fps": 30,
+  "duration_seconds": 50.0,
+  "width": 1920,
+  "height": 1080,
+  "quality": "Ultra",
+  "render_scale": 1,
+  "anti_aliasing": "SMAA",
+  "fixed_simulation_time_per_frame": true,
+  "wall_clock_performance_benchmark": false,
+  "seeded_resources": true,
+  "scripted_input": true,
+  "staged_cameras": true,
+  "live_game_audio": false,
+  "audio": "Separately synthesized original ambient score.",
+  "maximum_observed_pending_png_bytes": 2593916,
+  "chapters": [
+    {
+      "name": "pbr-ship-designs",
+      "start_seconds": 0.0
+    },
+    {
+      "name": "stitched-terrain-and-graded-cities",
+      "start_seconds": 9.0
+    },
+    {
+      "name": "walk-sprint-and-terrain-footwork",
+      "start_seconds": 19.0
+    },
+    {
+      "name": "original-alien-ark-and-fleet-combat",
+      "start_seconds": 31.0
+    },
+    {
+      "name": "planetary-biomes-clouds-and-atmosphere",
+      "start_seconds": 39.0
+    },
+    {
+      "name": "graphics-controls-and-save-compatibility",
+      "start_seconds": 46.0
+    }
+  ],
+  "simulation_timing": [
+    {
+      "name": "pbr-ship-designs",
+      "frames": 270,
+      "simulation_seconds": 8.966666
+    },
+    {
+      "name": "stitched-terrain-and-graded-cities",
+      "frames": 300,
+      "simulation_seconds": 9.966667
+    },
+    {
+      "name": "walk-sprint-and-terrain-footwork",
+      "frames": 360,
+      "simulation_seconds": 12.0
+    },
+    {
+      "name": "original-alien-ark-and-fleet-combat",
+      "frames": 240,
+      "simulation_seconds": 8.0
+    },
+    {
+      "name": "planetary-biomes-clouds-and-atmosphere",
+      "frames": 210,
+      "simulation_seconds": 7.0
+    },
+    {
+      "name": "graphics-controls-and-save-compatibility",
+      "frames": 120,
+      "simulation_seconds": 4.0
+    }
+  ]
+}

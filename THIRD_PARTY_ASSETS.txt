@@ -12,3 +12,17 @@ Diffuse and OpenGL normal maps are included in Assets/Resources/Surfaces.
 Original asset URLs, sizes and SHA256 checksums: docs/validation/surface-asset-manifest.json.
 The planet meshes, shaders, procedural terrain, ship and suit geometry are original project work.
 No franchise assets or paid assets are included.
+
+Production material maps added 2026-11-27
+
+Blue Metal Plate and Metal Plate 02 by Rob Tuytel, and Fabric Pattern 05
+by the Poly Haven contributors, downloaded from the official Poly Haven CDN at 1K.
+https://polyhaven.com/a/blue_metal_plate
+https://polyhaven.com/a/metal_plate_02
+https://polyhaven.com/a/fabric_pattern_05
+CC0 licence: https://polyhaven.com/license
+
+Unmodified diffuse, OpenGL normal and AO/roughness/metal maps are included in
+Assets/Resources/Surfaces. Asset URLs, sizes and SHA256 checksums are recorded in
+docs/validation/production-asset-manifest.json. The HDR reflection cube, bevelled
+meshes, alien ships, foundations and animation code are original project work.

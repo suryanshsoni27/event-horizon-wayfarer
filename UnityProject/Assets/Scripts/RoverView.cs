@@ -7,7 +7,7 @@ public sealed class RoverView : MonoBehaviour {
  public readonly Vector3[] anchors=new Vector3[6];
  Transform deck,wheel;readonly List<Material> owned=new List<Material>();float spin;
  Material M(Color c,float metallic=.2f){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.SetColor("_BaseColor",c);m.SetFloat("_Metallic",metallic);m.SetFloat("_Smoothness",.32f);owned.Add(m);return m;}
- Transform Part(Transform parent,string name,PrimitiveType type,Vector3 p,Vector3 size,Material m){var g=GameObject.CreatePrimitive(type);g.name=name;g.transform.SetParent(parent,false);g.transform.localPosition=p;g.transform.localScale=size;g.GetComponent<Renderer>().sharedMaterial=m;Destroy(g.GetComponent<Collider>());return g.transform;}
+ Transform Part(Transform parent,string name,PrimitiveType type,Vector3 p,Vector3 size,Material m){var g=GameObject.CreatePrimitive(type);g.name=name;g.transform.SetParent(parent,false);g.transform.localPosition=p;g.transform.localScale=size;g.GetComponent<Renderer>().sharedMaterial=m;if(type==PrimitiveType.Cube)g.GetComponent<MeshFilter>().sharedMesh=ProductionGeometry.BeveledBox;Destroy(g.GetComponent<Collider>());return g.transform;}
  Transform Joint(string name,Transform parent,Vector3 p){var t=new GameObject(name).transform;t.SetParent(parent,false);t.localPosition=p;return t;}
  public void Build(){Material rubber=M(new Color(.022f,.029f,.034f)),metal=M(new Color(.4f,.46f,.47f),.75f),ceramic=M(new Color(.72f,.73f,.65f)),orange=M(new Color(.84f,.26f,.04f)),seat=M(new Color(.06f,.09f,.10f));
   deck=Joint("Deployable crew deck / four riding seats",transform,Vector3.zero);

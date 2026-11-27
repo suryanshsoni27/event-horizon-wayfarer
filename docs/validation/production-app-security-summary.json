@@ -1,0 +1,8 @@
+{
+  "app_version": "0.4.0",
+  "scanner": "Gitleaks 8.30.1",
+  "initial_findings": 3,
+  "verified_public_runtime_mappings": 3,
+  "remaining_findings": 0,
+  "exception_basis": "All three matched complete machine.config files byte-for-byte against the installed Unity runtime. Only exact finding fingerprints for stock public strong-name token/key mappings were ignored."
+}

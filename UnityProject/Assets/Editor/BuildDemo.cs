@@ -16,7 +16,12 @@ public static class BuildDemo {
   foreach(var name in new[]{"Orbit/Glow","Orbit/XenoChitin","Orbit/AlienFlora","Orbit/Exhaust","Orbit/PlanetSurface","Orbit/Atmosphere","Orbit/Clouds","Orbit/BlackHoleDisk","Orbit/BlackHoleDistant","Orbit/Asteroid","Orbit/FrontierArchitecture","Orbit/FrontierStar","Orbit/StellarCorona","Orbit/VoyagerParticle","Orbit/HelmetPhoto","Orbit/GalaxyParticles","Orbit/Schwarzschild","Universal Render Pipeline/Lit"}){var shader=Shader.Find(name);if(shader==null)throw new System.Exception("Missing shader "+name);bool found=false;for(int i=0;i<included.arraySize;i++)if(included.GetArrayElementAtIndex(i).objectReferenceValue==shader)found=true;if(!found){included.InsertArrayElementAtIndex(included.arraySize);included.GetArrayElementAtIndex(included.arraySize-1).objectReferenceValue=shader;}}
   graphics.ApplyModifiedPropertiesWithoutUndo();
   GraphicsSettings.defaultRenderPipeline=pipeline;QualitySettings.renderPipeline=pipeline;
-  PlayerSettings.bundleVersion="0.3.0";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
+  foreach(string path in AssetDatabase.FindAssets("t:Texture2D",new[]{"Assets/Resources/Surfaces"})){
+   var importer=AssetImporter.GetAtPath(AssetDatabase.GUIDToAssetPath(path)) as TextureImporter;if(importer==null)continue;
+   bool dataMap=importer.assetPath.Contains("normal")||importer.assetPath.Contains("_arm");bool changed=importer.sRGBTexture==dataMap||importer.anisoLevel!=8||!importer.mipmapEnabled||importer.maxTextureSize!=1024||importer.wrapMode!=TextureWrapMode.Repeat;
+   importer.sRGBTexture=!dataMap;importer.anisoLevel=8;importer.mipmapEnabled=true;importer.maxTextureSize=1024;importer.wrapMode=TextureWrapMode.Repeat;if(changed)importer.SaveAndReimport();
+  }
+  PlayerSettings.bundleVersion="0.4.0";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
   var scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
   var camera=new GameObject("Main Camera");camera.tag="MainCamera";camera.AddComponent<Camera>();camera.AddComponent<UniversalAdditionalCameraData>();
   new GameObject("Orbital Field Lab").AddComponent<OrbitDemo>();

@@ -160,7 +160,7 @@ public sealed partial class DefenseGame {
   checks["qa_never_modifies_real_campaign"]=(!File.Exists(real)?DateTime.MinValue:File.GetLastWriteTimeUtc(real))==realStamp;
   SaveChecks("voyager-runtime-checks.json",checks);yield return null;Application.Quit();
  }
- [Serializable] sealed class BenchmarkReport {public string unity,device,processor,graphics;public int width,height,targetFps;public bool staged=true,captureDisabled=true;public List<BenchmarkPhase> phases=new List<BenchmarkPhase>();}
+ [Serializable] sealed class BenchmarkReport {public string unity,device,processor,graphics,quality,antiAliasing;public float renderScale;public int width,height,targetFps;public bool staged=true,captureDisabled=true;public List<BenchmarkPhase> phases=new List<BenchmarkPhase>();}
  [Serializable] sealed class BenchmarkPhase {public string name;public int frames;public float averageMs,p95Ms,p99Ms,minimumFps;public long allocatedMemory;public double gpuMs;public bool gpuTimingAvailable;}
  IEnumerator BenchmarkPhaseFrames(string name,BenchmarkReport report){
   for(int i=0;i<90;i++)yield return null;
@@ -172,7 +172,8 @@ public sealed partial class DefenseGame {
  }
  IEnumerator VoyagerBenchmark(){
   yield return new WaitForSeconds(1);NewCampaign(3);chapterBanner=0;voyager.chapter=5;landingAssist=false;invulnerable=10000;
-  var report=new BenchmarkReport{unity=Application.unityVersion,device=SystemInfo.deviceModel,processor=SystemInfo.processorType,graphics=SystemInfo.graphicsDeviceName,width=Screen.width,height=Screen.height,targetFps=preferences.targetFps};
+  if(Array.IndexOf(Environment.GetCommandLineArgs(),"--production-ultra")>=0){preferences.quality=2;ApplyPreferences();}
+  var report=new BenchmarkReport{unity=Application.unityVersion,device=SystemInfo.deviceModel,processor=SystemInfo.processorType,graphics=SystemInfo.graphicsDeviceName,width=Screen.width,height=Screen.height,targetFps=preferences.targetFps,quality=new[]{"Performance","Balanced","Ultra"}[preferences.quality],renderScale=(UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline as UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset).renderScale,antiAliasing=cam.GetUniversalAdditionalCameraData().antialiasing.ToString()};
   yield return BenchmarkPhaseFrames("orbital-flight",report);
   StageVoyagerCity();paused=false;yield return BenchmarkPhaseFrames("populated-city",report);
   StageVoyagerWar();paused=false;yield return BenchmarkPhaseFrames("native-fleet-battle",report);

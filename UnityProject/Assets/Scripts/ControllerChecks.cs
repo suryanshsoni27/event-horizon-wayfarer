@@ -41,7 +41,7 @@ public sealed partial class DefenseGame {
   for(int i=0;i<100;i++)PadFeed(pad,Press(GamepadButton.South),.02f);c["cross_handbrake_stops_rover"]=Vel(player).magnitude<1.5f;
   for(int i=0;i<80;i++)PadFeed(pad,new GamepadState{leftTrigger=1},.02f);c["l2_drives_reverse"]=Vector3.Dot(Vel(player),ShipForward)<-1;
   for(int i=0;i<100;i++)PadFeed(pad,Press(GamepadButton.South),.02f);PadFeed(pad,new GamepadState());PadFeed(pad,Press(GamepadButton.North));c["triangle_disembarks_parked_rover"]=GroundActive&&RoverReady;GalacticPoint parked=GlobalPosition;start=OriginGlobal+expedition.Focus;
-  for(int i=0;i<80;i++)PadFeed(pad,new GamepadState{leftStick=Vector2.up},.025f);c["pad_walks_native_astronaut"]=WorldDistance(start,OriginGlobal+expedition.Focus)>2;c["rover_parks_while_crew_explores"]=WorldDistance(parked,GlobalPosition)<.3f;
+  for(int i=0;i<240&&WorldDistance(parked,OriginGlobal+expedition.Focus)<8;i++)PadFeed(pad,new GamepadState{leftStick=Vector2.up},.025f);c["pad_walks_native_astronaut"]=WorldDistance(start,OriginGlobal+expedition.Focus)>2;c["rover_parks_while_crew_explores"]=WorldDistance(parked,GlobalPosition)<.3f;
   PadFeed(pad,Press(GamepadButton.LeftStick));c["l3_toggles_running"]=expedition.Sprinting&&expedition.RunToggle;
   PadFeed(pad,new GamepadState());PadFeed(pad,Press(GamepadButton.North));c["boarding_rejected_outside_range"]=GroundActive;
   PadFeed(pad,new GamepadState());PadFeed(pad,new GamepadState{rightTrigger=1},.2f);c["r2_fires_carbine"]=surface.Ammo<24;PadFeed(pad,new GamepadState());PadFeed(pad,Press(GamepadButton.West),.1f);c["square_starts_reload"]=surface.ReloadTime>0;for(int i=0;i<16;i++)PadFeed(pad,new GamepadState(),.1f);c["reload_completes"]=surface.Ammo==24;

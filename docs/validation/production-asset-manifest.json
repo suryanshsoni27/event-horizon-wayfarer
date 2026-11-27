@@ -1,0 +1,72 @@
+{
+  "downloaded": "2026-11-27",
+  "license": "https://polyhaven.com/license",
+  "maps": [
+    {
+      "asset": "blue_metal_plate",
+      "map": "Diffuse",
+      "resolution": "1k",
+      "file": "hull_diff.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/blue_metal_plate/blue_metal_plate_diff_1k.jpg",
+      "bytes": 395923,
+      "sha256": "a0162bffce47d4a35613a12af22571b28c18412dc5805cbb69eac343554ef750",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/blue_metal_plate"
+    },
+    {
+      "asset": "blue_metal_plate",
+      "map": "nor_gl",
+      "resolution": "1k",
+      "file": "hull_normal.png",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/blue_metal_plate/blue_metal_plate_nor_gl_1k.png",
+      "bytes": 4125323,
+      "sha256": "9f03852e15eadef3b0e6610ed6f040f2e8f0fd818ca31b76c94711e43b4c4e7a",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/blue_metal_plate"
+    },
+    {
+      "asset": "blue_metal_plate",
+      "map": "arm",
+      "resolution": "1k",
+      "file": "hull_arm.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/blue_metal_plate/blue_metal_plate_arm_1k.jpg",
+      "bytes": 419910,
+      "sha256": "9321b539fe9cf0136ea04c3405b95ae82383f31c258b9c0e37ff8a1e577b637f",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/blue_metal_plate"
+    },
+    {
+      "asset": "metal_plate_02",
+      "map": "arm",
+      "resolution": "1k",
+      "file": "alloy_arm.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/metal_plate_02/metal_plate_02_arm_1k.jpg",
+      "bytes": 1075839,
+      "sha256": "e099a8385d53f4a515b7e0ce94f85d88657fcac49c23979474f5394b22dd550b",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/metal_plate_02"
+    },
+    {
+      "asset": "fabric_pattern_05",
+      "map": "nor_gl",
+      "resolution": "1k",
+      "file": "suit_normal.png",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/1k/fabric_pattern_05/fabric_pattern_05_nor_gl_1k.png",
+      "bytes": 1991419,
+      "sha256": "c910934200d094ff967b93d914046ce22059c466bdead86b5bc8e54462d77d47",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/fabric_pattern_05"
+    },
+    {
+      "asset": "fabric_pattern_05",
+      "map": "arm",
+      "resolution": "1k",
+      "file": "suit_arm.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_05/fabric_pattern_05_arm_1k.jpg",
+      "bytes": 146593,
+      "sha256": "51e0a39d7b9e9a293217dc80a702d2c022111d1eaefd83116e038baaa383af24",
+      "license": "CC0-1.0",
+      "source": "https://polyhaven.com/a/fabric_pattern_05"
+    }
+  ]
+}

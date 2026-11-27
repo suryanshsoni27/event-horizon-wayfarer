@@ -1,0 +1,60 @@
+{
+  "unity": "6000.6.10f1",
+  "device": "Mac16,10",
+  "processor": "Apple M4",
+  "graphics": "Apple M4",
+  "quality": "Balanced",
+  "antiAliasing": "SubpixelMorphologicalAntiAliasing",
+  "renderScale": 0.8999999761581421,
+  "width": 1280,
+  "height": 800,
+  "targetFps": 60,
+  "staged": true,
+  "captureDisabled": true,
+  "phases": [
+    {
+      "name": "orbital-flight",
+      "frames": 360,
+      "averageMs": 16.758581161499023,
+      "p95Ms": 17.141162872314453,
+      "p99Ms": 17.585126876831055,
+      "minimumFps": 42.93388748168945,
+      "allocatedMemory": 204485077,
+      "gpuMs": 2.014821758995014,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "populated-city",
+      "frames": 360,
+      "averageMs": 16.81121063232422,
+      "p95Ms": 17.219919204711914,
+      "p99Ms": 17.727041244506836,
+      "minimumFps": 31.249507904052734,
+      "allocatedMemory": 217133367,
+      "gpuMs": 4.664021526938693,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "native-fleet-battle",
+      "frames": 360,
+      "averageMs": 16.900054931640625,
+      "p95Ms": 17.57258415222168,
+      "p99Ms": 21.399667739868164,
+      "minimumFps": 43.178741455078125,
+      "allocatedMemory": 227095147,
+      "gpuMs": 3.634076157646228,
+      "gpuTimingAvailable": true
+    },
+    {
+      "name": "dyson-collector-shell",
+      "frames": 360,
+      "averageMs": 16.85240936279297,
+      "p95Ms": 17.561166763305664,
+      "p99Ms": 20.710124969482422,
+      "minimumFps": 44.64992141723633,
+      "allocatedMemory": 217788885,
+      "gpuMs": 1.7945496535200316,
+      "gpuTimingAvailable": true
+    }
+  ]
+}

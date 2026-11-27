@@ -1,0 +1,10 @@
+{
+  "version": "0.4.0",
+  "file": "Event-Horizon-v0.4-macOS-AppleSilicon.zip",
+  "bytes": 55352922,
+  "sha256": "d341e51816797466d3694e7ebdeff2d6eac2eb9315460ddd28f00b0d7cd9d9fc",
+  "zip_crc_passed": true,
+  "executable_architecture": "arm64",
+  "environment_and_private_save_paths_absent": true,
+  "distribution_signed_or_notarized": false
+}

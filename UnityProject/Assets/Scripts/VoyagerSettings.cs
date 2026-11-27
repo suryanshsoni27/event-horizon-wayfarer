@@ -4,7 +4,8 @@ using UnityEngine;
 
 [Serializable]
 public sealed class VoyagerSettings {
- public int version=1,quality=1,targetFps=60,difficulty=1;
+ public int version=2,quality=1,targetFps=60,difficulty=1,antialiasing=2,shadowQuality=2;
+ public float bloom=.25f,fieldOfView=65;
  public float mouseSensitivity=1,stickSensitivity=1,deadzone=.16f,master=.8f,music=.35f,effects=.8f,uiScale=1;
  public bool invertX,invertY,rumble=true,aimAssist=true,motion=true,highContrast,toggleInteract,toggleAim;
  public int[] buttons={0,1,2,3,4,5,6,7,8,9,10,11,12,13};
@@ -21,8 +22,10 @@ public sealed class VoyagerSettings {
   float n=raw.magnitude;Vector2 v=n<=deadzone?Vector2.zero:raw/n*Mathf.Clamp01((n-deadzone)/(1-deadzone));
   if(looking){v*=stickSensitivity;if(invertX)v.x=-v.x;if(invertY)v.y=-v.y;}return v;
  }
+ public bool UpgradeAndValidate(){if(version==1){antialiasing=2;shadowQuality=2;bloom=.25f;fieldOfView=65;version=2;}return Validate();}
  public bool Validate(){
-  if(version!=1||quality<0||quality>2||difficulty<0||difficulty>2||buttons==null||buttons.Length!=14||keys==null||keys.Count>128)return false;
+  if(antialiasing<0||antialiasing>2||shadowQuality<0||shadowQuality>2||!VoyagerState.Finite(bloom)||bloom<0||bloom>.8f||!VoyagerState.Finite(fieldOfView)||fieldOfView<55||fieldOfView>90)return false;
+  if(version!=2||quality<0||quality>2||difficulty<0||difficulty>2||buttons==null||buttons.Length!=14||keys==null||keys.Count>128)return false;
   if(deadzone<.03f||deadzone>.4f||mouseSensitivity<.2f||mouseSensitivity>3||stickSensitivity<.2f||stickSensitivity>3||uiScale<.85f||uiScale>1.25f)return false;
   foreach(float v in new[]{deadzone,mouseSensitivity,stickSensitivity,master,music,effects,uiScale})if(!VoyagerState.Finite(v))return false;
   if(master<0||master>1||music<0||music>1||effects<0||effects>1)return false;

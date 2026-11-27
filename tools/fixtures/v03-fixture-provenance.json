@@ -1,0 +1,8 @@
+{
+  "release": "v0.3.0",
+  "commit": "f26c467e0f95eb3f644675bdae641554789fbac4",
+  "source_archive_sha256": "c41de8bc4191918dc2c6c0ad4493f4a8be97246eb327e4beb9eaf0b3af49d09e",
+  "fixture_sha256": "f44930867b49d0dd65781ebf53e04be5bb7050c3b5ef5c93419aeb6a92488892",
+  "synthetic_qa_data": true,
+  "private_campaign_data": false
+}

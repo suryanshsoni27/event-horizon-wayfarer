@@ -1,0 +1,45 @@
+{
+  "version": "0.4.0",
+  "date": "2026-11-27",
+  "unity": "6000.6.10f1",
+  "platform": "macOS Apple Silicon",
+  "total_player_checks": 378,
+  "suites": {
+    "voyager": 87,
+    "civilization": 64,
+    "game": 29,
+    "planet": 20,
+    "expanse": 33,
+    "surface": 33,
+    "cosmos": 28,
+    "controller": 51,
+    "production": 33
+  },
+  "all_passed": true,
+  "terrain": {
+    "maximum_sampled_edge_mismatch_metres": 0.000545915,
+    "edge_samples": 23940,
+    "maximum_foundation_surface_error_metres": 0.0007421821,
+    "platform_lip_metres": 0.24,
+    "node_budget": 600,
+    "scope": "Staged colony fixture; not an exhaustive traversal test."
+  },
+  "animation": {
+    "walking_metres_per_second": 1.816577,
+    "running_metres_per_second": 5.068258,
+    "walking_cycles_per_second": 1.000864,
+    "running_cycles_per_second": 1.964522,
+    "maximum_foot_ik_endpoint_error_metres": 0.02066985
+  },
+  "checkpoint_fixture": "../../tools/fixtures/v03-fixture-provenance.json",
+  "benchmarks": [
+    "production-performance-balanced.json",
+    "production-performance-ultra.json"
+  ],
+  "remaining_validation": [
+    "Full manual twelve-chapter balance playthrough",
+    "Long-session memory and terrain traversal profiling",
+    "Other hardware and physical DualSense USB/Bluetooth",
+    "Signed/notarized clean-machine installation"
+  ]
+}

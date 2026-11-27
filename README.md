@@ -2,11 +2,17 @@
 
 A Unity space-adventure and civilization prototype with a custom C++ physics core, locally trained NPC motion predictions, whole planets, alien expeditions, a crew rover, ship design, city construction, native rocket launches, planetary wars and a Dyson collector project. Built while learning Unity and experimenting with AI-assisted development.
 
-[![Twelve Horizons campaign](docs/media/twelve-horizons.jpg)](docs/media/twelve-horizons-tour.mp4)
+[![Graphics and production pass](docs/media/production-city-after.jpg)](docs/media/wayfarer-production-tour.mp4)
 
-**[Download the Mac game — v0.3.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.3.0)** · **[Watch the 72-second walkthrough](docs/media/twelve-horizons-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.4.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.4.0)** · **[Watch the new graphics tour](docs/media/wayfarer-production-tour.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.4.0: graphics and production fixes
+
+Terrain now stitches between detail levels, colony platforms meet graded ground, and cloud layers clear mountain peaks. Physically based ship and suit materials use licensed texture maps, an original HDR reflection environment, closed pressure hulls and beveled armor. Alien warships have their own crescent silhouette. Walk and sprint animation adds slope-aware feet and pelvis adjustment.
+
+The fourth settings page controls anti-aliasing, bloom, field of view and shadows. Earlier preferences migrate while preserving controls, and a checkpoint created by the actual v0.3 release loads in this version. Defeat now releases the mouse and lets a controller return to save slots. See the [before/after captures, measured results and remaining production work](docs/PRODUCTION_PASS.md).
 
 ## Twelve Horizons: an expedition becomes a civilization
 
@@ -31,7 +37,7 @@ The [Twelve Horizons guide](docs/TWELVE_HORIZONS.md) lists every chapter, contro
 - Reboard the parked rover, retract the tires and return to flight.
 - Play using keyboard/mouse or a PS5 DualSense controller.
 
-This is prototype gameplay and procedural art; distant terrain transitions and animation still need polish. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
+This remains prototype gameplay and procedural art. Hand-authored environments and characters, a full manual campaign balance pass and broader hardware testing remain production work. Galactic distances are compressed, planets are small gameplay worlds, and vehicle/contact behavior is simplified.
 
 ## Physics and NPC architecture
 
@@ -113,19 +119,23 @@ Controller tests use injected DualSense HID reports and a virtual gamepad. A phy
 
 ## Verification
 
-The v0.3.0 packaged player passed **345 automated checks**: 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Campaign QA covers all twelve chapter gates, increasing difficulty, native landing and rover transitions, physical contracts, escort motion and damage, fitting, shields, remapping and full checkpoint recovery. Civilization QA covers economy, actual native rocket ascent, fleet combat, placement, pause and origin shifts. Reviewed results live in [docs/validation](docs/validation).
+The v0.4.0 packaged player passed **378 automated checks**: 33 graphics/production, 87 campaign, 64 civilization and the original 194 checks. The original suites cover 29 gameplay, 20 crew/planet, 33 large-world, 33 surface mission, 28 space/animation and 51 controller/rover checks. Production QA measures terrain continuity and platform contact, exercises animation and live graphics controls, migrates preferences and restores an actual v0.3 checkpoint. Campaign and civilization QA cover chapter gates, increasing difficulty, native landing, rover transitions, physical contracts, fitting, economy, native rockets and fleet combat. Reviewed results live in [docs/validation](docs/validation/production-validation.json).
 
 After building and closing the normal player:
 
 ```sh
+python3 tools/check_production.py
 python3 tools/check_voyager.py
 python3 tools/check_civilization.py
 python3 tools/verify_game.py
 python3 tools/benchmark_voyager.py
-python3 tools/record_voyager.py
+python3 tools/benchmark_voyager.py --ultra --width 1920 --height 1080
+python3 tools/record_production.py
 ```
 
-The [performance report](docs/validation/voyager-performance.json) samples flight, a city, native fleet combat and the Dyson project at 1280×800 on Apple M4 hardware with a 60 FPS target. It records 360 frames per scene after warmup, with screenshots disabled, frame-time percentiles, available GPU timing and Unity allocated memory. This is a short staged local sample, not a cross-device or long-term stability guarantee. Automated progression checks do not replace a full manual balance playthrough.
+The [Balanced report](docs/validation/production-performance-balanced.json) and [Ultra report](docs/validation/production-performance-ultra.json) sample flight, a city, native fleet combat and the Dyson project on Apple M4 hardware with a 60 FPS target. Each records 360 frames per scene after warmup, actual resolution and render scale, anti-aliasing, frame-time percentiles, available GPU timing and Unity allocated memory. These are short staged local samples; traversal, long-term stability and other machines need separate testing. Automated progression checks do not replace a full manual balance playthrough.
+
+The new [50-second graphics tour](docs/media/wayfarer-production-tour.mp4) shows ship designs, graded terrain, walking and sprinting, alien fleet combat, planetary atmosphere and graphics settings at 1920×1080 and 30 FPS. It uses seeded resources, scripted inputs and staged cameras, labeled on screen. Simulation advances at a fixed 1/30 second per captured frame. The original ambient score is assembled separately. It is not a performance benchmark or a live-audio recording. The [manifest](docs/validation/production-record-manifest.json) includes measured simulation timing for each segment.
 
 The [72-second Twelve Horizons walkthrough](docs/media/twelve-horizons-tour.mp4) shows chapters, city infrastructure, native rocket ascent, ship outfitting, contracts, settings, fleet combat and the Dyson structure. Seeded resources, scripted inputs and staged cameras are labeled on screen. Capture is 1280×800 at 12 FPS, and the original ambient score is assembled separately. It is not an FPS benchmark, live-audio capture or uninterrupted manual campaign. The [manifest](docs/validation/voyager-record-manifest.json) records scene timings. Recording and QA protect normal campaign files.
 

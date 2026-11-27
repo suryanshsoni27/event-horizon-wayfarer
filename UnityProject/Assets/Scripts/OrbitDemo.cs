@@ -14,7 +14,9 @@ public class OrbitDemo : MonoBehaviour {
  public Vector3 Position{get{return new Vector3((float)state.x,(float)state.y,(float)state.z);}}
  public Vector3 Velocity{get{return new Vector3((float)state.vx,(float)state.vy,(float)state.vz);}}
  void Start(){
-  Application.targetFrameRate=60;Screen.SetResolution(Mathf.Min(1280,Display.main.systemWidth-80),Mathf.Min(800,Display.main.systemHeight-100),false);
+  Application.targetFrameRate=60;
+  // Preserve explicit player resolution arguments used by recordings and performance runs.
+  if(Array.IndexOf(Environment.GetCommandLineArgs(),"-screen-width")<0)Screen.SetResolution(Mathf.Min(1280,Display.main.systemWidth-80),Mathf.Min(800,Display.main.systemHeight-100),false);
   capture=Array.IndexOf(Environment.GetCommandLineArgs(),"--capture")>=0;output=Environment.GetEnvironmentVariable("BH_EVIDENCE")??Application.persistentDataPath;
   model=JsonUtility.FromJson<Model>(Resources.Load<TextAsset>("predictor").text);if(model.dimensions!=3)throw new Exception("A trained 3D predictor is required.");
   glow=new Material(Shader.Find("Orbit/Glow"));solid=new Material(Shader.Find("Universal Render Pipeline/Lit"));

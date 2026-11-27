@@ -166,7 +166,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
   if(GameKeyDown(KeyCode.N)){float near=999;for(int i=0;i<agents.Length;i++){float d=Vector3.Distance(Pos(player),Pos(agents[i].state));if(agents[i].status==0&&d<near){near=d;selected=i;}}}
   if(GameKeyDown(KeyCode.C)){orbit=!orbit;if(orbit){Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}else if(!paused)ResumeFlight();}
   if(GameKeyDown(KeyCode.V)){orbit=false;cam.transform.position=Pos(player)-shipRotation*Vector3.forward*6.5f+shipRotation*Vector3.up*.8f;cam.transform.rotation=shipRotation;if(!paused)ResumeFlight();}
-  if(GameKeyDown(KeyCode.F)){quality=(quality+1)%3;ApplyQuality();}
+  if(GameKeyDown(KeyCode.F)){if(voyager!=null){preferences.quality=(preferences.quality+1)%3;ApplyPreferences();}else{quality=(quality+1)%3;ApplyQuality();}}
   Vector3 mouse=Input.mousePosition,md=mouse-lastMouse;lastMouse=mouse;
   if(orbit&&!PointerUI()&&GameMouse(1)&&!GameMouseDown(1)){orbitYaw+=md.x*.25f;orbitPitch=Mathf.Clamp(orbitPitch-md.y*.25f,-75,75);}
   if(!PointerUI())orbitDistance=Mathf.Clamp(orbitDistance-Input.mouseScrollDelta.y,12,65);
@@ -261,7 +261,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
   Vector3 p=expedition.OnFoot?expedition.Focus:Pos(player);if(orbit){var nearBody=expedition.Nearest(p);Vector3 up=nearBody!=null&&expedition.Alt(p)<50?(p-nearBody.body.P).normalized:Vector3.up;cam.transform.position=p+Quaternion.FromToRotation(Vector3.up,up)*Quaternion.Euler(orbitPitch,orbitYaw,0)*new Vector3(0,0,-orbitDistance);cam.transform.LookAt(p+up,up);}
   else if(expedition.OnFoot){expedition.FootCamera(dt);}
   else if(RoverDeployed){RoverCamera(dt);}
-  else{Vector3 desired=p-orientation*Vector3.forward*(legacyUniverse?6.5f:10.5f)+orientation*Vector3.up*(legacyUniverse?.8f:2.2f);cam.transform.position=Vector3.Lerp(cam.transform.position,desired,1-Mathf.Exp(-10*Mathf.Min(dt,.1f)));cam.transform.rotation=Quaternion.Slerp(cam.transform.rotation,orientation,1-Mathf.Exp(-10*Mathf.Min(dt,.1f)));}
+  else{Vector3 desired=p-orientation*Vector3.forward*(legacyUniverse?6.5f:10.5f)+orientation*Vector3.up*(legacyUniverse?.8f:2.2f);cam.transform.position=Vector3.Lerp(cam.transform.position,desired,1-Mathf.Exp(-10*Mathf.Min(dt,.1f)));cam.transform.rotation=Quaternion.Slerp(cam.transform.rotation,orientation,1-Mathf.Exp(-10*Mathf.Min(dt,.1f)));cam.fieldOfView=Mathf.Lerp(cam.fieldOfView,CameraFov(legacyUniverse?60:65),1-Mathf.Exp(-6*Mathf.Min(dt,.1f)));}
   expedition.CameraClearance();
   foreach(var h in world.holes)if(Vector3.Distance(cam.transform.position,h.P)<(float)h.capture*1.23f)cam.transform.position=h.P+(cam.transform.position-h.P).normalized*(float)h.capture*1.23f;
   int near=0;float r=float.MaxValue;for(int i=0;i<world.holes.Length;i++){float d=Vector3.Distance(cam.transform.position,world.holes[i].P);if(d<r){r=d;near=i;}}
