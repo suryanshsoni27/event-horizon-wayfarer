@@ -62,7 +62,7 @@ public sealed partial class DefenseGame {
  }
  void ManualFlightTakeover(){
   if(paused||SurfaceVehicle||outcome!=""||inTidal||orbit)return;
-  bool manual=Controls.R2>.15f||Controls.L2>.15f||Controls.Move.sqrMagnitude>.12f||Controls.Look.sqrMagnitude>.12f||PadHeld(PilotInput.Button.Cross);
+  bool manual=Controls.R2>.15f||Controls.L2>.15f||Controls.Move.sqrMagnitude>.12f||Controls.Look.sqrMagnitude>.12f||PadHeld(PilotInput.Button.Cross)||PadHeld(PilotInput.Button.L1)||PadHeld(PilotInput.Button.R1)||PadDown(PilotInput.Button.Circle);
   if(!manual)return;
   if(landingAssist){landingAssist=false;throttle=0;desiredRotation=shipRotation;Notice("Manual flight / controller took over VTOL descent. D-pad up resumes landing assist.");}
   if(cruising){cruising=false;cruiseBraking=Controls.L2>.15f||Vel(player).magnitude>100;Notice(cruiseBraking?"Manual control requested / slowing from cruise speed.":"Cruise disengaged / manual flight.");}

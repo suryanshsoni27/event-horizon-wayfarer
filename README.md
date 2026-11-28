@@ -4,13 +4,13 @@ A Unity space-adventure and civilization prototype with a custom C++ physics cor
 
 [![Skinned expedition character](docs/media/animation-walk.png)](docs/media/wayfarer-animation.mp4)
 
-**[Download the Mac game — v0.9.1](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.1)** · **[Watch the character animation demo](docs/media/wayfarer-animation.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.9.2](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.2)** · **[Watch the character animation demo](docs/media/wayfarer-animation.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
 
-## v0.9.1: controller and campaign input repairs
+## v0.9.2: controller and campaign input repairs
 
-Controller menus now accept the left stick as well as the D-pad, with delayed repeat. The atlas consumes its own inputs, so selecting a destination on foot cannot open civilization command or the journal. Manual thrust, braking, boost or stick input takes over automatic landing. Reconnecting or resuming suppresses only controls already held, allowing other buttons to work immediately. Boarding while firing cannot carry that trigger into ship thrust.
+Controller menus now accept the left stick as well as the D-pad, with delayed repeat. The atlas consumes its own inputs, so selecting a destination on foot cannot open civilization command or the journal. Manual thrust, braking, boost, roll, leveling or stick input takes over automatic landing. Reconnecting or resuming suppresses only controls already held, allowing other buttons to work immediately. Boarding while firing cannot carry that trigger into ship thrust.
 
 Rebinding works in the game input loop; controller users can cancel keyboard binding with Options or Circle, and button binding by holding Options. A short Options press can still be assigned. Settings → Controller Actions includes a live device/button/stick/trigger display. Touchpad click opens the atlas, and face-flight setup is selectable from the pause menu. See the [fixes, controls and validation limits](docs/CONTROLLER_FIXES.md).
 

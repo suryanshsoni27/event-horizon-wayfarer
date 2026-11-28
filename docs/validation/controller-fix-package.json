@@ -1,8 +1,8 @@
 {
-  "version": "0.9.1",
-  "asset": "Event-Horizon-v0.9.1-macOS-AppleSilicon.zip",
-  "bytes": 93855730,
-  "sha256": "8a6532b83c31758ef7594ef066647a4c72a4a525d7ddc8394a31ec0899c3a922",
+  "version": "0.9.2",
+  "asset": "Event-Horizon-v0.9.2-macOS-AppleSilicon.zip",
+  "bytes": 93856690,
+  "sha256": "f4603ceb4f24aae06b47d43d5fec742ebfcf56ec78f3839a33082aa73533ad93",
   "architecture": "arm64",
   "zip_integrity": "PASS",
   "app_signature": "local ad-hoc; verified with codesign --deep --strict",

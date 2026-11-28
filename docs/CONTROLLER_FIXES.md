@@ -1,6 +1,6 @@
-# Controller repairs / v0.9.1
+# Controller repairs / v0.9.2
 
-[Download for Apple Silicon Mac](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.1) · [Default controls](../README.md#controls)
+[Download for Apple Silicon Mac](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.2) · [Default controls](../README.md#controls)
 
 The controller regression suite previously bypassed the campaign's menus. A separate campaign suite reproduced fourteen failing cases in the pre-fix player. Those cases are retained alongside new coverage for input transitions and raw DualSense reports.
 
@@ -10,7 +10,7 @@ The controller regression suite previously bypassed the campaign's menus. A sepa
 |---|---|
 | Moving the left stick had no effect in menus | Left stick and D-pad navigate campaign, settings, civilization, atlas and workshop menus. Holding a direction repeats after a delay; small stick movements do not move the selection. |
 | One held stick or trigger blocked every button after reconnect/resume | Each held control waits for its own release. Other buttons work immediately. A held Cross still cannot resume automatically on reconnection. |
-| VTOL landing overrode manual flight commands | Deliberate stick input, R2, L2 or boost takes over landing assist. D-pad up re-enables it. Cruise takeover first slows the craft when needed. |
+| VTOL landing overrode manual flight commands | Deliberate stick input, R2, L2, boost, shoulder roll or Circle leveling takes over landing assist. D-pad up re-enables it. Cruise takeover first slows the craft when needed. |
 | Atlas buttons also operated the world underneath | The atlas consumes navigation and confirmation. Its shoulders cannot open the journal, and D-pad down cannot open civilization command. |
 | Rebinding could trap controller users | Options or Circle cancels keyboard capture. Hold the physical Options button to cancel digital controller capture; a short Options press can still be assigned. Binding runs in the input update, independent of GUI repaint timing. |
 | Remapped D-pad hints and mapping labels were misleading | D-pad action hints resolve to their assigned buttons. Binding rows and the live test display retain physical button names. |

@@ -76,6 +76,12 @@ public sealed partial class DefenseGame {
   checks["brake_takes_over_automatic_landing"]=!landingAssist;
   NewCampaign(1);PadFeed(pad,new GamepadState());PadFeed(pad,Press(GamepadButton.South),.02f);
   checks["boost_takes_over_automatic_landing"]=!landingAssist;
+  NewCampaign(1);PadFeed(pad,new GamepadState());Quaternion rollBefore=shipRotation;PadFeed(pad,Press(GamepadButton.LeftShoulder),.1f);
+  checks["l1_roll_takes_over_automatic_landing"]=!landingAssist&&Quaternion.Angle(rollBefore,shipRotation)>1;
+  NewCampaign(1);PadFeed(pad,new GamepadState());rollBefore=shipRotation;PadFeed(pad,Press(GamepadButton.RightShoulder),.1f);
+  checks["r1_roll_takes_over_automatic_landing"]=!landingAssist&&Quaternion.Angle(rollBefore,shipRotation)>1;
+  NewCampaign(1);PadFeed(pad,new GamepadState());PadFeed(pad,Press(GamepadButton.East),.1f);
+  checks["circle_level_takes_over_automatic_landing"]=!landingAssist;
   NewCampaign(1);landingAssist=false;PadFeed(pad,new GamepadState());PadFeed(pad,new GamepadState{rightTrigger=.8f},.02f);PadFeed(pad,new GamepadState(),.02f);
   checks["releasing_r2_stops_main_thrust"]=throttle==0;
   OpenVoyager(VoyagerPanel.Outfitter);playerAction=Vector3.one;throttle=.7f;InputSystem.RemoveDevice(pad);Tick(.02f);

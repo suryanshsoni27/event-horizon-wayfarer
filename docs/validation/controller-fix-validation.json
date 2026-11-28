@@ -1,11 +1,11 @@
 {
-  "version": "0.9.1",
-  "checked_utc": "2026-11-28T00:36:45.184912+00:00",
-  "total_checks": 388,
+  "version": "0.9.2",
+  "checked_utc": "2026-11-28T00:41:37.894271+00:00",
+  "total_checks": 391,
   "failures": 0,
   "suites": {
     "controller": 51,
-    "controller_campaign": 41,
+    "controller_campaign": 44,
     "voyager": 87,
     "civilization": 64,
     "head_pilot": 50,
