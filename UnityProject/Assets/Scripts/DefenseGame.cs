@@ -127,7 +127,13 @@ public sealed partial class DefenseGame : MonoBehaviour {
  }
  void Notice(string s){notice=s;noticeTime=5;}
  public void HoldForUI(){releaseFire=true;accumulator=0;modalHeld=true;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}
- void OnApplicationFocus(bool focused){if(!focused&&ready&&!recording&&!approachRecording&&!planetRecording&&!expanseRecording&&!qa){paused=true;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}}
+ void OnApplicationFocus(bool focused){if(!focused&&ready&&!recording&&!approachRecording&&!planetRecording&&!expanseRecording&&!qa)PauseForFocusLoss();}
+ void PauseForFocusLoss(){
+  paused=true;releaseFire=true;throttle=0;playerAction=Vector3.zero;roverDrive=roverSteer=0;roverBrake=true;interactionToggle=aimToggle=false;
+  if(Controls!=null)Controls.SuppressUntilNeutral();SuspendHeadPilot();StopRumble();
+  if(voyager!=null&&campaignStarted&&voyagerPanel==VoyagerPanel.None&&!civilOpen&&!chartOpen&&!upgradeOpen&&(surface==null||!surface.Journal))OpenVoyager(VoyagerPanel.Pause);
+  Cursor.lockState=CursorLockMode.None;Cursor.visible=true;
+ }
  void ResumeFlight(){if(Controls!=null)Controls.SuppressUntilNeutral();paused=false;modalHeld=false;releaseFire=true;Input.ResetInputAxes();if(!recording&&!approachRecording){Cursor.lockState=orbit?CursorLockMode.None:CursorLockMode.Locked;Cursor.visible=orbit;}}
  bool PointerUI(){Vector2 p=new Vector2(Input.mousePosition.x/Screen.width*1600,1000-Input.mousePosition.y/Screen.height*1000);return Cursor.lockState!=CursorLockMode.Locked&&(HelmetPhotoUI.PointerOverUI||p.y>720);}
  public Vector3 Predict(Vector3 p,Vector3 u){Vector3 a=thrustX*u.x+thrustY*u.y+thrustZ*u.z;foreach(var h in world.holes){float scale=Mathf.Max(1,(float)h.capture/1.8f),d=Vector3.Distance(p,h.P),t=Mathf.Clamp01((d-60*scale)/(40*scale)),fade=1-t*t*(3-2*t);if(fade>0)a+=sim.PredictAcceleration((p-h.P)/scale,Vector3.zero)*(float)(h.mu/(60*scale*scale))*fade;}if(expedition!=null)foreach(var planet in expedition.planets){float scale=planet.body.radius>100?(float)planet.body.radius/22:1,d=Vector3.Distance(p,planet.body.P),inner=planet.body.radius>100?(float)planet.body.radius*5:60,outer=planet.body.radius>100?(float)planet.body.radius*8:100,t=Mathf.Clamp01((d-inner)/(outer-inner)),fade=1-t*t*(3-2*t);if(fade>0)a+=sim.PredictAcceleration((p-planet.body.P)/scale,Vector3.zero)*(float)(planet.body.mu/(60*scale*scale))*fade;}return a;}
@@ -148,10 +154,11 @@ public sealed partial class DefenseGame : MonoBehaviour {
   if(HeadPilotTick())return;
   if(Controls!=null&&ControllerMenu())return;
   if(CivilMenuInput())return;
+  ManualFlightTakeover();
   if(inTidal){if(voyager==null&&GameKeyDown(KeyCode.R))ResetRound();else{if(GameKeyDown(KeyCode.Escape)||GameKeyDown(KeyCode.P))paused=!paused;if(!paused)UpdateTidal(delta);return;}}
   if(!ready||beautyShot)return;if(cruising&&Controls.L2>.2f){cruising=false;cruiseBraking=true;Notice("Cruise disengaged / braking to manual-flight speed.");}if(GroundMenu())return;if(!legacyUniverse&&(GameKeyDown(KeyCode.F2)||GameKeyDown(KeyCode.Alpha9)))SelectBlackHole();if(!legacyUniverse&&(GameKeyDown(KeyCode.F4)||GameKeyDown(KeyCode.Alpha0))&&!paused&&!GroundActive)space.Service(Pos(player),Vel(player).magnitude);if(!legacyUniverse&&GameKeyDown(KeyCode.M))ToggleChart();if(chartOpen){if(GameKeyDown(KeyCode.Escape))ToggleChart();if(GameKeyDown(KeyCode.T))EngageRoute();return;}if(!legacyUniverse&&GameKeyDown(KeyCode.K)&&!expedition.OnFoot&&!RoverDeployed){landingAssist=!landingAssist;cruising=false;Notice(landingAssist?"VTOL descent engaged. K cancels.":"Descent cancelled.");}if(!legacyUniverse&&GameKeyDown(KeyCode.T)&&!RoverDeployed){if(cruising){cruising=false;cruiseBraking=true;Notice("Cruise disengaged / braking to manual-flight speed.");}else EngageRoute();}if(!paused){renderFrames++;renderSeconds+=Time.unscaledDeltaTime;maxFrame=Mathf.Max(maxFrame,Time.unscaledDeltaTime);}
   if(modalHeld){paused=true;modalHeld=false;}
-  if(GameKeyDown(KeyCode.U)){upgradeOpen=!upgradeOpen;releaseFire=true;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;Input.ResetInputAxes();if(!upgradeOpen)ResumeFlight();}if(upgradeOpen){playerAction=Vector3.zero;for(int i=0;i<4;i++)if(GameKeyDown((KeyCode)((int)KeyCode.Alpha1+i)))Fit(i);if(GameKeyDown(KeyCode.Escape)){upgradeOpen=false;ResumeFlight();}return;}
+  if(GameKeyDown(KeyCode.U)){upgradeOpen=!upgradeOpen;releaseFire=true;Controls.SuppressUntilNeutral();Cursor.lockState=CursorLockMode.None;Cursor.visible=true;Input.ResetInputAxes();if(!upgradeOpen)ResumeFlight();}if(upgradeOpen){playerAction=Vector3.zero;for(int i=0;i<4;i++)if(GameKeyDown((KeyCode)((int)KeyCode.Alpha1+i)))Fit(i);if(GameKeyDown(KeyCode.Escape)){upgradeOpen=false;ResumeFlight();}return;}
   if(voyager==null&&GameKeyDown(KeyCode.R)&&(!GroundActive||outcome!=""))ResetRound();
   if(GameKeyDown(KeyCode.Escape)||GameKeyDown(KeyCode.P)){paused=!paused;releaseFire=true;if(paused){Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}else ResumeFlight();}
   if(paused&&GameKeyDown(KeyCode.Return))ResumeFlight();
@@ -177,7 +184,7 @@ public sealed partial class DefenseGame : MonoBehaviour {
    float pitchDelta=Mathf.Clamp(mouseY,-15,15)+((GameKey(KeyCode.DownArrow)?1:0)-(GameKey(KeyCode.UpArrow)?1:0))*55*delta-Controls.Look.y*70*delta;
    float rollDelta=((GameKey(KeyCode.Q)||PadHeld(PilotInput.Button.L1)?1:0)-(GameKey(KeyCode.E)||PadHeld(PilotInput.Button.R1)?1:0))*75*delta;
    HeadPilotFlightInput(delta,ref mouseX,ref mouseY,ref yawDelta,ref pitchDelta,ref rollDelta);
-   desiredRotation=desiredRotation*Quaternion.Euler(pitchDelta,yawDelta,rollDelta);throttle=Mathf.Clamp01(throttle+((GameKey(KeyCode.W)?1:0)-(GameKey(KeyCode.S)?1:0))*.65f*delta);bool mouthThrottle=HeadSteeringActive&&headPilot.Settings.mouthControls;if(Controls.UsingPad&&Controls.Connected&&(!mouthThrottle||Controls.R2>.05f))throttle=Controls.R2;if(HeadGestureBrake)throttle=0;
+   desiredRotation=desiredRotation*Quaternion.Euler(pitchDelta,yawDelta,rollDelta);throttle=Mathf.Clamp01(throttle+((GameKey(KeyCode.W)?1:0)-(GameKey(KeyCode.S)?1:0))*.65f*delta);bool mouthThrottle=HeadSteeringActive&&headPilot.Settings.mouthControls;if(Controls.Connected&&(Controls.UsingPad||Controls.ThrottleReleased)&&(!mouthThrottle||Controls.R2>.05f))throttle=Controls.R2;if(HeadGestureBrake)throttle=0;
   }
   if(recording){var target=agents[selected];Vector3 aim=legacyUniverse?Pos(target.state)+Vel(target.state)*Vector3.Distance(Pos(target.state),Pos(player))/18-Pos(player):RecordedIntercept(target);if(salvage.Count>0&&Vector3.Distance(salvage[0].p,Pos(player))<28)aim=salvage[0].p-Pos(player);desiredRotation=Quaternion.LookRotation(aim,Vector3.up);throttle=.8f;}
   shipRotation=Quaternion.Slerp(shipRotation,desiredRotation,1-Mathf.Exp(-12*Mathf.Min(delta,.1f)));Quaternion orientation=shipRotation;rocket.rotation=orientation;

@@ -14,7 +14,7 @@ public sealed partial class DefenseGame {
  bool voyagerQA,voyagerBenchmark,voyagerRecord,voyagerRestoring,campaignStarted,interactionToggle,aimToggle;
  int newCampaignScenario;bool newGamePlus;
  int voyagerSelection,settingsPage,moduleCategory,slotSelection=1,overwriteSlot,rebindAction=-1,rebindKey=-1;
- float rebindReadyAt,checkpointClock,chapterBanner=6,hitFeedback,lastDamageAt,aimBlend;
+ float rebindReadyAt,rebindOptionsAt=-1,checkpointClock,chapterBanner=6,hitFeedback,lastDamageAt,aimBlend;
  string saveStatus="Progress saves during exploration.",voyagerToast="";
  float toastTime;
  Transform voyagerModuleRoot;
@@ -40,7 +40,7 @@ public sealed partial class DefenseGame {
   civilOpen=false;civilizationScene.HidePreview();voyagerPanel=VoyagerPanel.Home;paused=true;
   voyagerAudio=gameObject.AddComponent<VoyagerAudio>();voyagerAudio.Initialize(preferences);
   for(int i=1;i<=3;i++)if(ReadCampaign(i)!=null){slotSelection=i;break;}
-  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--animation-qa")>=0?AnimationChecks():Array.IndexOf(args,"--inhabited-worlds-qa")>=0?InhabitedWorldChecks():Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
+  if(voyagerQA)StartCoroutine(Array.IndexOf(args,"--controller-campaign-qa")>=0?ControllerCampaignChecks():Array.IndexOf(args,"--animation-qa")>=0?AnimationChecks():Array.IndexOf(args,"--inhabited-worlds-qa")>=0?InhabitedWorldChecks():Array.IndexOf(args,"--cinematic-art-qa")>=0?CinematicArtChecks():Array.IndexOf(args,"--ecology-qa")>=0?EcologyChecks():Array.IndexOf(args,"--head-pilot-qa")>=0?HeadPilotChecks():Array.IndexOf(args,"--production-qa")>=0?ProductionChecks():VoyagerChecks());
   else if(voyagerBenchmark)StartCoroutine(Array.IndexOf(args,"--inhabited-worlds-benchmark")>=0?InhabitedWorldBenchmark():Array.IndexOf(args,"--cinematic-art-benchmark")>=0?CinematicArtBenchmark():VoyagerBenchmark());
   else if(voyagerRecord)StartCoroutine(Array.IndexOf(args,"--animation-record")>=0?AnimationRecord():Array.IndexOf(args,"--inhabited-worlds-record")>=0?InhabitedWorldRecord():Array.IndexOf(args,"--cinematic-art-record")>=0?CinematicArtRecord():Array.IndexOf(args,"--ecology-record")>=0?EcologyRecord():Array.IndexOf(args,"--production-record")>=0?ProductionRecord():VoyagerRecord());
  }
@@ -102,13 +102,15 @@ public sealed partial class DefenseGame {
   if(voyager==null)return;SuspendHeadPilot();voyagerPanel=panel;voyagerSelection=0;civilOpen=false;civilPlacing=false;chartOpen=upgradeOpen=false;
   civilizationScene.HideGhost();civilizationScene.HidePreview();if(surface!=null)surface.Journal=false;
   paused=true;if(voyagerAudio!=null)voyagerAudio.Silence();releaseFire=true;playerAction=Vector3.zero;roverDrive=0;Controls.SuppressUntilNeutral();Cursor.lockState=CursorLockMode.None;Cursor.visible=true;
+  interactionToggle=aimToggle=false;rebindAction=rebindKey=-1;rebindOptionsAt=-1;
   StopRumble();if(panel==VoyagerPanel.Contracts)EnsureContracts();
  }
  void CloseVoyager(){civilizationScene.HidePreview();voyagerPanel=VoyagerPanel.None;overwriteSlot=0;rebindAction=rebindKey=-1;if(campaignStarted)ResumeFlight();else OpenVoyager(VoyagerPanel.Home);}
  bool VoyagerMenuInput(){
   if(voyager==null)return false;
-  if(preferences.toggleInteract&&((!automatedPlayback&&Input.GetKeyDown(preferences.Key(KeyCode.E)))||PadDown(PilotInput.Button.R1)))interactionToggle=!interactionToggle;
-  if(preferences.toggleAim&&(!automatedPlayback&&Input.GetMouseButtonDown(1)||Controls.L2>.6f&&aimBlend<=.6f))aimToggle=!aimToggle;aimBlend=Controls.L2;
+  bool surfaceInput=GroundActive&&!paused&&voyagerPanel==VoyagerPanel.None&&!civilOpen&&!chartOpen&&!upgradeOpen&&!civilPlacing;
+  if(surfaceInput&&preferences.toggleInteract&&((!automatedPlayback&&Input.GetKeyDown(preferences.Key(KeyCode.E)))||PadDown(PilotInput.Button.R1)))interactionToggle=!interactionToggle;
+  if(surfaceInput&&preferences.toggleAim&&(!automatedPlayback&&Input.GetMouseButtonDown(1)||Controls.L2>.6f&&aimBlend<=.6f))aimToggle=!aimToggle;aimBlend=Controls.L2;
   if(campaignStarted&&(outcome!=""||inTidal&&tidalTime>2.8f)&&voyagerPanel!=VoyagerPanel.Defeat)OpenVoyager(VoyagerPanel.Defeat);
   if(voyagerPanel==VoyagerPanel.None){
    if(GameKeyDown(KeyCode.F5)){Toast(SaveCampaign()?"Checkpoint saved":saveStatus);return true;}
@@ -117,18 +119,19 @@ public sealed partial class DefenseGame {
    if(!civilOpen&&!chartOpen&&!upgradeOpen&&(surface==null||!surface.Journal)&&(GameKeyDown(KeyCode.Escape)||GameKeyDown(KeyCode.F1))){OpenVoyager(VoyagerPanel.Pause);return true;}
    return false;
   }
-  if(voyagerPanel==VoyagerPanel.Home)civilizationScene.AnimatePreview(Time.unscaledDeltaTime,Vector2.zero);if(voyagerPanel==VoyagerPanel.Outfitter)civilizationScene.AnimatePreview(Time.unscaledDeltaTime,Controls.Look);if(rebindAction>=0||rebindKey>=0)return true;
+  if(voyagerPanel==VoyagerPanel.Home)civilizationScene.AnimatePreview(Time.unscaledDeltaTime,Vector2.zero);if(voyagerPanel==VoyagerPanel.Outfitter)civilizationScene.AnimatePreview(Time.unscaledDeltaTime,Controls.Look);
+  if(rebindAction>=0||rebindKey>=0){ControllerRebindingInput();return true;}
   if(GameKeyDown(KeyCode.Escape)||PadDown(PilotInput.Button.Circle)){
    if(voyagerPanel==VoyagerPanel.Home)return true;if(voyagerPanel==VoyagerPanel.Defeat){campaignStarted=false;OpenVoyager(VoyagerPanel.Home);return true;}
    if(voyagerPanel==VoyagerPanel.Pause)CloseVoyager();else OpenVoyager(campaignStarted?VoyagerPanel.Pause:VoyagerPanel.Home);return true;
   }
-  if(GameKeyDown(KeyCode.DownArrow)||PadDown(PilotInput.Button.Down))voyagerSelection++;
-  if(GameKeyDown(KeyCode.UpArrow)||PadDown(PilotInput.Button.Up))voyagerSelection--;
-  int direction=(GameKeyDown(KeyCode.RightArrow)||PadDown(PilotInput.Button.Right)||PadDown(PilotInput.Button.R1)?1:0)-(GameKeyDown(KeyCode.LeftArrow)||PadDown(PilotInput.Button.Left)||PadDown(PilotInput.Button.L1)?1:0);
+  if(GameKeyDown(KeyCode.DownArrow)||MenuDown)voyagerSelection++;
+  if(GameKeyDown(KeyCode.UpArrow)||MenuUp)voyagerSelection--;
+  int direction=(GameKeyDown(KeyCode.RightArrow)||MenuRight||PadDown(PilotInput.Button.R1)?1:0)-(GameKeyDown(KeyCode.LeftArrow)||MenuLeft||PadDown(PilotInput.Button.L1)?1:0);
   if(voyagerPanel==VoyagerPanel.Home){slotSelection=(slotSelection-1+direction+3)%3+1;if(direction!=0)overwriteSlot=0;voyagerSelection=(voyagerSelection+5)%5;}
   if(voyagerPanel==VoyagerPanel.Defeat)voyagerSelection=(voyagerSelection+2)%2;
   if(voyagerPanel==VoyagerPanel.HeadPilot){voyagerSelection=(voyagerSelection+HeadPilotRows)%HeadPilotRows;if(direction!=0)HeadPilotAction(voyagerSelection,direction);}
-  if(voyagerPanel==VoyagerPanel.Pause)voyagerSelection=(voyagerSelection+9)%9;
+  if(voyagerPanel==VoyagerPanel.Pause)voyagerSelection=(voyagerSelection+10)%10;
   if(voyagerPanel==VoyagerPanel.Outfitter){moduleCategory=(moduleCategory+direction+4)%4;voyagerSelection=(voyagerSelection+3)%3;}
   if(voyagerPanel==VoyagerPanel.Settings){voyagerSelection=(voyagerSelection+SettingsRows())%SettingsRows();if(direction!=0)AdjustSetting(voyagerSelection,direction);}
   if(voyagerPanel==VoyagerPanel.Contracts){var board=EnsureContracts();if(board.Count>0)voyagerSelection=(voyagerSelection+board.Count)%board.Count;}
@@ -137,7 +140,7 @@ public sealed partial class DefenseGame {
   if(PadDown(PilotInput.Button.Square)||GameKeyDown(KeyCode.Delete))VoyagerSecondary();
   if(PadDown(PilotInput.Button.Triangle)||GameKeyDown(KeyCode.G)){
    if(voyagerPanel==VoyagerPanel.Home){newCampaignScenario=(newCampaignScenario+1)%3;Toast("New expedition scenario / "+new[]{"Frontier","Conflict","Scarcity"}[newCampaignScenario]);}
-   if(voyagerPanel==VoyagerPanel.Settings)settingsPage=(settingsPage+1)%4;
+   if(voyagerPanel==VoyagerPanel.Settings){settingsPage=(settingsPage+1)%4;voyagerSelection=0;}
    if(voyagerPanel==VoyagerPanel.Colonies)CreateSupplyRoute();
    if(voyagerPanel==VoyagerPanel.Chapters)BeginFlagshipAssault();
   }
@@ -153,7 +156,7 @@ public sealed partial class DefenseGame {
    else Application.Quit();return;
   }
   if(voyagerPanel==VoyagerPanel.Pause){
-   switch(voyagerSelection){case 0:CloseVoyager();break;case 1:Toast(SaveCampaign()?"Checkpoint saved":saveStatus);break;case 2:LoadCampaign(voyager.slot);break;case 3:OpenVoyager(VoyagerPanel.Contracts);break;case 4:OpenVoyager(VoyagerPanel.Outfitter);civilizationScene.Preview(3,civilization.blueprint,civilization.paint,civilization);break;case 5:OpenVoyager(VoyagerPanel.Colonies);break;case 6:OpenVoyager(VoyagerPanel.Chapters);break;case 7:OpenVoyager(VoyagerPanel.Settings);break;case 8:if(SaveCampaign())Application.Quit();break;}return;
+   switch(voyagerSelection){case 0:CloseVoyager();break;case 1:Toast(SaveCampaign()?"Checkpoint saved":saveStatus);break;case 2:LoadCampaign(voyager.slot);break;case 3:OpenVoyager(VoyagerPanel.Contracts);break;case 4:OpenVoyager(VoyagerPanel.Outfitter);civilizationScene.Preview(3,civilization.blueprint,civilization.paint,civilization);break;case 5:OpenVoyager(VoyagerPanel.Colonies);break;case 6:OpenVoyager(VoyagerPanel.Chapters);break;case 7:OpenVoyager(VoyagerPanel.Settings);break;case 8:OpenVoyager(VoyagerPanel.HeadPilot);break;case 9:if(SaveCampaign())Application.Quit();break;}return;
   }
   if(voyagerPanel==VoyagerPanel.Defeat){if(voyagerSelection==0){if(!LoadCampaign(voyager.slot))OpenVoyager(VoyagerPanel.Home);}else{campaignStarted=false;OpenVoyager(VoyagerPanel.Home);}return;}
   if(voyagerPanel==VoyagerPanel.Settings){AdjustSetting(voyagerSelection,1);return;}
@@ -173,8 +176,8 @@ public sealed partial class DefenseGame {
  public float CameraFov(float baseline){return baseline+(preferences==null?0:preferences.fieldOfView-65);}
  public float CityAltitude(Vector3 point,float native){return voyager!=null&&civilizationScene!=null?civilizationScene.FloorAltitude(point,native):native;}
  public float EffectsVolume{get{return preferences==null?1:preferences.effects;}}
- void StopRumble(){try{if(Gamepad.current!=null)Gamepad.current.SetMotorSpeeds(0,0);}catch(Exception){}}
- void Rumble(float low,float high){if(preferences==null||!preferences.rumble||!Controls.Connected)return;try{Gamepad.current.SetMotorSpeeds(Mathf.Clamp01(low),Mathf.Clamp01(high));}catch(Exception){}}
+ void StopRumble(){try{if(Controls!=null&&Controls.Device!=null)Controls.Device.SetMotorSpeeds(0,0);}catch(Exception){}}
+ void Rumble(float low,float high){if(preferences==null||!preferences.rumble||!Controls.Connected)return;try{Controls.Device.SetMotorSpeeds(Mathf.Clamp01(low),Mathf.Clamp01(high));}catch(Exception){}}
  void VoyagerTick(float dt){
   if(voyager==null)return;float elapsed=Mathf.Min(dt,.1f);toastTime=Mathf.Max(0,toastTime-dt);chapterBanner=Mathf.Max(0,chapterBanner-dt);hitFeedback=Mathf.Max(0,hitFeedback-dt);
   if(hitFeedback<=0)StopRumble();else if(preferences.motion)cam.transform.position+=cam.transform.right*(Mathf.Sin(Time.unscaledTime*58)*hitFeedback*.04f);

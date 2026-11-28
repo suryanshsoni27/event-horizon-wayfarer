@@ -1,0 +1,32 @@
+{
+  "version": "0.9.1",
+  "checked_utc": "2026-11-28T00:36:45.184912+00:00",
+  "total_checks": 388,
+  "failures": 0,
+  "suites": {
+    "controller": 51,
+    "controller_campaign": 41,
+    "voyager": 87,
+    "civilization": 64,
+    "head_pilot": 50,
+    "expanse": 33,
+    "surface": 33,
+    "game": 29
+  },
+  "pre_fix_campaign_failures_reproduced": 14,
+  "physical_dualsense_connected": false,
+  "physical_usb_bluetooth_acceptance": "NOT VERIFIED",
+  "input_coverage": "Virtual gamepad and raw DualSense USB/full Bluetooth/minimal Bluetooth HID fixtures; campaign menus; native flight/rover/foot gameplay.",
+  "personal_saves_and_settings_preserved": true,
+  "not_a_full_campaign_playthrough": true,
+  "reports": {
+    "controller": "controller-fix-controller-checks.json",
+    "controller_campaign": "controller-fix-controller_campaign-checks.json",
+    "voyager": "controller-fix-voyager-checks.json",
+    "civilization": "controller-fix-civilization-checks.json",
+    "head_pilot": "controller-fix-head_pilot-checks.json",
+    "expanse": "controller-fix-expanse-checks.json",
+    "surface": "controller-fix-surface-checks.json",
+    "game": "controller-fix-game-checks.json"
+  }
+}

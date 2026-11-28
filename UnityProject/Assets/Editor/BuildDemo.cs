@@ -48,7 +48,7 @@ public static class BuildDemo {
    bool dataMap=importer.assetPath.Contains("normal")||importer.assetPath.Contains("_arm");bool changed=importer.sRGBTexture==dataMap||importer.anisoLevel!=8||!importer.mipmapEnabled||importer.maxTextureSize!=maxSize||importer.wrapMode!=TextureWrapMode.Repeat;
    importer.sRGBTexture=!dataMap;importer.anisoLevel=8;importer.mipmapEnabled=true;importer.maxTextureSize=maxSize;importer.wrapMode=TextureWrapMode.Repeat;if(changed)importer.SaveAndReimport();
   }
-  PlayerSettings.bundleVersion="0.9.0";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
+  PlayerSettings.bundleVersion="0.9.1";PlayerSettings.enableFrameTimingStats=true;PlayerSettings.companyName="Orbital Field Lab";PlayerSettings.productName="Event Horizon";PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=true;
   var playerConfig=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);
   playerConfig.FindProperty("cameraUsageDescription").stringValue="Use your camera for optional local face-flight steering and a live preview. Video is not recorded or uploaded.";playerConfig.ApplyModifiedPropertiesWithoutUndo();
   var scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);

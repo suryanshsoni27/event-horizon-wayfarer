@@ -4,9 +4,15 @@ A Unity space-adventure and civilization prototype with a custom C++ physics cor
 
 [![Skinned expedition character](docs/media/animation-walk.png)](docs/media/wayfarer-animation.mp4)
 
-**[Download the Mac game — v0.9.0](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.0)** · **[Watch the character animation demo](docs/media/wayfarer-animation.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
+**[Download the Mac game — v0.9.1](https://github.com/suryanshsoni27/event-horizon-wayfarer/releases/tag/v0.9.1)** · **[Watch the character animation demo](docs/media/wayfarer-animation.mp4)** · **[Player guide](docs/TWELVE_HORIZONS.md)**
 
 macOS / Apple Silicon · Keyboard/mouse or DualSense · Local play with no API key
+
+## v0.9.1: controller and campaign input repairs
+
+Controller menus now accept the left stick as well as the D-pad, with delayed repeat. The atlas consumes its own inputs, so selecting a destination on foot cannot open civilization command or the journal. Manual thrust, braking, boost or stick input takes over automatic landing. Reconnecting or resuming suppresses only controls already held, allowing other buttons to work immediately. Boarding while firing cannot carry that trigger into ship thrust.
+
+Rebinding works in the game input loop; controller users can cancel keyboard binding with Options or Circle, and button binding by holding Options. A short Options press can still be assigned. Settings → Controller Actions includes a live device/button/stick/trigger display. Touchpad click opens the atlas, and face-flight setup is selectable from the pause menu. See the [fixes, controls and validation limits](docs/CONTROLLER_FIXES.md).
 
 ## v0.9.0: skinned characters and authored performances
 
@@ -116,11 +122,11 @@ open 'Build/Event Horizon.app'
 
 ## Controls
 
-Connect the DualSense through USB or [pair it with macOS Bluetooth](https://www.playstation.com/en-us/support/hardware/pair-dualsense-controller-bluetooth/). Release all controls after connecting or resuming. The pause screen displays the detected device. Controller disconnection pauses the game.
+Connect the DualSense through USB or [pair it with macOS Bluetooth](https://www.playstation.com/en-us/support/hardware/pair-dualsense-controller-bluetooth/). Controls held across a connection or menu transition become active after their own release; other controls remain available. The menu footer displays the detected device. **Settings → Controller Actions** shows live sticks, triggers and physical buttons. Controller disconnection and loss of game focus pause safely.
 
 | Action | Keyboard / mouse | DualSense |
 |---|---|---|
-| Confirm menu / pause | Enter; Esc or F1 | Cross; Options |
+| Menu selection / confirm / pause | Arrows; Enter; Esc or F1 | Left stick or D-pad; Cross; Options |
 | Save / checkpoint menu / contracts | F5 / F9 / Tab | Through pause menu |
 | Flight look | Mouse / arrows | Right stick |
 | Flight thrust / brake | W/S throttle; Space brake | R2 thrust; L2 brake |
@@ -135,7 +141,7 @@ Connect the DualSense through USB or [pair it with macOS Bluetooth](https://www.
 | Run / hop | Shift or Caps Lock; Space | L3 toggle; Cross |
 | Carbine fire / aim / reload | Left / right click; R | R2 / L2; Square |
 | Interact / suit pulse / journal | Hold E; Q; O | Hold R1; Circle; L1 |
-| Stellar atlas | M | Create / Share |
+| Stellar atlas | M | Create / Share or touchpad click |
 | Cruise | T engages / cancels | Cross in atlas; L2 cancels |
 | Select black hole / orbital service | 9 / 0 | D-pad left / right |
 | Salvage workshop | U; 1–4 fit | R3; D-pad selects, Cross fits |
@@ -145,7 +151,7 @@ In the atlas, left/right or L1/R1 changes systems, up/down selects a destination
 
 Land and settle below 1.5 m/s before deploying tires or leaving the craft. The rover parks while the crew explores. Return within 6 m to board, then retract the tires before flight. Cruise requires clearing the atmosphere.
 
-Controller tests use injected DualSense HID reports and a virtual gamepad. A physical DualSense was not connected during verification; USB/Bluetooth feel, connection quality and device rumble remain unverified. Basic rumble is implemented through Unity controller support; adaptive triggers and gyro controls are not implemented. Keyboard and fourteen digital controller actions can be remapped in settings; analog trigger roles remain fixed.
+Controller tests use raw USB, full and minimal Bluetooth DualSense HID report fixtures and virtual gamepads, including real campaign menus and native rover/foot movement. They validate software routing and report decoding. A physical DualSense was not connected during this verification; USB/Bluetooth feel, connection quality and device rumble remain unverified. Basic rumble is implemented through Unity controller support; adaptive triggers and gyro controls are not implemented. Keyboard and fourteen digital controller actions can be remapped in settings; analog trigger roles remain fixed. PS and microphone buttons have no gameplay action.
 
 ![Exploring a planet on foot](docs/media/rover-crew-running.png)
 

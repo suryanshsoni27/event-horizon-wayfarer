@@ -37,10 +37,10 @@ public sealed partial class DefenseGame {
   bool toggle=GameKeyDown(KeyCode.B)||(GroundActive?PadDown(PilotInput.Button.Down):PadDown(PilotInput.Button.L3));
   if(!civilOpen&&toggle){OpenCivilization(0);return true;}
   if(civilOpen){civilizationScene.AnimatePreview(Mathf.Min(Time.unscaledDeltaTime,.1f),Controls.Look);int oldTab=civilTab,oldSelection=civilSelection,oldPaint=civilPaint;if(GameKeyDown(KeyCode.Escape)||PadDown(PilotInput.Button.Circle)||PadDown(PilotInput.Button.Options)||GameKeyDown(KeyCode.B)){CloseCivilization();return true;}
-   if(GameKeyDown(KeyCode.RightArrow)||PadDown(PilotInput.Button.R1)||PadDown(PilotInput.Button.Right)){civilTab=(civilTab+1)%6;civilSelection=0;}
-   if(GameKeyDown(KeyCode.LeftArrow)||PadDown(PilotInput.Button.L1)||PadDown(PilotInput.Button.Left)){civilTab=(civilTab+5)%6;civilSelection=0;}
-   if(GameKeyDown(KeyCode.DownArrow)||PadDown(PilotInput.Button.Down))civilSelection=(civilSelection+1)%CivilRows();
-   if(GameKeyDown(KeyCode.UpArrow)||PadDown(PilotInput.Button.Up))civilSelection=(civilSelection+CivilRows()-1)%CivilRows();
+   if(GameKeyDown(KeyCode.RightArrow)||PadDown(PilotInput.Button.R1)||MenuRight){civilTab=(civilTab+1)%6;civilSelection=0;}
+   if(GameKeyDown(KeyCode.LeftArrow)||PadDown(PilotInput.Button.L1)||MenuLeft){civilTab=(civilTab+5)%6;civilSelection=0;}
+   if(GameKeyDown(KeyCode.DownArrow)||MenuDown)civilSelection=(civilSelection+1)%CivilRows();
+   if(GameKeyDown(KeyCode.UpArrow)||MenuUp)civilSelection=(civilSelection+CivilRows()-1)%CivilRows();
    if(civilTab==3&&(GameKeyDown(KeyCode.C)||PadDown(PilotInput.Button.Square)))civilPaint=(civilPaint+1)%4;
    if(civilTab==2&&civilSelection==5&&(GameKeyDown(KeyCode.L)||PadDown(PilotInput.Button.Square))){LaunchCivilRocket();return true;}
    if(civilTab==4&&PadDown(PilotInput.Button.Square)){if(civilization.wars.Exists(w=>!w.resolved))CivilNavigateWar();else if(civilSelection<3)CivilNavigateFaction(civilSelection);return true;}

@@ -1,0 +1,20 @@
+{
+  "campaign_controller_uses_isolated_saves": true,
+  "left_stick_selects_campaign_menu": false,
+  "left_stick_changes_save_slot": false,
+  "held_camera_stick_does_not_block_menu_buttons": false,
+  "controller_cancels_keyboard_rebinding": false,
+  "controller_rebinding_runs_in_input_tick": false,
+  "dpad_hints_follow_rebindings": false,
+  "surface_atlas_shoulders_do_not_open_journal": false,
+  "surface_atlas_dpad_does_not_open_civilization": false,
+  "menu_shoulders_do_not_toggle_world_interactions": false,
+  "thrust_and_steering_take_over_automatic_landing": false,
+  "brake_takes_over_automatic_landing": false,
+  "boost_takes_over_automatic_landing": false,
+  "releasing_r2_stops_main_thrust": true,
+  "disconnect_inside_menu_clears_inputs_and_opens_pause": false,
+  "reconnect_held_cross_cannot_resume": true,
+  "released_cross_resumes_even_with_held_camera_stick": false,
+  "controller_qa_preserves_personal_saves_and_settings": true
+}

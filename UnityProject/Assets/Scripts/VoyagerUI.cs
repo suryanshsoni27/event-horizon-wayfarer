@@ -19,21 +19,21 @@ public sealed partial class DefenseGame {
  }
  void VMatrix(){float scale=Mathf.Min(Screen.width/1600f,Screen.height/1000f);GUI.matrix=Matrix4x4.TRS(new Vector3((Screen.width-1600*scale)*.5f,(Screen.height-1000*scale)*.5f,0),Quaternion.identity,Vector3.one*scale);}
  void VBox(Rect r,Color c){GUI.color=c.linear;GUI.DrawTexture(r,Texture2D.whiteTexture);GUI.color=Color.white;}
- void VText(Rect r,string message,VoyagerFont font=VoyagerFont.Body,Color? color=null){
+ void VText(Rect r,string message,VoyagerFont font=VoyagerFont.Body,Color? color=null,bool resolveBindings=true){
   VStyles();var style=font==VoyagerFont.Small?vSmall:font==VoyagerFont.Heading?vHeading:font==VoyagerFont.Hero?vHero:vBody;
   int original=style.fontSize;style.fontSize=Mathf.RoundToInt(original*(preferences==null?1:preferences.uiScale));
-  Color ink=color??(font==VoyagerFont.Small?vMuted:vWhite);if(preferences!=null&&preferences.highContrast&&ink==vMuted)ink=Color.white;GUI.color=ink.linear;GUI.Label(r,ControlHints(message),style);GUI.color=Color.white;style.fontSize=original;
+  Color ink=color??(font==VoyagerFont.Small?vMuted:vWhite);if(preferences!=null&&preferences.highContrast&&ink==vMuted)ink=Color.white;GUI.color=ink.linear;GUI.Label(r,resolveBindings?ControlHints(message):message,style);GUI.color=Color.white;style.fontSize=original;
  }
- bool VButton(Rect r,string text,bool selected=false){
+ bool VButton(Rect r,string text,bool selected=false,bool resolveBindings=true){
   bool hover=!automatedPlayback&&r.Contains(Event.current.mousePosition);
   VBox(r,selected?new Color(.045f,.23f,.25f):hover?new Color(.06f,.13f,.18f):new Color(.025f,.065f,.10f));
   if(selected)VBox(new Rect(r.x,r.y,4,r.height),vCyan);
-  bool pressed=GameButton(r,"",GUIStyle.none);if(pressed&&voyagerAudio!=null)voyagerAudio.Cue("ui",cam.transform.position);VText(new Rect(r.x+22,r.y+10,r.width-35,r.height-9),text,VoyagerFont.Body,selected?vCyan:vWhite);return pressed;
+  bool pressed=GameButton(r,"",GUIStyle.none);if(pressed&&voyagerAudio!=null)voyagerAudio.Cue("ui",cam.transform.position);VText(new Rect(r.x+22,r.y+10,r.width-35,r.height-9),text,VoyagerFont.Body,selected?vCyan:vWhite,resolveBindings);return pressed;
  }
  void VBar(Rect r,float value,Color color){VBox(r,new Color(.07f,.13f,.18f));VBox(new Rect(r.x,r.y,r.width*Mathf.Clamp01(value),r.height),color);}
  public string ControlHints(string value){
   if(preferences==null||value==null)return value;
-  return Regex.Replace(value,@"\b(Cross|Circle|Square|Triangle|L1|R1|L3|R3|Options|Share)\b",m=>{
+  return Regex.Replace(value,@"\b(D-pad up|D-pad down|D-pad left|D-pad right|Cross|Circle|Square|Triangle|L1|R1|L3|R3|Options|Share)\b",m=>{
    int index=Array.FindIndex(padNames,n=>string.Equals(n,m.Value,StringComparison.OrdinalIgnoreCase));
    return index<0?m.Value:padNames[preferences.buttons[index]];
   },RegexOptions.IgnoreCase);
@@ -56,7 +56,7 @@ public sealed partial class DefenseGame {
   else if(voyagerPanel==VoyagerPanel.HeadPilot)DrawHeadPilotSetup();
   else DrawVoyagerDefeat();
   VBox(new Rect(60,934,1480,1),new Color(.15f,.25f,.30f));
-  VText(new Rect(64,951,1470,38),toastTime>0?voyagerToast:"D-pad / arrows select   •   Cross / Enter act   •   Circle / Escape back   •   "+saveStatus,VoyagerFont.Small,toastTime>0?vGold:vMuted);
+  VText(new Rect(64,951,1470,38),toastTime>0?voyagerToast:"Left stick / D-pad / arrows select • Cross / Enter act • Circle / Escape back • "+(Controls.Connected?Controls.DeviceName:"No controller connected"),VoyagerFont.Small,toastTime>0?vGold:vMuted);
   if(rebindAction>=0||rebindKey>=0)DrawRebinding();
   return true;
  }
@@ -79,8 +79,8 @@ public sealed partial class DefenseGame {
  }
  static string FriendlySaveTime(string value){DateTime at;return DateTime.TryParse(value,out at)?at.ToLocalTime().ToString("MMM d, HH:mm"):"Checkpoint available";}
  void DrawVoyagerPause(){
-  string[] choices={"RESUME EXPEDITION","SAVE CHECKPOINT","LOAD LAST CHECKPOINT","FRONTIER CONTRACTS","SHIP OUTFITTER","COLONIES & DIPLOMACY","CAMPAIGN / 12 CHAPTERS","SETTINGS & ACCESSIBILITY","SAVE & QUIT"};
-  for(int i=0;i<choices.Length;i++)if(VButton(new Rect(78,209+i*72,610,60),choices[i],voyagerSelection==i)){voyagerSelection=i;VoyagerPrimary();}
+  string[] choices={"RESUME EXPEDITION","SAVE CHECKPOINT","LOAD LAST CHECKPOINT","FRONTIER CONTRACTS","SHIP OUTFITTER","COLONIES & DIPLOMACY","CAMPAIGN / 12 CHAPTERS","SETTINGS & ACCESSIBILITY","FACE FLIGHT / CAMERA SETUP","SAVE & QUIT"};
+  for(int i=0;i<choices.Length;i++)if(VButton(new Rect(78,209+i*64,610,56),choices[i],voyagerSelection==i)){voyagerSelection=i;VoyagerPrimary();}
   VText(new Rect(760,230,740,59),"CHAPTER "+(voyager.chapter+1)+" / "+CampaignChapters.Titles[voyager.chapter],VoyagerFont.Heading);
   VText(new Rect(765,321,708,128),CampaignChapters.Stories[voyager.chapter],VoyagerFont.Body,vMuted);
   VText(new Rect(765,488,710,130),CampaignChapters.Objectives[voyager.chapter],VoyagerFont.Body);
@@ -105,7 +105,7 @@ public sealed partial class DefenseGame {
  }
  static string OnOff(bool value){return value?"ON":"OFF";}
  void AdjustSetting(int row,int delta){
-  if(settingsPage==1){rebindKey=row;rebindReadyAt=Time.unscaledTime+.25f;return;}if(settingsPage==2){rebindAction=row;rebindReadyAt=Time.unscaledTime+.25f;return;}
+  if(settingsPage==1){rebindKey=row;rebindOptionsAt=-1;rebindReadyAt=Time.unscaledTime+.25f;return;}if(settingsPage==2){rebindAction=row;rebindOptionsAt=-1;rebindReadyAt=Time.unscaledTime+.25f;return;}
   if(settingsPage==3){switch(row){case 0:preferences.quality=(preferences.quality+delta+3)%3;break;case 1:preferences.targetFps=preferences.targetFps==30?60:preferences.targetFps==60?120:30;break;case 2:preferences.antialiasing=(preferences.antialiasing+delta+3)%3;break;case 3:preferences.bloom=Mathf.Clamp(preferences.bloom+delta*.05f,0,.8f);break;case 4:preferences.fieldOfView=Mathf.Clamp(preferences.fieldOfView+delta*5,55,90);break;case 5:preferences.shadowQuality=(preferences.shadowQuality+delta+3)%3;break;}ApplyPreferences();return;}
   switch(row){
    case 0:preferences.mouseSensitivity=Mathf.Clamp(preferences.mouseSensitivity+delta*.1f,.2f,3);break;
@@ -126,21 +126,29 @@ public sealed partial class DefenseGame {
   for(int i=0;i<4;i++)if(VButton(new Rect(80+i*368,243,352,50),pages[i],settingsPage==i)){settingsPage=i;voyagerSelection=0;}
   int count=SettingsRows();for(int i=0;i<count;i++){
    int col=i%2,row=i/2;Rect rect=new Rect(80+col*750,322+row*62,727,51);
-   if(VButton(rect,SettingLabel(i),voyagerSelection==i)){voyagerSelection=i;AdjustSetting(i,1);}
+   if(VButton(rect,SettingLabel(i),voyagerSelection==i,settingsPage!=2)){voyagerSelection=i;AdjustSetting(i,1);}
   }
+  if(settingsPage==2)DrawControllerDiagnostics();
   if(VButton(new Rect(80,887,710,43),"FACE FLIGHT / CAMERA SETUP (F7)"))OpenVoyager(VoyagerPanel.HeadPilot);
-  VText(new Rect(825,894,690,33),"Left / right adjusts • Cross selects • Triangle / G pages",VoyagerFont.Small);
+  VText(new Rect(825,894,690,33),"Left / right adjusts • Cross selects • Triangle pages • Square resets",VoyagerFont.Small);
+ }
+ void DrawControllerDiagnostics(){
+  VBox(new Rect(80,764,1436,112),new Color(.018f,.047f,.069f));
+  VText(new Rect(96,772,1400,26),Controls.Connected?"LIVE CONTROLLER / "+Controls.DeviceName+" / "+Controls.DeviceLayout:"NO CONTROLLER / Connect by USB or pair DualSense in macOS Bluetooth settings.",VoyagerFont.Small,Controls.Connected?vCyan:vGold,false);
+  string raw="Left stick "+Controls.RawMove.ToString("F2")+" • Right stick "+Controls.RawLook.ToString("F2")+" • L2 "+Controls.RawL2.ToString("F2")+" • R2 "+Controls.RawR2.ToString("F2");
+  VText(new Rect(96,801,1400,27),raw,VoyagerFont.Small,vWhite,false);
+  string buttons="";for(int i=0;i<14;i++)if(Controls.PhysicalHeld(i))buttons+=(buttons.Length>0?", ":"")+padNames[i];
+  VText(new Rect(96,832,1400,36),"Buttons: "+(buttons.Length==0?"none":buttons)+(Controls.WaitingForRelease?" • Release held controls to use those controls again.":" • Touchpad opens atlas. PS and microphone buttons have no gameplay action."),VoyagerFont.Small,vMuted,false);
  }
  void DrawRebinding(){
   VBox(new Rect(0,0,1600,1000),new Color(0,.01f,.025f,.96f));
   VText(new Rect(280,365,1080,70),rebindKey>=0?"PRESS A KEY":"PRESS A CONTROLLER BUTTON",VoyagerFont.Hero);
-  VText(new Rect(285,473,1030,95),"Escape cancels. Conflicting assignments are swapped. Triggers retain their analog thrust / brake and fire / aim roles.",VoyagerFont.Body,vMuted);
+  VText(new Rect(285,473,1030,125),rebindKey>=0?"Options, Circle or Escape cancels. Press a keyboard key to assign it.":"Press a button to assign it. Hold Options to cancel, or press Escape. Conflicting assignments are swapped. Triggers retain their analog thrust / brake and fire / aim roles.",VoyagerFont.Body,vMuted,rebindKey>=0);
   if(Time.unscaledTime<rebindReadyAt)return;
   if(Event.current.type==EventType.KeyDown&&Event.current.keyCode!=KeyCode.None){
-   if(Event.current.keyCode==KeyCode.Escape){rebindKey=rebindAction=-1;Event.current.Use();return;}
+   if(Event.current.keyCode==KeyCode.Escape){CancelRebinding();Event.current.Use();return;}
    if(rebindKey>=0){preferences.BindKey(remappableKeys[rebindKey],Event.current.keyCode);rebindKey=-1;Event.current.Use();ApplyPreferences();}
   }
-  if(rebindAction>=0){int physical=Controls.PhysicalPressed();if(physical>=0){preferences.BindButton(rebindAction,physical);rebindAction=-1;ApplyPreferences();Controls.SuppressUntilNeutral();}}
  }
  void DrawVoyagerContracts(){
   var board=EnsureContracts();VText(new Rect(80,182,1400,52),"FRONTIER / CONTRACT NETWORK",VoyagerFont.Heading);
